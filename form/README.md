@@ -4,7 +4,7 @@ A fast, flexible, and type-safe form management library for [Lit].
 
 ## Documentation
 
-See the full documentation at [kin-form.deno.dev](website).
+See the full documentation at [kin-form.deno.dev][website].
 
 ## Installation
 
