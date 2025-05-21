@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@custom-variant active (&[active]);
+@custom-variant dark (&:where(.dark, .dark *, :host(.dark) *));
+@custom-variant selected (&[selected]);
+
+@theme {
+  --color-primary: #bc52ee;
+  --color-secondary: #3245ff;
+  --spacing-8xl: 1536px;
+  --inset-shadow-b: inset 0 -1px var(--tw-shadow-color, rgba(0, 0, 0, 0.05));
+}
+
+@layer components {
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+:root {
+  scrollbar-width: thin;
+}
+
+.docs {
+  @apply flex flex-col;
+
+  a:not(.header-anchor) {
+    @apply text-primary;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  /*
+    Use negative mt + positive pt so header anchors can be scrolled into view
+    correctly when user click a header anchor or TOC anchor.
+  */
+  h2 {
+    @apply pt-16 -mt-8 mb-4 text-2xl;
+  }
+  h2:first-of-type {
+    @apply -mt-12;
+  }
+  p {
+    @apply mb-4;
+  }
+  img {
+    /* Border matches css/prism/light.css */
+    @apply rounded-md border border-[#ddd];
+  }
+  pre {
+    @apply relative mb-4 bg-white dark:bg-neutral-700 min-h-[max-content] rounded-md overflow-x-auto;
+  }
+  copy-button {
+    @apply absolute end-2 top-2 z-2 border rounded-sm hover:bg-black/5 dark:hover:bg-white/5;
+  }
+}

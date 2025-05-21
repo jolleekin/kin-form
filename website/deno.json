@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "types": ["lume/types.ts"]
+  },
+  "imports": {
+    "@std/html": "jsr:@std/html@^1.0.3",
+    "lit": "npm:lit@^3.3.0",
+    "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@4c90aaf24802e663ee9ac9130158153cb9d15a31/",
+    "lume_markdown_plugins/": "https://deno.land/x/lume_markdown_plugins@v0.9.0/",
+    "mermaid": "npm:mermaid@^11.6.0",
+    "prismjs": "npm:prismjs@^1.30.0"
+  },
+  "tasks": {
+    "lume": "echo \"import 'lume/cli.ts'\" | deno run -A -",
+    "build": "deno task lume",
+    "serve": "deno run -A --unstable-hmr main.ts -s"
+  }
+}

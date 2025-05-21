@@ -1,0 +1,20 @@
+name: Release
+on:
+  push:
+    branches: main
+    paths: form/**
+
+jobs:
+  deploy:
+    name: Release
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read # Needed to clone the repository
+      id-token: write # Needed for auth with JSR
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - run: npx jsr publish

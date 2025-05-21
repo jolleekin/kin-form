@@ -1,0 +1,33 @@
+name: Deploy Website
+on:
+  push:
+    branches: main
+    paths: website/**
+
+jobs:
+  deploy:
+    name: Deploy Website
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read # Needed to clone the repository
+      id-token: write # Needed for auth with Deno Deploy
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Install Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v2.x
+
+      - name: Build
+        run: cd website && deno task build
+
+      - name: Upload to Deno Deploy
+        uses: denoland/deployctl@v1
+        with:
+          project: kin-form
+          entrypoint: jsr:@std/http/file-server.ts
+          root: website/_site
