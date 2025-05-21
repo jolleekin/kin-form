@@ -366,7 +366,7 @@ export abstract class FormField<
     this.toggleAttribute("invalid", this.invalid);
     this.requestUpdate();
     this.#parent?._childInvalidChanged(this);
-    fire(this, "status-changed");
+    fire(this, "status-changed" as keyof HTMLElementEventMap);
   }
 
   /**
@@ -378,7 +378,7 @@ export abstract class FormField<
     this.toggleAttribute("touched", this.touched);
     this.requestUpdate();
     this.#parent?._childTouchedChanged(this);
-    fire(this, "touched-changed");
+    fire(this, "touched-changed" as keyof HTMLElementEventMap);
   }
 
   /**
@@ -390,7 +390,7 @@ export abstract class FormField<
     this.toggleAttribute("validating", this.validating);
     this.requestUpdate();
     this.#parent?._childValidatingChanged(this);
-    fire(this, "status-changed");
+    fire(this, "status-changed" as keyof HTMLElementEventMap);
   }
 
   /**
@@ -404,7 +404,7 @@ export abstract class FormField<
     }
     // Need the name so `willUpdate` can trigger validation.
     this.requestUpdate("value");
-    fire(this, "value-changed");
+    fire(this, "value-changed" as keyof HTMLElementEventMap);
   }
 
   /**

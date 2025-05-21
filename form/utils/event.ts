@@ -23,7 +23,7 @@ export function fire<T extends keyof HTMLElementEventMap>(
   initData.composed ??= true;
   const event = new CustomEvent(type, initData);
   target.dispatchEvent(event);
-  return event as HTMLElementEventMap[T];
+  return event as never;
 }
 
 /**
