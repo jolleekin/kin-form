@@ -17,4 +17,4 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
 
-      - run: npx jsr publish
+      - run: cd form && npx jsr publish
