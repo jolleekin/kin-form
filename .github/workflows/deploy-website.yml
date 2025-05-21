@@ -29,5 +29,5 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: kin-form
-          entrypoint: jsr:@std/http/file-server.ts
+          entrypoint: jsr:@std/http/file-server
           root: website/_site
