@@ -2,7 +2,9 @@ name: Deploy Website
 on:
   push:
     branches: main
-    paths: website/**
+    paths:
+      - .github/workflows/deploy-website.yml
+      - website/**
 
 jobs:
   deploy:
@@ -29,5 +31,5 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: kin-form
-          entrypoint: website/ssg-file-server.ts
+          entrypoint: ../ssg-file-server.ts
           root: website/_site

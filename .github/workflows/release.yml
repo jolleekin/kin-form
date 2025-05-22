@@ -2,7 +2,9 @@ name: Release
 on:
   push:
     branches: main
-    paths: form/**
+    paths:
+      - .github/workflows/release.yml
+      - form/**
 
 jobs:
   deploy:
