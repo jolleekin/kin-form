@@ -29,7 +29,7 @@ export default function ({ content, head, title, url }: Lume.Data) {
         class="m-0 min-h-dvh grid grid-rows-[auto_1fr_auto] bg-neutral-100 text-gray-700 dark:bg-neutral-900 dark:text-gray-200 overscroll-none"
       >
         <header
-          class="sticky top-0 z-30 bg-neutral-100 dark:bg-neutral-900 inset-shadow-b dark:shadow-neutral-500"
+          class="w-dvw sticky top-0 z-30 bg-neutral-100 dark:bg-neutral-900 inset-shadow-b dark:shadow-neutral-500"
         >
           <div class="w-full max-w-8xl mx-auto px-2 sm:px-4 lg:px-6">
             <nav class="flex justify-between h-14 px-2">

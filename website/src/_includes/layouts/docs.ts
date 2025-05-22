@@ -48,7 +48,7 @@ export default function ({
   return html`
     <div
       id="nav-view"
-      class="w-full max-w-8xl mx-auto px-2 sm:px-4 lg:px-6 grid grid-cols-[auto_1fr_auto] relative group"
+      class="w-dvw max-w-8xl mx-auto px-2 sm:px-4 lg:px-6 grid grid-cols-[auto_1fr_auto] relative group"
     >
       <div
         id="backdrop"
