@@ -31,5 +31,5 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: kin-form
-          entrypoint: ../ssg-file-server.ts
+          entrypoint: https://jsr.io/@kin/file-server/0.1.1/ssg.ts
           root: website/_site
