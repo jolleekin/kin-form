@@ -45,7 +45,7 @@ site.use(
 site.use(
   esbuild({
     options: {
-      chunkNames: "js/[hash].[ext]",
+      chunkNames: "js/[hash]",
       minify: true,
       splitting: true,
       target: "es2022",
