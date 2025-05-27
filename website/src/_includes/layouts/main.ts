@@ -6,6 +6,10 @@ export default function ({ content, head, title, url }: Lume.Data) {
     <html lang="en">
       <head>
         <meta charset="UTF-8" />
+        <meta
+          name="description"
+          content="A fast, flexible, and type-safe form management library for Lit"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>${title ? title + " - Kin Form" : "Kin Form"}</title>
         <link rel="stylesheet" href="/css/prism/dark.css" id="prism" />
