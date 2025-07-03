@@ -18,7 +18,7 @@ export const head = html`
 //
 
 const lit =
-  '<a class="text-primary hover:underline" href="https://lit.dev" target="_blank">Lit</a>';
+  '<a class="text-primary dark:text-primary-light hover:underline" href="https://lit.dev" target="_blank">Lit</a>';
 
 const features: FeatureCardProps[] = [
   {
@@ -67,7 +67,7 @@ const tabs = ["form-demo.ts", "text-field.ts", "number-field.ts", "utils.ts"];
 export default function () {
   return html`
     <div
-      class="w-dvw max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-y-16 flex-1 pb-16"
+      class="w-full max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-y-16 flex-1 pb-16"
     >
       <div class="flex flex-col items-center gap-6 pt-16">
         <span class="text-3xl text-center text-balance">

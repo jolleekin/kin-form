@@ -5,7 +5,9 @@
 @custom-variant selected (&[selected]);
 
 @theme {
-  --color-primary: #bc52ee;
+  --color-primary: #a248cc;
+  --color-primary-light: color-mix(in oklab, var(--color-primary) 80%, white);
+  --color-primary-dark: color-mix(in oklab, var(--color-primary) 90%, black);
   --color-secondary: #3245ff;
   --spacing-8xl: 1536px;
   --inset-shadow-b: inset 0 -1px var(--tw-shadow-color, rgba(0, 0, 0, 0.05));
@@ -25,10 +27,10 @@
   @apply flex flex-col;
 
   a:not(.header-anchor) {
-    @apply text-primary;
+    @apply text-primary-dark dark:text-primary-light underline;
   }
-  a:hover {
-    text-decoration: underline;
+  .header-anchor:hover {
+    @apply underline;
   }
   /*
     Use negative mt + positive pt so header anchors can be scrolled into view

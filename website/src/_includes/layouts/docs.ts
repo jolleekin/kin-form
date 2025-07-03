@@ -48,7 +48,7 @@ export default function ({
   return html`
     <div
       id="nav-view"
-      class="w-dvw max-w-8xl mx-auto px-2 sm:px-4 lg:px-6 grid grid-cols-[auto_1fr_auto] relative group"
+      class="w-full max-w-8xl mx-auto px-2 sm:px-4 lg:px-6 grid grid-cols-[auto_1fr_auto] relative group"
     >
       <div
         id="backdrop"
@@ -56,10 +56,10 @@ export default function ({
           hidden group-open:block lg:hidden lg:group-open:hidden"
       ></div>
       <aside
-        class="bg-neutral-50 dark:bg-neutral-800 lg:bg-transparent lg:dark:bg-transparent
-         absolute z-20 left-0 inset-y-0 w-67 h-[calc(100dvh_-_56px)] overflow-y-auto
+        class="bg-neutral-50 dark:bg-neutral-800 lg:bg-transparent lg:dark:bg-transparent shadow
+         fixed z-20 left-0 w-67 top-14 h-[calc(100dvh_-_56px)] overflow-y-auto
          -translate-x-full group-open:translate-x-0 
-         lg:sticky lg:top-14 lg:translate-x-0 transition-transform"
+         lg:sticky lg:translate-x-0 lg:shadow-none transition-transform"
       >
         <div class="px-2 py-1 flex flex-col gap-1">
           ${pageGroups
@@ -177,6 +177,8 @@ export default function ({
           navView.setAttribute("open", "");
         }
       };
+
+      $("#backdrop").onscroll = (evt) => evt.preventDefault();
 
       $("#backdrop").onclick = () => {
         navView.removeAttribute("open");

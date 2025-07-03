@@ -30,10 +30,11 @@ export default function ({ content, head, title, url }: Lume.Data) {
         </script>
       </head>
       <body
-        class="m-0 min-h-dvh grid grid-rows-[auto_1fr_auto] bg-neutral-100 text-gray-700 dark:bg-neutral-900 dark:text-gray-200 overscroll-none"
+        class="m-0 min-h-dvh grid grid-cols-[100%] grid-rows-[auto_1fr_auto] overscroll-none
+        bg-neutral-100 text-gray-700 dark:bg-neutral-900 dark:text-gray-200"
       >
         <header
-          class="w-dvw sticky top-0 z-30 bg-neutral-100 dark:bg-neutral-900 inset-shadow-b dark:shadow-neutral-500"
+          class="w-full sticky top-0 z-30 bg-neutral-100 dark:bg-neutral-900 inset-shadow-b dark:shadow-neutral-500"
         >
           <div class="w-full max-w-8xl mx-auto px-2 sm:px-4 lg:px-6">
             <nav class="flex justify-between h-14 px-2">
@@ -111,7 +112,7 @@ export default function ({ content, head, title, url }: Lume.Data) {
           </div>
         </header>
         ${content}
-        <footer class="flex justify-center py-4 -mt-14 relative z-30">
+        <footer class="flex justify-center py-4 -mt-14 relative z-1">
           Created with ♥️ by&nbsp;
           <a
             class="hover:text-primary"
