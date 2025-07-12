@@ -21,11 +21,11 @@ export class FormDemo extends LitElement {
     const { field, handleSubmit, submitting } = this.#form;
 
     return html`
-      <!-- Use custom elements that extend FormField -->
+      <!-- Option 1: Use custom elements that extend FormField -->
       <text-field label="Name" ${field("name")}></text-field>
       <number-field label="Level" ${field("level")}></number-field>
 
-      <!-- Use <kin-field> with a custom template -->
+      <!-- Option 2: Use <kin-field> with a custom template -->
       <kin-field
         ${field("dateOfBirth")}
         .template=${(f: KinField<Date | null>) => html`
