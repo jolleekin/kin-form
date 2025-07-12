@@ -1,0 +1,20 @@
+{
+  "name": "vite-ts",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "@kin/form": "npm:@jsr/kin__form@^0.1.4",
+    "inspector-elements": "^0.1.0",
+    "lit": "^3.3.0"
+  }
+}
