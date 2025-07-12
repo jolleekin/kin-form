@@ -5,10 +5,12 @@
 @custom-variant selected (&[selected]);
 
 @theme {
-  --color-primary: #a248cc;
+  --color-primary: #8A2BE2;
   --color-primary-light: color-mix(in oklab, var(--color-primary) 80%, white);
   --color-primary-dark: color-mix(in oklab, var(--color-primary) 90%, black);
-  --color-secondary: #3245ff;
+  --color-secondary: #FF7F50;
+  --color-secondary-light: color-mix(in oklab, var(--color-secondary) 80%, white);
+  --color-secondary-dark: color-mix(in oklab, var(--color-secondary) 65%, black);
   --spacing-8xl: 1536px;
   --inset-shadow-b: inset 0 -1px var(--tw-shadow-color, rgba(0, 0, 0, 0.05));
 }
@@ -51,6 +53,20 @@
   }
   pre {
     @apply relative mb-4 bg-white dark:bg-neutral-700 min-h-[max-content] rounded-md overflow-x-auto;
+  }
+  ol {
+    list-style-type: decimal;
+    @apply mb-4 ps-8;
+  }
+  ul {
+    list-style-type: disc;
+    @apply mb-4 ps-8;
+  }
+  li:has(p) {
+    @apply mt-2;
+  }
+  li:first-child {
+    @apply mt-0;
   }
   copy-button {
     @apply absolute end-2 top-2 z-2 border rounded-sm hover:bg-black/5 dark:hover:bg-white/5;

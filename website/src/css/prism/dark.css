@@ -44,8 +44,9 @@ pre[class*="language-"] {
 :not(pre) > code[class*="language-"] {
 	padding: .1em .3em;
 	border-radius: .3em;
-	color: #db4c69;
-	background: #111;
+	color: var(--color-secondary-light);
+	background: #2f2f2f;
+	border: 1px solid #555;
 }
 /*********************************************************
 * Tokens

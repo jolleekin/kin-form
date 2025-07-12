@@ -127,8 +127,8 @@ export default function ({
         ${csbTitle
           ? html`
               <iframe
+                class="w-full min-h-[calc(100dvh_-_64px)] border-0 rounded-sm overflow-hidden"
                 src="https://codesandbox.io/p/devbox/${csbBasename}?embed=1&file=%2Fsrc%2Fkin-form-example.ts"
-                style="width:100%; flex: 1; border:0; border-radius: 4px; overflow:hidden;"
                 title="${csbTitle}"
                 sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
               ></iframe>
