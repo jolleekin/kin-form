@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@layer base {
+  code {
+    @apply rounded bg-blue-50 px-1.5 py-0.5 font-mono text-[0.85em]
+      text-blue-700;
+  }
+
+  em {
+    @apply font-medium text-gray-700;
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "tasks": {
+    "bundle-size": "deno run -A --node-modules-dir bundle-size.ts",
+    "speed-bench": "deno run -A --node-modules-dir speed-bench.ts"
+  },
+  "imports": {
+    "rolldown": "npm:rolldown@^1",
+    "react": "npm:react@^19.2.7",
+    "react-dom": "npm:react-dom@^19.2.7",
+    "react-hook-form": "npm:react-hook-form@^7",
+    "formik": "npm:formik@^2",
+    "@tanstack/react-form": "npm:@tanstack/react-form@^1",
+    "final-form": "npm:final-form@^4",
+    "react-final-form": "npm:react-final-form@^6",
+    "@kin-form/core/index.ts": "../core/index.ts",
+    "@kin-form/react/index.ts": "../react/index.ts",
+    "@kin-form/validators/index.ts": "../validators/index.ts",
+    "@happy-dom/global-registrator": "npm:@happy-dom/global-registrator@^15",
+    "@testing-library/react": "npm:@testing-library/react@^16.3.2",
+    "@types/react": "npm:@types/react@^19.2.17",
+    "zod": "npm:zod@^4"
+  },
+  "compilerOptions": {
+    "lib": ["deno.window", "deno.unstable", "node", "dom"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
+  }
+}

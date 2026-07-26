@@ -1,0 +1,11 @@
+{
+  "name": "@kin-form/validators",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": {
+    "./index.ts": "./index.ts"
+  },
+  "imports": {
+    "@standard-schema/spec": "npm:@standard-schema/spec@^1.1.0"
+  }
+}

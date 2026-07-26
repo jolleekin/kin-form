@@ -1,0 +1,76 @@
+name: Publish to JSR
+
+on:
+  push:
+    tags:
+      - "core@*"
+      - "react@*"
+      - "react-devtools@*"
+      - "validators@*"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: denoland/setup-deno@v2
+      - run: deno lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: denoland/setup-deno@v2
+      - run: deno test -A core react react-devtools validators
+
+  publish-core:
+    needs: [lint, test]
+    if: startsWith(github.ref, 'refs/tags/core@')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: denoland/setup-deno@v2
+      - run: deno publish
+        working-directory: core
+
+  publish-react:
+    needs: [lint, test]
+    if: startsWith(github.ref, 'refs/tags/react@')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: denoland/setup-deno@v2
+      - run: deno publish
+        working-directory: react
+
+  publish-react-devtools:
+    needs: [lint, test]
+    if: startsWith(github.ref, 'refs/tags/react-devtools@')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: denoland/setup-deno@v2
+      - run: deno publish
+        working-directory: react-devtools
+
+  publish-validators:
+    needs: [lint, test]
+    if: startsWith(github.ref, 'refs/tags/validators@')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: denoland/setup-deno@v2
+      - run: deno publish
+        working-directory: validators

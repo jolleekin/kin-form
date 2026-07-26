@@ -1,0 +1,27 @@
+{
+  "name": "@kin-form/react-devtools",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": {
+    "./index.ts": "./index.ts"
+  },
+  "tasks": {
+    "test": "deno test --allow-env ."
+  },
+  "imports": {
+    "@happy-dom/global-registrator": "npm:@happy-dom/global-registrator@^15",
+    "@testing-library/react": "npm:@testing-library/react@^16.3.2",
+    "@types/react": "npm:@types/react@^19.2.17",
+    "react": "npm:react@^19.2.7"
+  },
+  "compilerOptions": {
+    "lib": [
+      "deno.window",
+      "deno.unstable",
+      "node",
+      "dom"
+    ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
+  }
+}
