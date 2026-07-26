@@ -2,6 +2,8 @@
 import BarChart from './BarChart.vue';
 import type { BarChartEntry } from './BarChart.vue';
 
+withDefaults(defineProps<{ title?: string }>(), {});
+
 // Sorted ascending. Regenerate via `deno task --cwd scripts bundle-size` and
 // keep in sync with readme.md's "Bundle size" table/breakdown.
 const bars: BarChartEntry[] = [
@@ -14,23 +16,16 @@ const bars: BarChartEntry[] = [
 
 <template>
   <div class="bundle-size-chart">
+    <h4 v-if="title" class="bundle-size-title">{{ title }}</h4>
     <BarChart :bars="bars" />
-    <p class="bundle-size-caption">
-      React usage, minified + gzipped, same toolchain for every library.
-    </p>
   </div>
 </template>
 
 <style scoped>
-.bundle-size-chart {
-  margin: 32px 0;
-}
-
-.bundle-size-caption {
-  color: var(--vp-c-text-3);
-  margin-top: 10px;
+.bundle-size-title {
   font-size: 13px;
-  line-height: 16px;
-  text-align: center;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  margin: 0 0 10px;
 }
 </style>

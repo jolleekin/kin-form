@@ -14,12 +14,6 @@ const rows: Array<{
   trimmed?: boolean;
   notes?: Notes;
 }> = [
-  // {
-  //   label: 'Bundle size (React usage, gzip)',
-  //   kin: 'bundle',
-  //   rhf: '13.0 KB', formik: '13.9 KB', tanstack: '18.5 KB',
-  //   trimmed: true,
-  // },
   {
     label: 'Zero dependencies',
     kin: '✅', rhf: '✅', formik: '❌', tanstack: '⚠️',
@@ -115,20 +109,17 @@ const visibleRows = computed(() =>
         </table>
       </div>
       <p class="feature-matrix-legend">✅ full support · ⚠️ partial or conditional · ❌ not supported</p>
-      <p v-if="!full" class="feature-matrix-cta">
-        Don't believe it? <a href="/comparison/">See full comparison with code examples →</a>
-      </p>
     </div>
   </section>
 </template>
 
 <style scoped>
 .feature-matrix {
-  padding: 0 24px 80px;
+  padding: 0 24px;
 }
 
 .feature-matrix.is-full {
-  padding: 0 0 40px;
+  padding: 0;
 }
 
 .feature-matrix-inner {
@@ -237,21 +228,5 @@ const visibleRows = computed(() =>
   margin-top: 12px;
   font-size: 12px;
   color: var(--vp-c-text-3);
-}
-
-.feature-matrix-cta {
-  text-align: center;
-  margin-top: 8px;
-  font-size: 14px;
-}
-
-.feature-matrix-cta a {
-  color: var(--vp-c-brand-3);
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.feature-matrix-cta a:hover {
-  text-decoration: underline;
 }
 </style>

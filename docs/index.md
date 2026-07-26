@@ -39,50 +39,63 @@ features:
 
 <FeatureMatrix />
 
+<div class="mini-charts-row">
+  <div class="mini-chart-card">
+    <BundleSizeChart title="Bundle size (React usage, gzip)" />
+  </div>
+  <div class="mini-chart-card">
+    <PerformanceHighlight title="Flat field update burst (800×)" />
+  </div>
+</div>
+
+<p class="comparison-cta">
+  Don't believe it? <a href="/comparison/">See full comparison with code examples →</a>
+</p>
+
 <style>
-html .VPHero .name {
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-size: 20px;
-  line-height: 32px;
-}
-html .VPHero .text {
-  font-size: 36px;
-  line-height: 40px;
-  max-width: 100%;
-}
-html .VPHero .tagline {
-  font-size: 16px;
-  line-height: 1.5;
-  max-width: 564px;
+.mini-charts-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 40px 24px;
 }
 
-@media (min-width: 640px) {
-  html .VPHero .name {
-    font-size: 24px;
-    line-height: 1.5;
-  }
+.mini-chart-card { flex: 1 1 280px; min-width: 280px; padding: 16px;
+border-radius: 12px; background: var(--vp-c-bg-soft); }
 
-  html .VPHero .text {
-    font-size: 44px;
-    line-height: 56px;
-  }
-
-  html .VPHero .tagline {
-    font-size: 20px;
-    line-height: 32px;
-  }
+.comparison-cta {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 14px;
 }
 
-@media (min-width: 960px) {
-  html .VPHero .name {
-    font-size: 32px;
-    line-height: 1.5;
-  }
-
-  html .VPHero .text {
-    font-size: 56px;
-    line-height: 64px;
-  }
+.comparison-cta a {
+  color: var(--vp-c-brand-3);
+  font-weight: 500;
+  text-decoration: none;
 }
+
+.comparison-cta a:hover {
+  text-decoration: underline;
+}
+
+
+html .VPHero .name { text-transform: uppercase; letter-spacing: 0.2em;
+font-size: 20px; line-height: 32px; } html .VPHero .text { font-size: 36px;
+line-height: 40px; max-width: 100%; } html .VPHero .tagline { font-size: 16px;
+line-height: 1.5; max-width: 564px; }
+
+@media (min-width: 640px) { html .VPHero .name { font-size: 24px; line-height:
+1.5; }
+
+html .VPHero .text { font-size: 44px; line-height: 56px; }
+
+html .VPHero .tagline { font-size: 20px; line-height: 32px; } }
+
+@media (min-width: 960px) { html .VPHero .name { font-size: 32px; line-height:
+1.5; }
+
+html .VPHero .text { font-size: 56px; line-height: 64px; } }
 </style>

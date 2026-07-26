@@ -6,6 +6,8 @@ import SideBySide from "./SideBySide.vue";
 import FeatureMatrix from "./FeatureMatrix.vue";
 import BundleSizeChart from "./BundleSizeChart.vue";
 import PerformanceCharts from "./PerformanceCharts.vue";
+import PerformanceHighlight from "./PerformanceHighlight.vue";
+import HomeSnippets from "./home-snippets.md";
 import "./style.css";
 
 export default {
@@ -13,6 +15,7 @@ export default {
   Layout() {
     return h(DefaultTheme.Layout, null, {
       "sidebar-nav-before": () => h(FrameworkSwitcher),
+      "home-features-before": () => h(HomeSnippets),
     });
   },
   // deno-lint-ignore no-explicit-any
@@ -22,5 +25,6 @@ export default {
     app.component("FeatureMatrix", FeatureMatrix);
     app.component("BundleSizeChart", BundleSizeChart);
     app.component("PerformanceCharts", PerformanceCharts);
+    app.component("PerformanceHighlight", PerformanceHighlight);
   },
 };

@@ -46,7 +46,7 @@ function heightOf(value: number): string {
   position: relative;
   display: flex;
   gap: 12px;
-  height: 160px;
+  height: 200px;
 }
 
 .bar-baseline {

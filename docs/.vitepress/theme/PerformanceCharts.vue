@@ -122,6 +122,7 @@ const rerenderScenarios: Scenario[] = [
 </script>
 
 <template>
+  <h3 class="performance-group-title">Smaller is better.</h3>
   <div class="performance-charts">
     <div v-for="scenario in scenarios" :key="scenario.title" class="performance-scenario">
       <h4 class="performance-scenario-title">{{ scenario.title }}</h4>
@@ -129,7 +130,7 @@ const rerenderScenarios: Scenario[] = [
     </div>
     <div class="performance-scenario" style="height: 0; padding: 0; background-color: transparent;"></div>
   </div>
-  <h4 class="performance-group-title">Untouched sibling re-renders (800 updates)</h4>
+  <h3 class="performance-group-title">Untouched sibling re-renders (800 updates)</h3>
   <div class="performance-charts">
     <div v-for="scenario in rerenderScenarios" :key="scenario.title" class="performance-scenario">
       <h4 class="performance-scenario-title">{{ scenario.title }}</h4>
@@ -145,7 +146,6 @@ const rerenderScenarios: Scenario[] = [
   flex-wrap: wrap;
   align-items: flex-end;
   gap: 24px;
-  margin: 32px 0;
 }
 
 .performance-scenario {
@@ -160,13 +160,13 @@ const rerenderScenarios: Scenario[] = [
   font-size: 13px;
   font-weight: 600;
   color: var(--vp-c-text-1);
-  margin: 0 0 10px;
+  margin: 0 0 12px;
 }
 
 .performance-group-title {
   font-size: 15px;
   font-weight: 600;
   color: var(--vp-c-text-1);
-  margin: 40px 0 0;
+  margin: 12px 0;
 }
 </style>

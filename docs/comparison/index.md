@@ -4,7 +4,7 @@
 
 <FeatureMatrix :full="true" />
 
-## Bundle Size
+## Bundle size (React usage)
 
 <BundleSizeChart />
 
@@ -14,8 +14,6 @@ minifies with terser by default and can produce different sizes for the same
 source. Reproducible via `deno task --cwd scripts bundle-size`.
 
 ## Performance
-
-Smaller is better.
 
 <PerformanceCharts />
 
