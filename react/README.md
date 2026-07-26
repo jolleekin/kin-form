@@ -30,22 +30,19 @@ deno add jsr:@kin-form/react
 
 ```tsx
 import { useForm, Watch } from "@kin-form/react/index.ts";
+import { required } from "@kin-form/validators/index.ts";
 
 function LoginForm() {
   const form = useForm({
     initialValue: { email: "", password: "" },
-    onSubmit: async (form) => {
-      await login(form.value);
-    },
+    onSubmit: async (form) => await login(form.value),
     onSubmitError: () => toast.error("Failed to log in"),
   });
 
   return (
     <form onSubmit={form.handleSubmit}>
       <Watch
-        api={form.field("email", {
-          validators: [(f) => (f.value ? null : "Email is required")],
-        })}
+        api={form.field("email", { validators: required("Email is required") })}
       >
         {(field) => (
           <>
@@ -58,7 +55,12 @@ function LoginForm() {
           </>
         )}
       </Watch>
-      <button type="submit" disabled={form.submitting}>Log in</button>
+
+      <Watch api={form} select={(f) => f.submitting}>
+        {(_form, submitting) => (
+          <button type="submit" disabled={submitting}>Log in</button>
+        )}
+      </Watch>
     </form>
   );
 }
