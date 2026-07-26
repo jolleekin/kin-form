@@ -144,10 +144,10 @@ prop, so every form in the app agrees on when submission is disabled:
 
 ```tsx
 function SubmitButton<TValue>(
-  { form, children }: { form: FormApi<TValue>; children: React.ReactNode },
+  { api, children }: { api: FormApi<TValue>; children: React.ReactNode },
 ) {
   const [submitting, dirty] = useWatch(
-    form,
+    api,
     (f) => [f.submitting, f.dirty] as const,
   );
 
@@ -182,7 +182,7 @@ function CheckoutForm() {
       />
       <AddressField api={form.field("shipping")} />
       <ItemsField api={form.field("items")} />
-      <SubmitButton form={form}>Place order</SubmitButton>
+      <SubmitButton api={form}>Place order</SubmitButton>
     </form>
   );
 }

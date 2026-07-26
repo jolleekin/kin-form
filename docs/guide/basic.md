@@ -1,9 +1,9 @@
 # Basic
 
-[Concepts](/guide/concepts) covered the state machine in the abstract; this
-page builds an actual form with it — starting with `Watch`, the simplest way to
-bind an input, then promoting that into a reusable `TextField`. The rest of
-these guides assume a component like it exists.
+[Concepts](/guide/concepts) covered the state machine in the abstract; this page
+builds an actual form with it — starting with `Watch`, the simplest way to bind
+an input, then promoting that into a reusable `TextField`. The rest of these
+guides assume a component like it exists.
 
 ## A login form with `Watch`
 
@@ -62,10 +62,10 @@ re-renders when the state it reads changes.
 
 `form.field(name, options)` resolves (creating on first call) the `FieldApi`
 registered on `form` — see [Concepts](/guide/concepts#getting-a-field) for what
-that resolution does. Safe to call inline in JSX on every render: `options`
-gets applied to an already-registered field the same way every time, so
-re-calling it doesn't re-create anything. `Watch` then subscribes the calling
-component to whatever `api` it's given.
+that resolution does. Safe to call inline in JSX on every render: `options` gets
+applied to an already-registered field the same way every time, so re-calling it
+doesn't re-create anything. `Watch` then subscribes the calling component to
+whatever `api` it's given.
 
 ## Promoting to a reusable `TextField`
 
@@ -97,6 +97,9 @@ export function TextField<TParentValue>(
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
       />
+      {field.touched && field.invalid && (
+        <span>{field.error ?? field.schemaError}</span>
+      )}
     </label>
   );
 }
@@ -108,8 +111,8 @@ reused component, call the hook directly instead of wrapping a render prop
 around it.
 
 `TextField` also takes an already-resolved `api` rather than `parent`+`name` —
-the caller resolves the field (and its options) once, at the call site, the
-same way it already does for `Watch` above. `TextField` only needs to know it's
+the caller resolves the field (and its options) once, at the call site, the same
+way it already does for `Watch` above. `TextField` only needs to know it's
 rendering _some_ `FieldApi<string, TParentValue>`, not where in the tree it
 lives or how it was configured.
 
@@ -124,14 +127,14 @@ import type { ReactNode } from "react";
 import { type FormApi, useWatch } from "@kin-form/react/index.ts";
 
 export type SubmitButtonProps<TValue> = {
-  form: FormApi<TValue>;
+  api: FormApi<TValue>;
   children: ReactNode;
 };
 
 export function SubmitButton<TValue>(
-  { form, children }: SubmitButtonProps<TValue>,
+  { api, children }: SubmitButtonProps<TValue>,
 ): ReactNode {
-  const submitting = useWatch(form, (f) => f.submitting);
+  const submitting = useWatch(api, (f) => f.submitting);
 
   return (
     <button type="submit" disabled={submitting}>
@@ -149,9 +152,7 @@ With the new `TextField` and `SubmitButton`, `LoginForm` collapses to:
 function LoginForm() {
   const form = useForm({
     initialValue: { email: "", password: "" },
-    onSubmit: async (form) => {
-      await login(form.value);
-    },
+    onSubmit: async (form) => await login(form.value),
   });
 
   return (
@@ -164,7 +165,7 @@ function LoginForm() {
         type="password"
       />
 
-      <SubmitButton form={form}>Log in</SubmitButton>
+      <SubmitButton api={form}>Log in</SubmitButton>
     </form>
   );
 }

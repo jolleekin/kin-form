@@ -44,7 +44,7 @@ function CheckoutWizard() {
 
       {!isFirstStep && <button onClick={back}>Back</button>}
       {!isLastStep && <button onClick={next} disabled={isBusy}>Next</button>}
-      {isLastStep && <SubmitButton form={form}>Submit</SubmitButton>}
+      {isLastStep && <SubmitButton api={form}>Submit</SubmitButton>}
     </div>
   );
 }
