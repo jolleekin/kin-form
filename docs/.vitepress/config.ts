@@ -6,6 +6,10 @@ export default defineConfig({
   description:
     "Fast, lightweight, framework-agnostic form state library for TypeScript. Zero-dependencies core, 100% type-safe field paths, React bindings built in.",
 
+  head: [
+    ["link", { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }],
+  ],
+
   markdown: {
     codeTransformers: [
       {
@@ -23,6 +27,8 @@ export default defineConfig({
   },
 
   themeConfig: {
+    logo: "/logo.svg",
+
     nav: [
       { text: "Guide", link: "/guide/" },
       { text: "Validators", link: "/validators/" },
