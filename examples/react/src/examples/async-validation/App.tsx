@@ -4,10 +4,10 @@ import {
   type FormApi,
   useForm,
   useWatch,
-  Watch,
 } from "@kin-form/react/index.ts";
 import { useFormDevtools } from "@kin-form/react-devtools/index.ts";
 import { email, required } from "@kin-form/validators/index.ts";
+import { SubmitButton } from "./components/SubmitButton.tsx";
 import { TextField } from "./components/TextField.tsx";
 
 type SignupValues = {
@@ -75,20 +75,9 @@ export default function App() {
           autoComplete="email"
         />
 
-        <Watch
-          api={form}
-          select={(f) => [f.invalid, f.validating, f.submitting] as const}
-        >
-          {(form, [invalid, validating, submitting]) => (
-            <button
-              type="submit"
-              disabled={invalid || validating || submitting}
-              className="mt-2 w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-500 disabled:cursor-not-allowed disabled:bg-gray-300"
-            >
-              {form.submitting ? "Creating…" : "Create account"}
-            </button>
-          )}
-        </Watch>
+        <SubmitButton api={form} className="w-full" pendingLabel="Creating…">
+          Create account
+        </SubmitButton>
       </form>
     </div>
   );

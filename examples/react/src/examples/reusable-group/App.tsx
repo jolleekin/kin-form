@@ -1,13 +1,14 @@
-import { useForm, Watch } from "@kin-form/react/index.ts";
+import { useForm } from "@kin-form/react/index.ts";
 import { useFormDevtools } from "@kin-form/react-devtools/index.ts";
 import { type Address, AddressField } from "./components/AddressField.tsx";
+import { SubmitButton } from "./components/SubmitButton.tsx";
 
 type Order = {
   billing: Address;
   shipping: Address;
 };
 
-const emptyAddress: Address = { line1: "", city: "", zip: "" };
+const emptyAddress: Address = { line1: "", line2: "", city: "", zip: "" };
 
 export default function App() {
   const form = useForm<Order>({
@@ -62,20 +63,13 @@ export default function App() {
           Shipping address is the same as billing
         </label>
 
-        <Watch
+        <SubmitButton
           api={form}
-          select={(f) => [f.invalid, f.validating, f.submitting] as const}
+          className="w-full"
+          pendingLabel="Placing order…"
         >
-          {(form, [invalid, validating, submitting]) => (
-            <button
-              type="submit"
-              disabled={invalid || validating || submitting}
-              className="w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-500 disabled:cursor-not-allowed disabled:bg-gray-300"
-            >
-              {form.submitting ? "Placing order…" : "Place order"}
-            </button>
-          )}
-        </Watch>
+          Place order
+        </SubmitButton>
       </form>
     </div>
   );

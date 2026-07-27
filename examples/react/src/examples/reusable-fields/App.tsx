@@ -1,6 +1,7 @@
-import { useForm, type Validator, Watch } from "@kin-form/react/index.ts";
+import { useForm, type Validator } from "@kin-form/react/index.ts";
 import { useFormDevtools } from "@kin-form/react-devtools/index.ts";
 import { email, minLength, required } from "@kin-form/validators/index.ts";
+import { SubmitButton } from "./components/SubmitButton.tsx";
 import { TextField } from "./components/TextField.tsx";
 
 type Login = {
@@ -58,20 +59,9 @@ export default function App() {
           autoComplete="current-password"
         />
 
-        <Watch
-          api={form}
-          select={(f) => [f.invalid, f.validating, f.submitting] as const}
-        >
-          {(form, [invalid, validating, submitting]) => (
-            <button
-              type="submit"
-              disabled={invalid || validating || submitting}
-              className="mt-2 w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-500 disabled:cursor-not-allowed disabled:bg-gray-300"
-            >
-              {form.submitting ? "Signing in…" : "Sign in"}
-            </button>
-          )}
-        </Watch>
+        <SubmitButton api={form} className="w-full" pendingLabel="Signing in…">
+          Sign in
+        </SubmitButton>
       </form>
     </div>
   );

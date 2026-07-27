@@ -4,11 +4,11 @@ import {
   useForm,
   useWatch,
   type Validator,
-  Watch,
 } from "@kin-form/react/index.ts";
 import { useFormDevtools } from "@kin-form/react-devtools/index.ts";
 import { required } from "@kin-form/validators/index.ts";
 import { ArrayField } from "./components/ArrayField.tsx";
+import { SubmitButton } from "./components/SubmitButton.tsx";
 import { TextField } from "./components/TextField.tsx";
 
 type AttributeType = "string" | "number" | "boolean" | "enum";
@@ -97,17 +97,9 @@ export default function App() {
 
         <TypeSection form={form} />
 
-        <Watch api={form} select={(f) => [f.validating, f.submitting] as const}>
-          {(form, [validating, submitting]) => (
-            <button
-              type="submit"
-              disabled={validating || submitting}
-              className="w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-500 disabled:cursor-not-allowed disabled:bg-gray-300"
-            >
-              {form.submitting ? "Saving…" : "Save attribute"}
-            </button>
-          )}
-        </Watch>
+        <SubmitButton api={form} className="w-full" pendingLabel="Saving…">
+          Save attribute
+        </SubmitButton>
       </form>
     </div>
   );

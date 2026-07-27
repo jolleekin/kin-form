@@ -8,6 +8,7 @@ import {
 } from "@kin-form/react/index.ts";
 import { useFormDevtools } from "@kin-form/react-devtools/index.ts";
 import { required } from "@kin-form/validators/index.ts";
+import { SubmitButton } from "./components/SubmitButton.tsx";
 import { TextField } from "./components/TextField.tsx";
 
 type Stay = { startDate: string; endDate: string };
@@ -78,20 +79,9 @@ export default function App() {
 
         <FormError form={form} />
 
-        <Watch
-          api={form}
-          select={(f) => [f.invalid, f.validating, f.submitting] as const}
-        >
-          {(form, [invalid, validating, submitting]) => (
-            <button
-              type="submit"
-              disabled={invalid || validating || submitting}
-              className="w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-500 disabled:cursor-not-allowed disabled:bg-gray-300"
-            >
-              {form.submitting ? "Booking…" : "Book"}
-            </button>
-          )}
-        </Watch>
+        <SubmitButton api={form} className="w-full" pendingLabel="Booking…">
+          Book
+        </SubmitButton>
       </form>
     </div>
   );
