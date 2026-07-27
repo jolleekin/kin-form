@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "docs",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": ["task", "--cwd", "docs", "dev"],
+      "port": 5173
+    },
+    {
+      "name": "examples-react",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": ["task", "--cwd", "examples/react", "dev"],
+      "port": 5555
+    }
+  ]
+}
