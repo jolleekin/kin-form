@@ -907,29 +907,67 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
 
   /**
    * Called synchronously when {@linkcode invalid} has changed.
+   *
+   * {@linkcode immediate} is `false` when the source of the change is a
+   * descendant field under construction; {@linkcode #doNotify} defers the
+   * {@linkcode BaseApi.notify} call instead of making it directly in that
+   * case.
    */
-  protected invalidChanged(): void {
-    this.parent?.[kChildInvalidChanged](this);
-    this.notify();
+  protected invalidChanged(immediate = true): void {
+    this.parent?.[kChildInvalidChanged](
+      this,
+      immediate && !this.#constructing,
+    );
+    this.#doNotify(immediate);
   }
 
   /**
-   * Called synchronously when {@linkcode touched} has changed.
+   * Called synchronously when {@linkcode touched} has changed. See
+   * {@linkcode invalidChanged} for why {@linkcode immediate} is gated on
+   * {@linkcode #constructing}.
    */
-  protected touchedChanged(): void {
-    this.parent?.[kChildTouchedChanged](this);
-    this.notify();
+  protected touchedChanged(immediate = true): void {
+    this.parent?.[kChildTouchedChanged](
+      this,
+      immediate && !this.#constructing,
+    );
+    this.#doNotify(immediate);
   }
 
   /**
-   * Called synchronously when {@linkcode validating} has changed.
+   * Called synchronously when {@linkcode validating} has changed. See
+   * {@linkcode invalidChanged} for why {@linkcode immediate} is gated on
+   * {@linkcode #constructing}.
    */
-  validatingChanged(notify = true): void {
+  validatingChanged(immediate = true): void {
     this.parent?.[kChildValidatingChanged](
       this,
-      notify && !this.#constructing,
+      immediate && !this.#constructing,
     );
-    if (notify) this.notify();
+    this.#doNotify(immediate);
+  }
+
+  /**
+   * Calls {@linkcode notify}, either synchronously or, if {@linkcode
+   * immediate} is `false`, on a microtask instead.
+   *
+   * The deferred branch is used by {@linkcode invalidChanged}/
+   * {@linkcode touchedChanged}/{@linkcode validatingChanged} for an ancestor
+   * whose aggregate flipped because some descendant field bubbled a change up
+   * to it while still constructing. That ancestor may already have subscribers
+   * of its own (e.g. a submit button watching {@linkcode invalid}) from an
+   * earlier render, and a synchronous `notify()` here would update those
+   * subscribers in the middle of rendering the component that's constructing
+   * the descendant field that triggered this. Deferring, rather than
+   * dropping the notification outright, still lets those subscribers pick up
+   * the change, just a tick later instead of mid-render.
+   */
+  #doNotify(immediate: boolean): void {
+    if (immediate) {
+      this.notify();
+    } else {
+      queueMicrotask(() => this.notify());
+    }
   }
 
   /**
@@ -1407,45 +1445,50 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * @internal
    *
    * Called by a child when its {@linkcode invalid} property has changed.
+   *
+   * {@linkcode immediate} is `false` when the source of the change is a
+   * descendant field under construction.
    */
   [kChildInvalidChanged]<ChildValue>(
     child: FieldApi<ChildValue, TValue>,
+    immediate = true,
   ): void {
     const oldInvalid = this.invalid;
     this.#anyChildInvalid = child.invalid || this.#anyChild((f) => f.invalid);
-    if (this.invalid !== oldInvalid) this.invalidChanged();
+    if (this.invalid !== oldInvalid) this.invalidChanged(immediate);
   }
 
   /**
    * @internal
    *
-   * Called by a child when its {@linkcode touched} property has changed.
+   * Called by a child when its {@linkcode touched} property has changed. See
+   * {@linkcode kChildInvalidChanged} for why {@linkcode immediate} is
+   * sometimes `false`.
    */
   [kChildTouchedChanged]<ChildValue>(
     child: FieldApi<ChildValue, TValue>,
+    immediate = true,
   ): void {
     const oldTouched = this.touched;
     this.#anyChildTouched = child.touched || this.#anyChild((f) => f.touched);
-    if (this.touched !== oldTouched) this.touchedChanged();
+    if (this.touched !== oldTouched) this.touchedChanged(immediate);
   }
 
   /**
    * @internal
    *
    * Called by a child when its {@linkcode validating} property has changed.
-   *
-   * {@linkcode notify} is `false` when the child calls this method while still
-   * constructing, avoiding the "update another component while rendering a
-   * component" bug.
+   * See {@linkcode kChildInvalidChanged} for why {@linkcode immediate} is
+   * sometimes `false`.
    */
   [kChildValidatingChanged]<ChildValue>(
     child: FieldApi<ChildValue, TValue>,
-    notify = true,
+    immediate = true,
   ): void {
     const oldValidating = this.validating;
     this.#anyChildValidating = child.validating ||
       this.#anyChild((f) => f.validating);
-    if (this.validating !== oldValidating) this.validatingChanged(notify);
+    if (this.validating !== oldValidating) this.validatingChanged(immediate);
   }
 
   /**

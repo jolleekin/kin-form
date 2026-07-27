@@ -1725,8 +1725,8 @@ Deno.test("FieldApi", async (t) => {
   });
 
   await t.step(
-    "should not synchronously notify an already-subscribed parent when constructing a child field with a schemaValidator",
-    () => {
+    "should not synchronously notify an already-subscribed parent when constructing a child field with a schemaValidator, but should still notify it on a microtask",
+    async () => {
       const parent = new FieldApi<{ address: { line1: string } }>(
         null,
         "",
@@ -1738,15 +1738,49 @@ Deno.test("FieldApi", async (t) => {
 
       // Constructing this child schedules its schema-errors task, whose
       // `onPending` callback would (without the `#constructing` guard)
-      // synchronously call `parent._childValidatingChanged(this, true)`,
-      // notifying `parent`'s subscribers mid-construction: exactly the
-      // class of React "update during render" warning `#constructing`
-      // exists to prevent.
+      // synchronously call `parent[kChildValidatingChanged](this, true)`,
+      // notifying `parent`'s subscribers mid-construction: exactly the class
+      // of React "update during render" warning `#constructing` exists to
+      // prevent.
       parent.field("address", {
         schemaValidator: () => ({ line1: "Required" }),
       });
 
       assertSpyCalls(callback, 0);
+
+      // The notification isn't dropped, only deferred: an already-mounted
+      // subscriber (e.g. a submit button watching `parent.validating`) must
+      // still learn about it, just not mid-render.
+      await Promise.resolve(); // Flushes the microtask queue.
+      assertSpyCalls(callback, 1);
+    },
+  );
+
+  await t.step(
+    "should defer, not drop, notifying an already-subscribed parent when a lazily-constructed child starts out invalid",
+    async () => {
+      const parent = new FieldApi<{ address: { line1: string } }>(
+        null,
+        "",
+        { initialValue: { address: { line1: "" } } },
+      );
+
+      const callback = spy();
+      parent.subscribe(callback);
+
+      // `line1`'s validator fails immediately against its initial (empty)
+      // value, flipping `parent.invalid` from `false` to `true` while this
+      // child is still under construction.
+      const child = parent.field("address.line1", {
+        validators: [(f) => (f.value ? null : "Required")],
+      });
+
+      assertEquals(child.invalid, true);
+      assertEquals(parent.invalid, true);
+      assertSpyCalls(callback, 0);
+
+      await Promise.resolve(); // Flushes the microtask queue.
+      assertSpyCalls(callback, 1);
     },
   );
 
