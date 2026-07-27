@@ -18,12 +18,12 @@ type Valid =
   | F<"name">
   | F<"address.line1">
   | F<"fields.1.code">
-  // Array indices match TypeScript's `${number}` pattern, not `${bigint}` —
+  // Array indices match TypeScript's `${number}` pattern, not `${bigint}`,
   // chosen so a plain `number` (e.g. a `.map((_, i) => i)` index) assigns
   // straight into a path template without a cast. That pattern also happens
   // to match a trailing "." with nothing after (TS's `${number}` accepts
   // "0." as well as "0"), so this resolves to the same "not found" outcome
-  // `getIn`/`setIn` already give any other missing path — not a new runtime
+  // `getIn`/`setIn` already give any other missing path, not a new runtime
   // risk, just a type marginally looser than `${bigint}` was.
   | F<"fields.0.">;
 
@@ -42,7 +42,7 @@ type Invalid5 = F<"address.x">;
 
 type H<K extends DeepKeyOrRoot<User>> = K;
 
-// "" means "this node itself" — only DeepKeyOrRoot accepts it.
+// "" means "this node itself": only DeepKeyOrRoot accepts it.
 type ValidRoot = H<"">;
 
 // LeafTypeMap can be extended via declaration merging so that consumer-defined

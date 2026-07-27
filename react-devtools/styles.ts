@@ -1,7 +1,7 @@
 /**
  * Shared color/font constants for the devtools panel's inline styles.
  *
- * Internal, not exported via index.ts — the panel renders with its own
+ * Internal, not exported via index.ts: the panel renders with its own
  * fixed dark styling regardless of the host page's theme, the same way most
  * devtools overlays do, rather than trying to match the app around it.
  *

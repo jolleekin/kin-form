@@ -74,7 +74,7 @@ Deno.test("FieldApi array helpers", async (t) => {
 
     group.moveItem("items", 1, 3);
     // Not a swap: "b" relocates to index 3, and "c"/"d" each shift down one
-    // slot to close the gap left behind — "e" is untouched throughout.
+    // slot to close the gap left behind; "e" is untouched throughout.
     assertEquals(group.value.items, ["a", "c", "d", "b", "e"]);
   });
 
@@ -195,7 +195,7 @@ Deno.test("FieldApi array helpers", async (t) => {
       const last = group.field("items.2");
       const destroySpy = spy(last, kDestroy);
 
-      // Bypasses `removeItem` entirely — nothing re-keys `#children` for this.
+      // Bypasses `removeItem` entirely; nothing re-keys `#children` for this.
       group.value = { items: ["a", "b"] };
 
       assertSpyCalls(destroySpy, 1);
@@ -218,8 +218,8 @@ Deno.test("FieldApi array helpers", async (t) => {
 
       group.value = { items: [{ label: "a" }] };
 
-      // `label` is destroyed as part of `item1`'s own recursive `_destroy()`
-      // — `item1` itself is what `group` finds out of bounds and destroys.
+      // `label` is destroyed as part of `item1`'s own recursive `_destroy()`;
+      // `item1` itself is what `group` finds out of bounds and destroys.
       assertSpyCalls(destroySpy, 1);
       assertEquals(group.children.has("items.1"), false);
       assertEquals(item1.children.has("label"), false);

@@ -1,5 +1,5 @@
 /**
- * `@kin-form/core` — the framework-agnostic form engine: `FieldApi` and
+ * `@kin-form/core`: the framework-agnostic form engine, `FieldApi` and
  * `FormApi`.
  *
  * @module

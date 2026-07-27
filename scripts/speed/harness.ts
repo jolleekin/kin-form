@@ -2,14 +2,14 @@
  * Common contract every library's harness (`*.harness.tsx`) implements, plus
  * the scenario names `speed-bench.ts` drives them through. Each method mounts
  * a fresh form (flat fields, a nested address group, an item array), performs
- * one scenario's burst, unmounts, and returns raw (single-trial) metrics —
+ * one scenario's burst, unmounts, and returns raw (single-trial) metrics;
  * `speed-bench.ts` is what repeats a method across trials and takes the
  * median (see `runTrials` in `scenario.ts`).
  */
 
 import { allLeafKeys, type Metrics, UPDATE_BURST_SIZE } from "./scenario.ts";
 
-/** Every `SpeedHarness` method that runs a scenario — everything but the display `name`. */
+/** Every `SpeedHarness` method that runs a scenario: everything but the display `name`. */
 export type ScenarioKey = Exclude<keyof SpeedHarness, "name">;
 
 export interface SpeedHarness {

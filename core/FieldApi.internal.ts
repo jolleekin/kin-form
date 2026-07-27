@@ -1,16 +1,16 @@
 /**
- * Symbol keys for `FieldApi`'s parent/child protocol methods — calls made
+ * Symbol keys for `FieldApi`'s parent/child protocol methods: calls made
  * across instances (parent to child, child to parent) that stay internal to
  * `FieldApi.ts`. A symbol key can't be reached via `.` access from outside
  * the module that holds the symbol, so these never show up in autocomplete
  * for a `FieldApi` value, unlike a `_`-prefixed method name.
  *
- * Not part of `@kin-form/core`'s public exports — `index.ts` never imports
+ * Not part of `@kin-form/core`'s public exports; `index.ts` never imports
  * this file. Only `FieldApi.ts` itself imports these to define/call the
  * methods; test files import them too, to spy on one directly.
  *
  * Each constant is left with its inferred `unique symbol` type (no `: symbol`
- * annotation) — that's what lets TypeScript treat `[kDestroy]`/etc. as
+ * annotation): that's what lets TypeScript treat `[kDestroy]`/etc. as
  * distinct, independently-typed class members instead of merging them all
  * into one indistinguishable `symbol`-keyed signature.
  *

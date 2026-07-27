@@ -201,7 +201,7 @@ Deno.test("FieldApi", async (t) => {
     const validator: Validator<string> = () => "Error";
     field.validators = [validator];
     // Reassigning validators on an idle field doesn't auto-run them (see the
-    // `validators` setter's own doc comment for why) — force a check.
+    // `validators` setter's own doc comment for why); force a check.
     await field.validate(true);
     assertEquals(field.error, "Error");
   });
@@ -556,7 +556,7 @@ Deno.test("FieldApi", async (t) => {
     "should not restart validation when re-assigned synchronously, before the debounced run has started",
     async () => {
       // Simulates an async validator built inline (a fresh closure on every
-      // call/render) — reassigned several times in the same synchronous tick
+      // call/render), reassigned several times in the same synchronous tick
       // (like React batching multiple renders), before the debounce timer
       // has even fired once. Each task resolves to a distinct result so we
       // can tell exactly which one (if any) actually ran.
@@ -582,7 +582,7 @@ Deno.test("FieldApi", async (t) => {
       await field.waitForValidation();
 
       // None of this happened with an `await` in between, so the debounce
-      // timer hasn't fired yet by the time any of these run — the pending
+      // timer hasn't fired yet by the time any of these run; the pending
       // run starts only once control yields (at `waitForValidation()`
       // above), by which point `#asyncValidator` already holds the *last*
       // reassignment. Only that one is ever actually invoked.
@@ -598,7 +598,7 @@ Deno.test("FieldApi", async (t) => {
     "should not change the outcome of an already-invoked validator when reassigned mid-flight",
     async () => {
       // Unlike the previous test, this reassigns *after* the debounced run
-      // has genuinely started (and already invoked the first validator) —
+      // has genuinely started (and already invoked the first validator),
       // simulated with a real delay safely inside the task's own delay, so
       // there's no risk of it having already settled by the time we get
       // there. `#runAsyncValidator` only ever reads `this.#asyncValidator`
@@ -635,11 +635,11 @@ Deno.test("FieldApi", async (t) => {
     "should not automatically run when asyncValidator is reassigned after the previous one already settled",
     async () => {
       // Unlike reassigning while still pending (previous tests), an idle
-      // field never auto-schedules on reassignment alone — a component
+      // field never auto-schedules on reassignment alone: a component
       // passing an inline validator reassigns on literally every render, and
       // auto-scheduling on that alone would create a self-sustaining
       // notify/re-render/reschedule loop (see the `validators` setter's own
-      // comment — the same reasoning applies here). The fresh validator only
+      // comment; the same reasoning applies here). The fresh validator only
       // takes effect on the next genuine trigger: a value change, or an
       // explicit `validate(true)` call.
       const task1 = spy(
@@ -765,7 +765,7 @@ Deno.test("FieldApi", async (t) => {
       await form.waitForValidation();
 
       // ...so `line1.schemaError` reflects that, not `form`'s entry for
-      // "address.line1" — `address` owns the verdict for everything under it.
+      // "address.line1": `address` owns the verdict for everything under it.
       assertEquals(line1.schemaError, null);
     },
   );
@@ -802,7 +802,7 @@ Deno.test("FieldApi", async (t) => {
       field.subscribe(callback);
 
       // Reassigning `schemaValidator` alone doesn't auto-trigger a run
-      // (same reassignment semantics as `validators`) — a value change
+      // (same reassignment semantics as `validators`); a value change
       // (a fresh object reference, so it doesn't short-circuit on `===`)
       // is what actually kicks off the new validator here.
       group.schemaValidator = () => ({ a: "Required" });
@@ -940,7 +940,7 @@ Deno.test("FieldApi", async (t) => {
   );
 
   await t.step(
-    "should return the same instance when field() is called twice for the same exact name — no longer a field/group collision, since there's only one node type",
+    "should return the same instance when field() is called twice for the same exact name, no longer a field/group collision, since there's only one node type",
     () => {
       const group = new FieldApi<{ address: { line1: string } }>(
         null,
@@ -1107,7 +1107,7 @@ Deno.test("FieldApi", async (t) => {
       });
 
       // The field runs its sync validators synchronously as part of its own
-      // constructor — this must be visible on the group's aggregate right
+      // constructor; this must be visible on the group's aggregate right
       // away, with no pending/validating state ever, or a caller that checks
       // `group.validating`/`group.invalid` in the same tick a step/group is
       // first mounted (e.g. a wizard's `next()`) would race it.
@@ -1129,7 +1129,7 @@ Deno.test("FieldApi", async (t) => {
       });
 
       // The field schedules its own async validation synchronously as part
-      // of its constructor — this must be visible on the group's aggregate
+      // of its constructor; this must be visible on the group's aggregate
       // right away (not just after the async settle), or a caller that
       // checks `group.validating`/`group.invalid` in the same tick a
       // step/group is first mounted (e.g. a wizard's `next()`) would race
@@ -1306,7 +1306,7 @@ Deno.test("FieldApi", async (t) => {
       groupA.subscribe(() => order.push("groupA"));
 
       groupA.batch(() => {
-        groupB.value = { name: "y" }; // Unrelated tree — not deferred.
+        groupB.value = { name: "y" }; // Unrelated tree, not deferred.
         order.push("mid-batch");
         groupA.removeItem("items", 1); // Triggers groupA's own batched recompute.
       });
@@ -1460,7 +1460,7 @@ Deno.test("FieldApi", async (t) => {
     "should run onValueChanged as a side effect of a sibling's value change",
     () => {
       // `country`'s onValueChanged clears `province`, the same shape as
-      // tanstack/form's `listeners.onChange` example — unlike `dependents`,
+      // tanstack/form's `listeners.onChange` example. Unlike `dependents`,
       // which can only force sibling validators to re-run, this can push a
       // new value.
       const group = new FieldApi<{ country: string; province: string }>(
@@ -1486,7 +1486,7 @@ Deno.test("FieldApi", async (t) => {
     "should call a field's own onValueChanged after its children's",
     () => {
       // Pushing a new value down from the field (not bubbling up from a
-      // child) — `valueChanged` re-syncs every child before scheduling its
+      // child): `valueChanged` re-syncs every child before scheduling its
       // own validation/notifying, so the children's `onValueChanged` must
       // fire before the parent's own.
       const calls: string[] = [];
@@ -1568,7 +1568,7 @@ Deno.test("FieldApi", async (t) => {
     "should not call invalidChanged again when a schemaValidator's fresh-but-equal result settles",
     async () => {
       // A settle's `validating` pending->settled transition notifies every
-      // time regardless (same as the plain `error` pipeline already does) —
+      // time regardless (same as the plain `error` pipeline already does);
       // that's not what `shallowEqual` is for. What it *does* prevent
       // is a redundant `invalidChanged()` call specifically when the
       // resettled map's content didn't actually change, even though the
@@ -1739,7 +1739,7 @@ Deno.test("FieldApi", async (t) => {
       // Constructing this child schedules its schema-errors task, whose
       // `onPending` callback would (without the `#constructing` guard)
       // synchronously call `parent._childValidatingChanged(this, true)`,
-      // notifying `parent`'s subscribers mid-construction — exactly the
+      // notifying `parent`'s subscribers mid-construction: exactly the
       // class of React "update during render" warning `#constructing`
       // exists to prevent.
       parent.field("address", {
@@ -1765,7 +1765,7 @@ Deno.test("FieldApi", async (t) => {
       // `group`'s own schemaErrorMap, from its own schemaValidator.
       assertEquals(group.schemaErrorMap, { a: "Nested required" });
       // `group`'s own schemaError falls back to a lookup into *its* parent
-      // (`form`)'s schemaErrorMap under its own name ("group") — independent
+      // (`form`)'s schemaErrorMap under its own name ("group"), independent
       // of the above, since group's own schemaValidator never produced a
       // "" entry (it only ever flagged "a"), so there's nothing of group's
       // own to prefer here.
@@ -1776,7 +1776,7 @@ Deno.test("FieldApi", async (t) => {
   await t.step(
     "should fall back to its own schemaErrorMap's \"\" entry when there's no parent slice",
     async () => {
-      // At the root, there's no `parent` to assign a slice at all — this is
+      // At the root, there's no `parent` to assign a slice at all; this is
       // the only way a whole-form `.refine()`-style check (no `path`) can
       // ever surface through `schemaError`.
       const form = new FieldApi<{ a: string }>(null, "", {

@@ -1,6 +1,6 @@
 /**
  * Shared form shape, sizing constants, and trial-running helper for the speed
- * benchmark — one source of truth so every library's harness
+ * benchmark: one source of truth so every library's harness
  * (`*.harness.tsx`) measures the exact same workload. See `speed-bench.ts`
  * for how this gets driven.
  */
@@ -19,7 +19,7 @@ export const TRIAL_COUNT = 15;
 export interface ArrayItem {
   /**
    * A userland-embedded stable id, travelling with the item through
-   * reorders — the workaround Formik and TanStack Form users reach for
+   * reorders: the workaround Formik and TanStack Form users reach for
    * since neither library generates one itself (unlike Kin Form's
    * `field.id` or React Hook Form's `fields[i].id`). Every harness keys its
    * per-item React component by this so a swap is measured as "the same
@@ -49,7 +49,7 @@ export const FLAT_FIELD_NAMES: readonly string[] = Array.from(
 export function makeInitialValue(): FormValue {
   const fields: Record<string, string> = {};
   for (const name of FLAT_FIELD_NAMES) fields[name] = "";
-  // Distinct per-item values (not all blank) — a swap between two
+  // Distinct per-item values (not all blank): a swap between two
   // structurally-identical blank items would produce no observable value
   // change at either position, making "did this leaf re-render for the
   // right reason" unmeasurable regardless of how correct a library's
@@ -97,7 +97,7 @@ export const ADDRESS_LEAF_KEYS: readonly string[] = [
   "address.geo.lng",
 ];
 
-/** Every leaf field's dotted path across the whole form — flat fields, the nested address group, and every array item. */
+/** Every leaf field's dotted path across the whole form: flat fields, the nested address group, and every array item. */
 export function allLeafKeys(): string[] {
   return [
     ...FLAT_FIELD_NAMES.map(fieldKey),
@@ -108,12 +108,12 @@ export function allLeafKeys(): string[] {
   ];
 }
 
-/** A scenario's raw measurements — keys vary per scenario, values are always numeric. */
+/** A scenario's raw measurements: keys vary per scenario, values are always numeric. */
 export type Metrics = Record<string, number>;
 
 /**
  * Runs `runOnce` `TRIAL_COUNT + 1` times, discards the first (JIT/cache
- * warmup), and returns the per-key median across the rest — resistant to a
+ * warmup), and returns the per-key median across the rest, resistant to a
  * single GC-pause outlier the way a mean isn't.
  */
 export async function runTrials(

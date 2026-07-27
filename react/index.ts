@@ -1,5 +1,5 @@
 /**
- * `@kin-form/react` — React bindings (`useForm`, `useMultistep`, `Watch`) on
+ * `@kin-form/react`: React bindings (`useForm`, `useMultistep`, `Watch`) on
  * top of `@kin-form/core`, re-exporting everything from `@kin-form/core` too.
  *
  * @module

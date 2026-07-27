@@ -1,5 +1,5 @@
 /**
- * Kin Form's speed-benchmark harness — see `harness.ts` for the contract and
+ * Kin Form's speed-benchmark harness; see `harness.ts` for the contract and
  * `speed-bench.ts` for how these methods get driven and averaged.
  */
 
@@ -52,7 +52,7 @@ function counterKeys(): string[] {
 
 // Takes an already-resolved, already-configured `api` (validators/
 // asyncValidator/debounce are set by the caller via `parent.field(name,
-// options)`) — this component's only job is the render+subscribe half.
+// options)`); this component's only job is the render+subscribe half.
 function Leaf(
   { api, counters, countKey }: {
     api: FieldApi<any, any>;
@@ -136,7 +136,7 @@ function Items(
           <Item
             // Keyed by the item's own embedded id (not its array index) so a
             // swap moves the same component instance rather than remounting
-            // two new ones — see the array-swap-burst methodology note.
+            // two new ones; see the array-swap-burst methodology note.
             key={item.id}
             parent={items}
             index={i}
@@ -152,7 +152,7 @@ function Items(
 }
 
 // Memoized so an unrelated item's props (index, and thus its field paths)
-// being unchanged after a sibling swap actually skips re-invoking it —
+// being unchanged after a sibling swap actually skips re-invoking it;
 // without this, the `Items` wrapper re-rendering (required to read the
 // array's current length/order) would re-invoke every item regardless of
 // whether *that* item's own data changed, masking whatever benefit stable
@@ -313,7 +313,7 @@ export const kinFormHarness: SpeedHarness = {
     const start = performance.now();
     act(() => {
       // Cycles through adjacent pairs rather than swapping the same two
-      // repeatedly — an even-length repeat of the same swap is a no-op
+      // repeatedly: an even-length repeat of the same swap is a no-op
       // permutation, which (combined with React's automatic batching of a
       // synchronous burst into one final render) would trivially collapse
       // to "nothing changed" and measure a batching artifact instead of
@@ -348,14 +348,14 @@ export const kinFormHarness: SpeedHarness = {
     const start = performance.now();
     act(() => {
       // Inserts a freshly-tagged item at the front, then removes one from
-      // the middle — keeps the array's length constant at ARRAY_ITEM_COUNT
+      // the middle: keeps the array's length constant at ARRAY_ITEM_COUNT
       // while exercising the re-key path on both ends (every item shifts
       // identity on the insert; everything past `mid` shifts again on the
       // remove). Front insert + middle remove, not insert-then-remove-at-the-
       // same-spot: repeating the same index pair is a net no-op permutation
       // after enough iterations, which (combined with React's automatic
       // batching of a synchronous burst into one final render) would
-      // trivially collapse to "nothing changed" — the same trap
+      // trivially collapse to "nothing changed", the same trap
       // `mutateArray`'s adjacent-pair cycling avoids for swaps.
       for (let i = 0; i < UPDATE_BURST_SIZE; i++) {
         items.insertItem("", 0, makeInsertedItem(i));

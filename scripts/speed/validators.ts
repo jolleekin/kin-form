@@ -1,5 +1,5 @@
 /**
- * Shared validation rules for the speed benchmark's validation scenarios —
+ * Shared validation rules for the speed benchmark's validation scenarios:
  * one sync rule, one artificially slow async rule, and one whole-form zod
  * schema, reused identically across every library's harness so the
  * validation *cost* being measured is the same in every case.
@@ -16,7 +16,7 @@ export function syncValidate(value: string): string | null {
 }
 
 /**
- * An artificially slow async validator, for the debounce scenario — counts
+ * An artificially slow async validator, for the debounce scenario: counts
  * how many times it actually ran and timestamps the most recent settle, so a
  * caller can measure "time to settle" as `lastSettledAt() - start` after
  * waiting a generous (but otherwise irrelevant) buffer, rather than that
@@ -42,7 +42,7 @@ export function makeAsyncValidate(delayMs: number): {
 }
 
 /**
- * A classic `setTimeout`-based trailing debounce — the hand-rolled wrapper a
+ * A classic `setTimeout`-based trailing debounce: the hand-rolled wrapper a
  * React Hook Form or Formik user reaches for since neither has a built-in
  * per-field debounce option (see `docs/comparison/react-hook-form.md`'s
  * `lodash/debounce` example). Used to give those two libraries' debounce
@@ -86,7 +86,7 @@ export const wholeFormSchema = z.object({
 /**
  * Turns a flat list of dotted-path issues (zod's native `issue.path`, or a
  * Standard Schema issue's `path`) into the nested per-field error object
- * React Hook Form's `Resolver` and Formik's `validate` function both expect —
+ * React Hook Form's `Resolver` and Formik's `validate` function both expect;
  * `makeLeaf` controls the leaf shape, since RHF wants `{ type, message }` and
  * Formik just wants the message string.
  */

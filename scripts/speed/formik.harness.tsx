@@ -96,7 +96,7 @@ function ItemsArray(
           remove: helpers.remove,
         };
         // Formik has no built-in per-item id (unlike Kin Form's `field.id` or
-        // React Hook Form's `fields[i].id`) — reading `.id` off the current
+        // React Hook Form's `fields[i].id`); reading `.id` off the current
         // value itself is the realistic workaround, kept consistent with the
         // other three harnesses' keying strategy (see scenario.ts's
         // `ArrayItem.id` doc comment).
@@ -124,7 +124,7 @@ function ItemsArray(
 }
 
 // Memoized so an unrelated item's props (index, and thus its field paths)
-// being unchanged after a sibling swap actually skips re-invoking it —
+// being unchanged after a sibling swap actually skips re-invoking it;
 // without this, `ItemsArray`'s render-prop re-running (required to read the
 // array's current length/order) would re-invoke every item regardless of
 // whether *that* item's own data changed.
@@ -311,7 +311,7 @@ export const formikHarness: SpeedHarness = {
       counters,
       ADDRESS_LEAF_KEYS.filter((k) => k !== "address.geo.lat"),
     );
-    // Formik has no addressable group node for "address" either — same
+    // Formik has no addressable group node for "address" either, same
     // asymmetry noted for React Hook Form. No `groupRenders` reported.
 
     unmount();
@@ -336,7 +336,7 @@ export const formikHarness: SpeedHarness = {
     const start = performance.now();
     act(() => {
       // Cycles through adjacent pairs rather than swapping the same two
-      // repeatedly — see the Kin Form harness's mutateArray for why.
+      // repeatedly; see the Kin Form harness's mutateArray for why.
       for (let i = 0; i < UPDATE_BURST_SIZE; i++) {
         const a = i % (ARRAY_ITEM_COUNT - 1);
         items.swap(a, a + 1);
@@ -373,7 +373,7 @@ export const formikHarness: SpeedHarness = {
 
     const start = performance.now();
     act(() => {
-      // Inserts at the front, then removes from the middle — see the Kin
+      // Inserts at the front, then removes from the middle; see the Kin
       // Form harness's insertRemoveArray for why (avoids the same
       // batching-collapses-to-a-no-op trap as a fixed insert+remove index).
       for (let i = 0; i < UPDATE_BURST_SIZE; i++) {
@@ -435,7 +435,7 @@ export const formikHarness: SpeedHarness = {
     const counters = makeCounterMap(counterKeys());
     const async_ = makeAsyncValidate(5);
     // Formik has no built-in per-field debounce (see the feature matrix's
-    // "Built-in async-validation debounce" row) — hand-rolled here the way a
+    // "Built-in async-validation debounce" row); hand-rolled here the way a
     // real app would, so this reports the realistic cost of reaching parity
     // rather than the (uninteresting) undebounced number.
     const debouncedValidate = debounce(async_.validate, 50);

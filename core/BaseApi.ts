@@ -11,7 +11,7 @@
  */
 export abstract class BaseApi {
   /**
-   * The ultimate ancestor of `this` — the instance whose {@linkcode batch}
+   * The ultimate ancestor of `this`: the instance whose {@linkcode batch}
    * bookkeeping a {@linkcode notify} on `this` should use.
    *
    * Defaults to `this`. `FieldApi` overrides this to walk up to its
@@ -61,7 +61,7 @@ export abstract class BaseApi {
     };
   };
 
-  // Meaningful only on whichever instance `root` resolves to — keying
+  // Meaningful only on whichever instance `root` resolves to; keying
   // batching off the root (not a single process-wide counter) is what keeps
   // two unrelated trees from coalescing each other's notifications.
   #batchDepth = 0;
@@ -84,7 +84,7 @@ export abstract class BaseApi {
    * its subscribers at most once, after {@linkcode fn} returns, instead of
    * once per `notify()` call.
    *
-   * Scoped to `this`'s tree (see {@linkcode root}) — calling this on one
+   * Scoped to `this`'s tree (see {@linkcode root}): calling this on one
    * form has no effect on an unrelated form's notifications, even if the
    * two happen to be mutated within the same synchronous call.
    *

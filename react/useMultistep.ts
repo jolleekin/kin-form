@@ -24,14 +24,14 @@ export type UseMultistepOptions<
   initialStep?: number;
   /**
    * Runs after the current step's own field passes validation but before
-   * the step actually advances — the hook to persist progress (e.g. save a
+   * the step actually advances: the hook to persist progress (e.g. save a
    * draft to the server) alongside the transition, or to branch: returning
    * a step name (or `null`, for a step with no field) redirects `next()`
    * there instead of the next linear index.
    *
    * Returning `false` cancels the advance, leaving `stepIndex` unchanged.
-   * 
-   * Should not throw — a thrown error still propagates as a rejected
+   *
+   * Should not throw: a thrown error still propagates as a rejected
    * `next()` promise for the caller to handle, but catch it here and return
    * `false` instead where possible.
    */
@@ -48,7 +48,7 @@ export type UseMultistepOptions<
   ) => PromiseOr<boolean | void | TSteps[number]>;
   /**
    * Runs after `stepIndex` actually changes, from `next()`, `back()`, or
-   * `jump()` alike. Purely informational — unlike `onBeforeNext`, it can't
+   * `jump()` alike. Purely informational: unlike `onBeforeNext`, it can't
    * cancel anything.
    */
   onStepChanged?: (
@@ -69,8 +69,8 @@ export type UseMultistepOptions<
 // One member per possible `stepNames` entry: `null` narrows `field` to
 // `undefined`, and each `TName` narrows it to that step's own field type.
 // `TName` is bare in the conditional, so this distributes automatically when
-// instantiated with a union (e.g. `TSteps[number]`) — the same trick
-// `DeepKey`/`DeepValue` themselves rely on (core/types.ts) — producing one
+// instantiated with a union (e.g. `TSteps[number]`), the same trick
+// `DeepKey`/`DeepValue` themselves rely on (core/types.ts), producing one
 // union member per step instead of a single type with `field` typed as the
 // union of every step's value type.
 type Step<TValue, TName extends DeepKey<TValue> | null> = TName extends null ? {
@@ -121,11 +121,11 @@ export type Multistep<
      */
     next: () => Promise<boolean>;
     /**
-     * Moves to the previous step, if any — never validates.
+     * Moves to the previous step, if any; never validates.
      */
     back: () => void;
     /**
-     * Jumps to an arbitrary step — by index or by step name — never
+     * Jumps to an arbitrary step, by index or by step name; never
      * validates.
      *
      * Throws if given an index out of range or a step name not present in
@@ -137,13 +137,13 @@ export type Multistep<
 
 /**
  * Orchestrates a wizard's `stepIndex` state on top of one step per named
- * {@linkcode FieldApi} — validating the current step, waiting for it to
+ * {@linkcode FieldApi}: validating the current step, waiting for it to
  * settle, and gating the advance, so a hand-rolled wizard doesn't have to
  * repeat that per step.
  *
  * {@linkcode stepNames} entries are the `DeepKey<TValue>` of each step's own
  * field, or `null` for a step with no field of its own (e.g. a final review
- * screen) — `next()` treats a `null` step as always valid, skipping straight
+ * screen). `next()` treats a `null` step as always valid, skipping straight
  * to {@linkcode UseMultistepOptions.onBeforeNext}.
  *
  * If `stepNames` is stored in a variable rather than passed as an inline
@@ -245,7 +245,7 @@ export function useMultistep<
 
   // The branches above compute `stepName`/`stepField` as a plain
   // (non-discriminated) pairing, not TS-provably one of `Step`'s
-  // union members — same reason `useWatch`'s cast above is needed.
+  // union members, same reason `useWatch`'s cast above is needed.
   return {
     stepIndex,
     stepCount: stepNames.length,

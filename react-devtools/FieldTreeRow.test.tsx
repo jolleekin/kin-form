@@ -14,7 +14,7 @@ import type { AnyNode } from "./types.ts";
 type Person = { name: string; age: number; tags: string[] };
 
 // `FormApi<TValue>` (`TParentValue = never`) isn't structurally assignable
-// to `AnyNode` — see `types.ts`'s comment on the same issue for
+// to `AnyNode`; see `types.ts`'s comment on the same issue for
 // `FieldTreeRow`'s own `selected as unknown as AnyNode` cast in
 // `DevtoolsPanel.tsx`.
 function asNode<T>(node: T): AnyNode {
@@ -185,7 +185,7 @@ Deno.test("FieldTreeRow", async (t) => {
     "shows an invalid badge and the error message immediately, for a sync validator",
     () => {
       try {
-        // `validators` run synchronously at construction — no `validate()`
+        // `validators` run synchronously at construction, no `validate()`
         // call or `act()` wrapping needed to see the badge; that's the whole
         // point of them being immediate rather than debounced.
         const form = new FormApi<Person>({

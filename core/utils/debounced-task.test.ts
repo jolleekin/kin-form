@@ -41,7 +41,7 @@ Deno.test("DebouncedTask", async (t) => {
   );
 
   await t.step(
-    "schedule() while a run is in flight supersedes it — both resolve to the newer result",
+    "schedule() while a run is in flight supersedes it: both resolve to the newer result",
     async () => {
       let call = 0;
       const task = (): Promise<string> => {
@@ -81,7 +81,7 @@ Deno.test("DebouncedTask", async (t) => {
   });
 
   await t.step(
-    "settle() supersedes an already in-flight run — both resolve to the settled value",
+    "settle() supersedes an already in-flight run: both resolve to the settled value",
     async () => {
       const task = (): Promise<string> =>
         new Promise((resolve) => setTimeout(() => resolve("stale"), 10));
@@ -185,7 +185,7 @@ Deno.test("DebouncedTask", async (t) => {
 
       const forced = debounced.forceRun();
       assertEquals(debounced.pending, true);
-      assertSpyCalls(task, 1); // Not invoked yet — still debouncing.
+      assertSpyCalls(task, 1); // Not invoked yet, still debouncing.
 
       await debounced.flush(); // Bypass the delay to observe the outcome.
       assertEquals(await forced, "result");

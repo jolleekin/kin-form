@@ -491,7 +491,7 @@ Deno.test("FormApi", async (t) => {
       form.resetField("name", "Saved");
 
       // No field was ever registered for "name", but `value` itself must
-      // still move, not just the baseline — otherwise a field registered
+      // still move, not just the baseline, otherwise a field registered
       // *now* would read the stale pre-reset value at construction.
       assertEquals(form.value, { name: "Saved", age: 30 });
       const nameField = form.field("name");

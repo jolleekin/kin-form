@@ -7,16 +7,16 @@
  *
  *   deno task --cwd scripts speed-bench
  *
- * (`scripts/` has its own deno.json rather than being a workspace member —
+ * (`scripts/` has its own deno.json rather than being a workspace member;
  * see `bundle-size.ts`'s module comment for why. `--node-modules-dir` is
  * required so @testing-library/react and Happy DOM can see a real
  * node_modules tree.)
  *
- * Every number here is Happy DOM (JS-only, no layout/paint) — a proxy for
+ * Every number here is Happy DOM (JS-only, no layout/paint), a proxy for
  * each library's own state-management overhead, not a browser-realistic
  * timing. React Hook Form is measured via `Controller`/`useController`
  * (controlled), not idiomatic `register()`, so it's on the same
- * controlled-input basis as the other three — see the readme's "Performance"
+ * controlled-input basis as the other three; see the readme's "Performance"
  * section for the full methodology note. Numbers will shift as dependencies
  * update; reproduce locally before quoting them elsewhere.
  */
@@ -73,7 +73,7 @@ function metricLabel(key: string): string {
 }
 
 console.log(
-  `\nKin Form speed benchmark — ${TRIAL_COUNT} trials/scenario (median), ${UPDATE_BURST_SIZE}x update bursts, Happy DOM.\n`,
+  `\nKin Form speed benchmark: ${TRIAL_COUNT} trials/scenario (median), ${UPDATE_BURST_SIZE}x update bursts, Happy DOM.\n`,
 );
 
 for (const scenario of SCENARIOS) {

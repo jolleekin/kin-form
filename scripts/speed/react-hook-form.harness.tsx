@@ -1,7 +1,7 @@
 /**
  * React Hook Form's speed-benchmark harness. Measured via `Controller`/
  * `useController` throughout (never idiomatic `register()`), so RHF is on
- * the same controlled-input basis as the other three libraries — see the
+ * the same controlled-input basis as the other three libraries; see the
  * "RHF fairness" decision in the benchmark plan. Field updates are driven
  * programmatically via `methods.setValue`, not simulated keystrokes.
  */
@@ -84,7 +84,7 @@ function Leaf(
       : undefined,
   });
   // Reading `.error` (even unused) is what registers RHF's proxy-based
-  // subscription to this field's error state — without it, error-only
+  // subscription to this field's error state; without it, error-only
   // changes wouldn't re-render this component at all.
   void fieldState.error;
   return null;
@@ -98,7 +98,7 @@ function ItemsController(
   },
 ) {
   // `keyName: "rhfKey"` moves React Hook Form's own auto-generated id off
-  // the default `id` key, so it doesn't clobber our data's own `id` field —
+  // the default `id` key, so it doesn't clobber our data's own `id` field;
   // `fields[i].id` below is ours, kept consistent with the other three
   // harnesses' keying strategy (see scenario.ts's `ArrayItem.id` doc comment).
   const { fields, swap, insert, remove } = useFieldArray({
@@ -132,7 +132,7 @@ function ItemsController(
 }
 
 // Memoized so an unrelated item's props (index, and thus its field paths)
-// being unchanged after a sibling swap actually skips re-invoking it —
+// being unchanged after a sibling swap actually skips re-invoking it;
 // without this, `ItemsController` re-rendering (required to read the
 // array's current length/order) would re-invoke every item regardless of
 // whether *that* item's own data changed.
@@ -331,7 +331,7 @@ export const reactHookFormHarness: SpeedHarness = {
       counters,
       ADDRESS_LEAF_KEYS.filter((k) => k !== "address.geo.lat"),
     );
-    // React Hook Form has no addressable group node for "address" — see the
+    // React Hook Form has no addressable group node for "address"; see the
     // plan's note on this structural asymmetry. No `groupRenders` reported.
 
     unmount();
@@ -352,7 +352,7 @@ export const reactHookFormHarness: SpeedHarness = {
     const start = performance.now();
     act(() => {
       // Cycles through adjacent pairs rather than swapping the same two
-      // repeatedly — see the Kin Form harness's mutateArray for why.
+      // repeatedly; see the Kin Form harness's mutateArray for why.
       for (let i = 0; i < UPDATE_BURST_SIZE; i++) {
         const a = i % (ARRAY_ITEM_COUNT - 1);
         items.swap(a, a + 1);
@@ -385,7 +385,7 @@ export const reactHookFormHarness: SpeedHarness = {
 
     const start = performance.now();
     act(() => {
-      // Inserts at the front, then removes from the middle — see the Kin
+      // Inserts at the front, then removes from the middle; see the Kin
       // Form harness's insertRemoveArray for why (avoids the same
       // batching-collapses-to-a-no-op trap as a fixed insert+remove index).
       for (let i = 0; i < UPDATE_BURST_SIZE; i++) {
@@ -449,7 +449,7 @@ export const reactHookFormHarness: SpeedHarness = {
     const counters = makeCounterMap(counterKeys());
     const async_ = makeAsyncValidate(5);
     // React Hook Form has no built-in per-field debounce (see the feature
-    // matrix's "Built-in async-validation debounce" row) — hand-rolled here
+    // matrix's "Built-in async-validation debounce" row); hand-rolled here
     // the same way a real app would (see docs/comparison/react-hook-form.md's
     // lodash/debounce example), so this reports the realistic cost of
     // reaching parity rather than the (uninteresting) undebounced number.

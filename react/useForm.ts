@@ -13,7 +13,7 @@ import { FormApi, type FormApiOptions } from "@kin-form/core/index.ts";
  * validators/dependents) stay in sync with the latest render's closures
  * instead of going stale.
  *
- * Doesn't itself subscribe the calling component to the form — pass the
+ * Doesn't itself subscribe the calling component to the form; pass the
  * returned instance to `Watch` for that.
  *
  * @example

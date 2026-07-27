@@ -13,12 +13,12 @@ import type { AnyNode } from "./types.ts";
 /** Props for {@linkcode FieldTreeRow}. */
 export type FieldTreeRowProps = {
   node: AnyNode;
-  /** Nesting depth, for indentation — `0` for the tree's root. */
+  /** Nesting depth, for indentation; `0` for the tree's root. */
   depth: number;
 };
 
 // A node's `children` keys are dotted paths *relative to that node* and can
-// be any depth (e.g. "items.0.label"), not just a direct child name — see
+// be any depth (e.g. "items.0.label"), not just a direct child name; see
 // `FieldApi.field`'s `DeepKey` typing. `Map` iteration order also doesn't
 // track current array order: `swapItems`/`moveItem` re-key existing entries
 // in place without reordering the `Map` itself. So for an array-valued node,
@@ -54,7 +54,7 @@ function formatValue(value: unknown): string {
   }
 }
 
-// Hoisted module-level constants, not object literals inline in JSX — built
+// Hoisted module-level constants, not object literals inline in JSX: built
 // once, not re-allocated on every render. `rowBaseStyle` holds everything
 // that doesn't vary per row; `depth`'s indentation is the one thing that
 // does, so it's spread in at the callsite instead of living here.
@@ -157,13 +157,13 @@ function Badge({
 
 /**
  * One row per `FieldApi`, recursing into a node's own
- * {@linkcode sortedFields} for its children — deliberately built the same
+ * {@linkcode sortedFields} for its children, deliberately built the same
  * way real Kin Form UI is: each row subscribes only to its own node via
  * {@linkcode useNodeVersion}, so an edit to one field re-renders that row
  * (and whichever ancestors' aggregate flags it flips), not the whole tree.
  *
  * Whether a row renders as expandable is decided by `children.size`, not a
- * type check — a node whose value happens to be an object/array but hasn't
+ * type check: a node whose value happens to be an object/array but hasn't
  * had `field()` called on any of its sub-paths yet (e.g. its inputs haven't
  * rendered) shows as a leaf until something registers into it, matching
  * "leaf vs. decomposed is a usage choice, not a data-shape fact."
@@ -225,7 +225,7 @@ export function FieldTreeRow({ node, depth }: FieldTreeRowProps): ReactNode {
   );
 }
 
-// The expanded state a node's "▸ details" toggle reveals — every property
+// The expanded state a node's "▸ details" toggle reveals: every property
 // `FieldTreeRow`'s own compact row doesn't already surface as a badge or
 // inline preview. Kept as a separate disclosure from `expanded` (which
 // governs `children`) so inspecting one node's full state doesn't force

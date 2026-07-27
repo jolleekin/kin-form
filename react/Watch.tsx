@@ -40,7 +40,7 @@ export type WatchFormSelectProps<TValue, TSlice> = {
   children: (form: FormApi<TValue>, selected: TSlice) => ReactNode;
 };
 
-/** Selector variant of {@linkcode WatchFieldProps} — see {@linkcode WatchFormSelectProps}. */
+/** Selector variant of {@linkcode WatchFieldProps}; see {@linkcode WatchFormSelectProps}. */
 export type WatchFieldSelectProps<TValue, TParentValue, TSlice> = {
   api: FieldApi<TValue, TParentValue>;
   select: FieldSelector<TValue, TParentValue, TSlice>;
@@ -56,9 +56,9 @@ export type WatchFieldSelectProps<TValue, TParentValue, TSlice> = {
  * writing a custom component around `useWatch`.
  *
  * Calls `useWatch(api, select, equal)` and renders `children` with `api` as
- * the first argument — always, so `children` can read/act on the api itself
+ * the first argument, always, so `children` can read/act on the api itself
  * the way `array.map((item, i) => ...)` callbacks can always reach `item`
- * even when they only care about `i`. `api` is resolved beforehand —
+ * even when they only care about `i`. `api` is resolved beforehand,
  * typically via `parent.field(name, options)`, which applies `options` to an
  * already-registered field the same way on every call, so it's safe to call
  * inline in JSX on every render:
@@ -84,7 +84,7 @@ export type WatchFieldSelectProps<TValue, TParentValue, TSlice> = {
  */
 // Overloaded rather than one generic component with a `select` type
 // conditional on `TApi`, for the same reason `useWatch` is (see its comment
-// in useWatch.ts) — the shared bound needed for a single type parameter
+// in useWatch.ts): the shared bound needed for a single type parameter
 // isn't actually satisfiable here.
 export function Watch<TValue>(props: WatchFormProps<TValue>): ReactNode;
 export function Watch<TValue, TParentValue>(
@@ -102,7 +102,7 @@ export function Watch(
   // actually satisfiable, and this body is only ever reached via the four
   // overloads above. The cast just below picks a loosely-typed stand-in
   // shape (`select` optional, `children` taking an optional second
-  // argument) to destructure through — `api`, `select`, `equal`, and
+  // argument) to destructure through: `api`, `select`, `equal`, and
   // `children` are only ever passed straight through to
   // `useWatch`/`children(...)`, never inspected, so which of the four actual
   // shapes gets asserted doesn't matter here.

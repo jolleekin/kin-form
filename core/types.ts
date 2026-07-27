@@ -23,7 +23,7 @@ export type Updater<T> = (prev: T) => T;
 export type ValidationError = string | null;
 
 /**
- * What a {@linkcode Validator} may return — {@linkcode ValidationError}, plus
+ * What a {@linkcode Validator} may return: {@linkcode ValidationError}, plus
  * `false`/`undefined` as convenient falsy shorthands for "valid" (e.g. a
  * `condition && "message"` expression, or a validator with no `else` branch).
  *
@@ -62,7 +62,7 @@ type Prev = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 /**
  * The union of all non-empty paths of {@linkcode T} up to {@linkcode Depth}
- * levels deep — what `field()`/`useField()` and most other APIs accept for a
+ * levels deep: what `field()`/`useField()` and most other APIs accept for a
  * field name, since addressing "this node itself" (see
  * {@linkcode DeepKeyOrRoot}) doesn't make sense for them.
  *
@@ -114,13 +114,13 @@ export type DeepKey<
 /**
  * Union of `""` and {@linkcode DeepKey}.
  *
- * `""` means "this node itself" rather than a path *into* it — every
+ * `""` means "this node itself" rather than a path *into* it: every
  * `FieldApi`'s array methods (`pushItem`, `insertItem`, `swapItems`,
  * `moveItem`, `removeItem`, `replaceItem`, all in `core/FieldApi.ts`)
  * take a `name: DeepKeyOrRoot<TValue>` precisely so they can either address a
  * named array field on this node (`group.pushItem("items", newItem)`) *or*
  * this node's own value, when the node itself already *is* the array
- * (`itemsGroup.pushItem("", newItem)`) — the latter is what lets a reusable
+ * (`itemsGroup.pushItem("", newItem)`). The latter is what lets a reusable
  * "array field" component stay generic over where it's mounted: it only
  * ever needs a `FieldApi<Item[]>`, not the dotted path leading to it.
  * See {@linkcode FieldApi.pushItem}'s example for both forms side by

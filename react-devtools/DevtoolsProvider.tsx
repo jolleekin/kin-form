@@ -10,7 +10,7 @@ import { DevtoolsRegistry } from "./DevtoolsRegistry.ts";
 import { DevtoolsPanel, type DockPosition } from "./DevtoolsPanel.tsx";
 
 /**
- * `null` outside any `DevtoolsProvider` — {@linkcode useFormDevtools} treats
+ * `null` outside any `DevtoolsProvider`; {@linkcode useFormDevtools} treats
  * that as "no devtools mounted" and registers nothing.
  */
 export const DevtoolsContext: Context<DevtoolsRegistry | null> = createContext<
@@ -31,7 +31,7 @@ export type DevtoolsProviderProps = {
  *
  * Any {@linkcode useFormDevtools} call anywhere under `children` finds this
  * provider via context and registers its form into the same registry the
- * panel reads from — without a `DevtoolsProvider` ancestor, those calls are
+ * panel reads from; without a `DevtoolsProvider` ancestor, those calls are
  * no-ops (see {@linkcode useFormDevtools}'s comment for why that matters).
  */
 export function DevtoolsProvider({

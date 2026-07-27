@@ -27,7 +27,7 @@ export type FormSelector<TValue, TSlice> = (api: FormApi<TValue>) => TSlice;
  * plain object, index-by-index for an array, `Object.is` otherwise), so a
  * selector can return a fresh tuple/record literal on every call (e.g.
  * `f => [f.value, f.touched] as const`) without forcing a re-render on every
- * notify — pass one of these to compare some other way, e.g. deep equality.
+ * notify. Pass one of these to compare some other way, e.g. deep equality.
  */
 export type EqualFn<TSlice> = (a: TSlice, b: TSlice) => boolean;
 
@@ -43,7 +43,7 @@ export type EqualFn<TSlice> = (a: TSlice, b: TSlice) => boolean;
  *
  * Public so consumers can build their own low-level components subscribed to
  * a `FieldApi`/`FormApi` (e.g. a shared `TextField`, or an `ActionButtons`
- * reading `dirty`/`submitting`) — `useForm` deliberately doesn't subscribe by
+ * reading `dirty`/`submitting`); `useForm` deliberately doesn't subscribe by
  * itself, to avoid re-rendering the whole form on every keystroke.
  */
 // Overloaded rather than one generic function with a `select` type

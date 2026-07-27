@@ -4,8 +4,8 @@
  *
  * TanStack Form's own React bindings carry an unusually heavy generic
  * signature (12+ type parameters, inferred from options at every call site).
- * Fighting that here would buy nothing — this is an internal measurement
- * script, not a public API surface — so `form`/`field` are treated as `any`
+ * Fighting that here would buy nothing: this is an internal measurement
+ * script, not a public API surface, so `form`/`field` are treated as `any`
  * throughout rather than threading its generics through every helper.
  */
 
@@ -71,7 +71,7 @@ function Leaf(
     ? {
       onChangeAsync: async ({ value }: { value: string }) =>
         (await asyncValidate(value)) ?? undefined,
-      // Matches Kin Form's validationDebounceMs=50 for this same scenario —
+      // Matches Kin Form's validationDebounceMs=50 for this same scenario;
       // TanStack's debounce is opt-in per event rather than one field-level
       // setting (see the readme's "Validators: when they run" section).
       onChangeAsyncDebounceMs: 50,
@@ -165,7 +165,7 @@ function Items(
           remove: field.removeValue,
         };
         // TanStack Form has no built-in per-item id (unlike Kin Form's
-        // `field.id` or React Hook Form's `fields[i].id`) — reading `.id`
+        // `field.id` or React Hook Form's `fields[i].id`); reading `.id`
         // off the current value itself is the realistic workaround, kept
         // consistent with the other three harnesses' keying strategy (see
         // scenario.ts's `ArrayItem.id` doc comment).
@@ -193,7 +193,7 @@ function Items(
 }
 
 // Memoized so an unrelated item's props (index, and thus its field paths)
-// being unchanged after a sibling swap actually skips re-invoking it —
+// being unchanged after a sibling swap actually skips re-invoking it;
 // without this, the array-mode `FormField`'s render prop re-running
 // (required to read the array's current length/order) would re-invoke every
 // item regardless of whether *that* item's own data changed.
@@ -393,7 +393,7 @@ export const tanstackFormHarness: SpeedHarness = {
     const start = performance.now();
     act(() => {
       // Cycles through adjacent pairs rather than swapping the same two
-      // repeatedly — see the Kin Form harness's mutateArray for why.
+      // repeatedly; see the Kin Form harness's mutateArray for why.
       for (let i = 0; i < UPDATE_BURST_SIZE; i++) {
         const a = i % (ARRAY_ITEM_COUNT - 1);
         items.swap(a, a + 1);
@@ -426,7 +426,7 @@ export const tanstackFormHarness: SpeedHarness = {
 
     const start = performance.now();
     act(() => {
-      // Inserts at the front, then removes from the middle — see the Kin
+      // Inserts at the front, then removes from the middle; see the Kin
       // Form harness's insertRemoveArray for why (avoids the same
       // batching-collapses-to-a-no-op trap as a fixed insert+remove index).
       for (let i = 0; i < UPDATE_BURST_SIZE; i++) {

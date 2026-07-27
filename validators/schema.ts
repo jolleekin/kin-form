@@ -17,7 +17,7 @@ import type {
  * For example, `[{ key: "items" }, 0, { key: "name" }]`
  * (or the equivalent plain `["items", 0, "name"]`) becomes `"items.0.name"`.
  *
- * An issue with no `path` (or an empty one) maps to `""` — this group's own
+ * An issue with no `path` (or an empty one) maps to `""`: this group's own
  * value as a whole, matching `DeepKeyOrRoot`'s `""` meaning "this node
  * itself" (e.g. a schema-level `.refine()`/cross-field check with no
  * specific field attached).

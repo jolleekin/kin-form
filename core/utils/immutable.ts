@@ -24,7 +24,7 @@ export function splitPath(path: string): Array<string | number> {
 
 /**
  * Splits `path` into its first segment and everything after it, dot
- * included (so `first + rest === path`) — `rest` is `""` when `path` has
+ * included (so `first + rest === path`). `rest` is `""` when `path` has
  * only one segment.
  *
  * Unlike {@linkcode splitPath}, this doesn't parse keys as numbers or split
@@ -47,7 +47,7 @@ export function splitFirstSegment(path: string): [first: string, rest: string] {
  * Immutably gets a value from an object at a given path.
  *
  * The resolved value itself may be `null`/`undefined` (e.g. an optional or
- * nullable field that hasn't been populated) — that's a legitimate result.
+ * nullable field that hasn't been populated); that's a legitimate result.
  * Throws instead if a segment *before* the last one resolves to
  * `null`/`undefined`, since there's then no object left to read the next
  * segment from.
@@ -74,8 +74,8 @@ export function getIn<T, TPath extends DeepKeyOrRoot<T>>(
 }
 
 /**
- * Reports whether every segment of `path` actually exists in `obj` — an
- * object key that's genuinely present, or an array index within bounds —
+ * Reports whether every segment of `path` actually exists in `obj`: an
+ * object key that's genuinely present, or an array index within bounds,
  * as opposed to merely resolving to `undefined` via {@linkcode getIn} (a
  * legitimate value for an optional/nullable field). A missing segment
  * partway through means everything nested under it is gone too, so the
@@ -210,7 +210,7 @@ export function arraySwap<T>(
 /**
  * Immutably moves the item at `fromIndex` to `toIndex` in `array`, shifting
  * every item strictly between the two indices one slot the other way to
- * close/open the gap — the same result as `Array#splice`-ing the item out
+ * close/open the gap, the same result as `Array#splice`-ing the item out
  * and back in elsewhere, unlike {@linkcode arraySwap}, which only touches the
  * two endpoints.
  */

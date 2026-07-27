@@ -6,7 +6,7 @@
 
 React bindings for [`@kin-form/core`](../core/README.md): `useForm` to create a
 form, `Watch` (or the underlying `useWatch` hook) to subscribe a component to an
-already-resolved `FieldApi`/`FormApi` — resolved via
+already-resolved `FieldApi`/`FormApi`, resolved via
 `parent.field(name,
 options)` directly, no separate hook for that.
 `@kin-form/react` depends on and re-exports everything from `@kin-form/core`, so
@@ -71,20 +71,20 @@ function LoginForm() {
 Creates a `FormApi` once and calls `updateOptions` on it every render, so
 `onSubmit`/`onSubmitInvalid`/`onSubmitError` (and validators/dependents) stay in
 sync with the latest render's closures instead of going stale. Doesn't itself
-subscribe the calling component — pass the returned instance to `Watch` for
+subscribe the calling component; pass the returned instance to `Watch` for
 that.
 
 ## Resolving a field
 
 `parent.field(name, options)` (see [`@kin-form/core`](../core/README.md)) gets
-(creating on first call) the `FieldApi` registered under `name` on `parent` —
+(creating on first call) the `FieldApi` registered under `name` on `parent`,
 for a leaf value, a nested object/array, or an array item alike, the same
 accessor either way. It's safe to call inline in JSX on every render: on an
 already-registered field, `options` is applied via `updateOptions` the same way
 every time, so re-calling it doesn't re-create anything. For an array, the
 field's own _value_ is the array, so array methods are called on it with `""`.
 
-There's no separate hook for this — `field()` is a plain method, and inferring
+There's no separate hook for this: `field()` is a plain method, and inferring
 its `name` argument from a string literal works reliably without one.
 
 ## `Watch`
@@ -113,7 +113,7 @@ function EmailInput({ parent }: { parent: FieldApi<{ email: string }> }) {
 }
 ```
 
-`children` always receives `api` as its first argument — pass `select` to
+`children` always receives `api` as its first argument; pass `select` to
 additionally narrow the subscription down to a derived slice, passed as the
 second argument, instead of re-rendering on every change:
 
@@ -123,7 +123,7 @@ second argument, instead of re-rendering on every change:
 </Watch>;
 ```
 
-Works the same way for a nested object or array — resolve the parent field
+Works the same way for a nested object or array: resolve the parent field
 first, then call `field`/`Watch` again on it:
 
 ```tsx
@@ -135,7 +135,7 @@ first, then call `field`/`Watch` again on it:
 ```
 
 For an array, a field's own _value_ is the array, so array methods are called on
-it with `""` — this stays generic over where in the tree it's mounted:
+it with `""`, which stays generic over where in the tree it's mounted:
 
 ```tsx
 function ArrayField<Item>(
@@ -147,14 +147,14 @@ function ArrayField<Item>(
 
 For a field that appears in multiple places, define a reusable component around
 `Watch` (or `useWatch` directly) instead (e.g. `TextField`, `AddressField`)
-rather than repeating a `<Watch>` render prop everywhere — see
+rather than repeating a `<Watch>` render prop everywhere; see
 [Form Composition](../docs/guide/form-composition.md).
 
 ## `useMultistep`
 
 Orchestrates a wizard's current-step state on top of one step per named
-`FieldApi` — validating the current step, waiting for it to settle, and gating
-the advance:
+`FieldApi`: validating the current step, waiting for it to settle, and gating
+the advance.
 
 ```tsx
 const wizard = useMultistep(form, ["shipping", "payment", null]);

@@ -8,7 +8,7 @@ import type { AnyNode } from "./types.ts";
 type Person = { name: string; tags: string[] };
 
 // `FormApi<TValue>` (`TParentValue = never`) isn't structurally assignable
-// to `AnyNode` — see `types.ts`'s comment on the same contravariance
+// to `AnyNode`; see `types.ts`'s comment on the same contravariance
 // issue that `DevtoolsPanel.tsx` casts around.
 function asNode<T>(node: T): AnyNode {
   return node as unknown as AnyNode;

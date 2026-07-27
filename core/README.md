@@ -6,7 +6,7 @@
 ![100% type-safe](https://img.shields.io/badge/100%25%20type--safe-166534?style=flat)
 ![Zero dependencies](https://img.shields.io/badge/Zero%20dependencies-166534?style=flat)
 
-Form state that stays out of your way. `FieldApi` and `FormApi` — the
+Form state that stays out of your way. `FieldApi` and `FormApi`: the
 framework-agnostic engine behind `@kin-form/react`. No UI framework dependency;
 just the state machine.
 
@@ -14,29 +14,29 @@ just the state machine.
 
 ### One state machine, one shape
 
-A form is a tree, and every node in it — leaf input, nested object/array, or the
-form itself — is the same kind of thing: a `FieldApi`, holding
+A form is a tree, and every node in it (leaf input, nested object/array, or the
+form itself) is the same kind of thing: a `FieldApi`, holding
 `value`/`error`/`touched`/`validating` and a lazily-populated registry of its
 own child fields. Whether a given object/array-valued field is treated as one
 atomic leaf (bind `handleChange` straight to a custom control) or decomposed
-into children (call `field()` for each sub-path) is entirely up to the caller —
+into children (call `field()` for each sub-path) is entirely up to the caller;
 nothing in the engine forces one or the other. `FormApi` is just the `FieldApi`
 at the tree's root (`parent` `null`, `name` `""`), with
 `submitting`/`dirty`/`handleSubmit` added on top.
 
 ### Type-safe paths, not string soup
 
-`DeepKey<T>` computes every dot-joined path into `T` — through objects and
-arrays alike — as a literal string union; `DeepValue<T, Key>` resolves the value
+`DeepKey<T>` computes every dot-joined path into `T` (through objects and
+arrays alike) as a literal string union; `DeepValue<T, Key>` resolves the value
 type at that path. `form.field("address.line1")` or `form.field("items.0.code")`
-type-check against your form's actual value type — a typo'd path is a compile
+type-check against your form's actual value type: a typo'd path is a compile
 error, not a silent `undefined` at runtime.
 
 ### Stable array item identity
 
 `pushItem`/`insertItem`/`moveItem`/`swapItems`/`removeItem` update the
 immutable value and re-key the field registry together, so a field's identity
-follows its item through a reorder — not whatever value now happens to sit at
+follows its item through a reorder, not whatever value now happens to sit at
 its old index. Every field also carries a stable `id`, independent of `name`,
 that survives the same reorders: the right React `key` for a list of array
 items (`key={field.id}`, not `key={index}`).
@@ -113,8 +113,8 @@ form.field("confirmPassword", {
 });
 ```
 
-Whenever `password` changes, `confirmPassword` is force-validated automatically
-— no manual subscriptions.
+Whenever `password` changes, `confirmPassword` is force-validated automatically,
+with no manual subscriptions.
 
 ## Class hierarchy
 

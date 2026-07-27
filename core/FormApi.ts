@@ -1,5 +1,5 @@
 /**
- * The form tree's root — {@linkcode FormApi}, submit handling, and
+ * The form tree's root ({@linkcode FormApi}), submit handling, and
  * resetting the whole tree or a single field.
  *
  * @module
@@ -58,7 +58,7 @@ export class FormApi<TValue = unknown> extends FieldApi<TValue> {
    *
    * This is an arrow field so it can be passed by reference.
    *
-   * If given an `event` with a `preventDefault` method, calls it first — bind
+   * If given an `event` with a `preventDefault` method, calls it first. Bind
    * directly to a `<form>`'s `onSubmit`, no wrapper arrow function needed:
    *
    * @example
@@ -69,7 +69,7 @@ export class FormApi<TValue = unknown> extends FieldApi<TValue> {
    * `event` is untyped on purpose: it's never assumed to have
    * `preventDefault` (only checked for one at runtime), so `handleSubmit`
    * stays assignable to whatever single-argument event-callback shape the
-   * caller's framework uses — including one with no `preventDefault` at all,
+   * caller's framework uses, including one with no `preventDefault` at all,
    * like React Native Button's `onPress`.
    *
    * Waits out any pending validation, then:
@@ -174,7 +174,7 @@ export class FormApi<TValue = unknown> extends FieldApi<TValue> {
    * Finds the field already registered at `name`, without registering one
    * that isn't (unlike {@linkcode FieldApi.field}).
    *
-   * Walks {@linkcode FieldApi.children} down from {@linkcode node} — `name`
+   * Walks {@linkcode FieldApi.children} down from {@linkcode node}: `name`
    * may address a field registered directly at this level, or one nested
    * through an already-registered intermediate field (mirroring how
    * {@linkcode FieldApi.field} itself resolves a dotted path against

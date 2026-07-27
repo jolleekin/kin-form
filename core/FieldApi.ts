@@ -1,5 +1,5 @@
 /**
- * A field in the form's tree — {@linkcode FieldApi} — value/error/touched/
+ * A field in the form's tree ({@linkcode FieldApi}): value/error/touched/
  * validating/validators, `handleBlur`/`handleChange` for binding directly to
  * a single control, and (if used to hold a nested object/array) a
  * lazily-populated registry of child fields with array mutation helpers and
@@ -51,7 +51,7 @@ import { shallowEqual } from "./utils/shallow-equal.ts";
 /**
  * A function run against a {@linkcode FieldApi} to check its current
  * {@linkcode FieldApi.value}, returning a falsy result when valid. Runs
- * immediately, synchronously, on every value change — for a check that's
+ * immediately, synchronously, on every value change; for a check that's
  * expensive or needs debouncing, see {@linkcode AsyncValidator} instead.
  *
  * Must not throw; return a {@linkcode ValidatorResult} instead.
@@ -62,19 +62,19 @@ export type Validator<TValue, TParentValue = never> = (
 
 /**
  * A function run against a {@linkcode FieldApi} to check its current
- * {@linkcode FieldApi.value}, asynchronously — debounced by this field's own
+ * {@linkcode FieldApi.value}, asynchronously: debounced by this field's own
  * {@linkcode FieldApiOptions.validationDebounceMs validationDebounceMs}, and
  * only run once every entry in {@linkcode FieldApiOptions.validators validators}
  * has already passed, so an expensive check never fires for a value already known
  * invalid by a cheap one.
  *
- * Singular — one per field, not an array like {@linkcode Validator}s. If more
+ * Singular: one per field, not an array like {@linkcode Validator}s. If more
  * than one async check is needed, combine them inside this one function with
  * full control over ordering/concurrency instead, e.g.
  * `async (field) => (await checkA(field)) ?? (await checkB(field))`.
  *
  * Must not throw; return/resolve a {@linkcode ValidatorResult} instead.
- * Doesn't actually have to be `async` — a validator placed here that happens
+ * Doesn't actually have to be `async`: a validator placed here that happens
  * to resolve synchronously still goes through the debounced path, which is
  * the point of putting it here instead of in {@linkcode FieldApiOptions.validators}
  * (e.g. throttling an expensive-but-synchronous check without needing an
@@ -88,7 +88,7 @@ export type AsyncValidator<TValue, TParentValue = never> = (
  * A function run against a {@linkcode FieldApi} to check its current
  * {@linkcode FieldApi.value} as a whole, producing a flat, dot-joined
  * path -> message map instead of a single message (unlike
- * {@linkcode Validator}) — for whole-group/whole-form validation where one
+ * {@linkcode Validator}), for whole-group/whole-form validation where one
  * schema is the single source of truth for every field under this field,
  * rather than duplicating rules per field.
  *
@@ -119,7 +119,7 @@ let nextId = 0;
 export type FieldApiOptions<TValue, TParentValue = never> = {
   /**
    * Sibling field paths (relative to this field's parent) to re-validate
-   * whenever *this* field's value changes — for cross-field rules like
+   * whenever *this* field's value changes: for cross-field rules like
    * "confirm password must match password" or "check-out must be after
    * check-in".
    *
@@ -139,12 +139,12 @@ export type FieldApiOptions<TValue, TParentValue = never> = {
    * Synchronous validator(s) for this field.
    *
    * Validators run in order, immediately, on every value change; the first
-   * truthy result wins. Never debounced — see {@linkcode asyncValidator} for
+   * truthy result wins. Never debounced; see {@linkcode asyncValidator} for
    * a check that needs to be (expensive, network-calling, or otherwise worth
    * throttling while the user is still typing).
    *
    * Accepts a single validator directly, without wrapping it in an array.
-   * Doing so always allocates a fresh one-element array underneath, though —
+   * Doing so always allocates a fresh one-element array underneath, though:
    * if this field's validators rarely change and you want reassigning the
    * same set to be a cheap no-op, cache the array yourself (e.g. a
    * module-level constant, or `useMemo`) and pass that instead. See
@@ -164,12 +164,12 @@ export type FieldApiOptions<TValue, TParentValue = never> = {
    * {@linkcode SchemaValidator}) instead of a single message, populating
    * {@linkcode FieldApi.schemaErrorMap}.
    *
-   * Singular — one per field, not an array like {@linkcode validators}.
+   * Singular: one per field, not an array like {@linkcode validators}.
    * There's no real use case for stacking multiple whole-field schemas on the
    * same field the way there is for stacking small per-field rules; combine
    * schemas yourself (e.g. Zod's `.and()`/`.merge()`) before passing one in.
    *
-   * Debounced using this field's own {@linkcode validationDebounceMs} —
+   * Debounced using this field's own {@linkcode validationDebounceMs};
    * there's no separate delay knob for this.
    */
   schemaValidator?: SchemaValidator<TValue, TParentValue>;
@@ -188,7 +188,7 @@ export type FieldApiOptions<TValue, TParentValue = never> = {
    * repeated calls (e.g. a React re-render passing a fresh closure).
    *
    * For side effects that aren't validation (validation belongs in
-   * {@linkcode validators}/{@linkcode dependents}) — e.g. clearing a
+   * {@linkcode validators}/{@linkcode dependents}), e.g. clearing a
    * dependent field:
    *
    * ```ts
@@ -228,7 +228,7 @@ export type FieldApiOptions<TValue, TParentValue = never> = {
  * Whether a given object/array-valued field is treated as one atomic leaf
  * (bind `handleChange` straight to a custom control) or decomposed into
  * children (call {@linkcode field} for each sub-path) is entirely up to the
- * caller — nothing here enforces one or the other.
+ * caller; nothing here enforces one or the other.
  */
 export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   /** This field's current value. */
@@ -253,8 +253,8 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    *
    * {@linkcode value} and {@linkcode initialValue} are both whole-subtree
    * snapshots at whatever level of the tree this field sits at, so this one
-   * comparison already reflects every descendant too — no separate aggregation
-   * from {@linkcode children} is needed, unlike {@linkcode touched}/
+   * comparison already reflects every descendant too, so no separate
+   * aggregation from {@linkcode children} is needed, unlike {@linkcode touched}/
    * {@linkcode invalid}/{@linkcode validating}.
    *
    * Cached rather than recomputed on every read.
@@ -264,14 +264,14 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   }
 
   /**
-   * This field's dirty-comparison baseline (see {@linkcode dirty}) — this
+   * This field's dirty-comparison baseline (see {@linkcode dirty}): this
    * field's own slice of {@linkcode parent}'s own baseline, or, for a field
    * constructed with no `parent` (only `FormApi` legitimately is), the
    * value it was constructed with.
    *
-   * Assignable only so `FormApi.reset`/`FormApi.resetField` can move it —
+   * Assignable only so `FormApi.reset`/`FormApi.resetField` can move it;
    * not part of the public surface otherwise. Only ever assigned on a field
-   * with no `parent` — every other field's `initialValue` is purely derived,
+   * with no `parent`: every other field's `initialValue` is purely derived,
    * so assigning it there would just be stored and never read.
    */
   protected get initialValue(): TValue {
@@ -315,7 +315,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * Prefers this field's own {@linkcode schemaErrorMap}'s `""` entry
    * (from its own {@linkcode schemaValidator}), since that's more specific than
    * one attached higher up. Otherwise falls back to this field's slice of the
-   * nearest ancestor's `schemaErrorMap` — walking up past {@linkcode parent} if needed, to
+   * nearest ancestor's `schemaErrorMap`, walking up past {@linkcode parent} if needed, to
    * whichever ancestor has its own `schemaValidator` first, since that one
    * takes precedence over anything further up.
    *
@@ -382,7 +382,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * {@linkcode schemaValidator} is currently pending/in-flight, or any of
    * {@linkcode children} is.
    *
-   * {@linkcode validators} never contributes here — they run synchronously,
+   * {@linkcode validators} never contributes here; they run synchronously,
    * immediately, so there's never anything pending from them alone.
    */
   get validating(): boolean {
@@ -397,8 +397,8 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    *
    * Safe to pass a freshly-constructed array on every call, e.g. from
    * validator factories (`required('...')`, `maxLength(20, '...')`).
-   * Reassigning doesn't itself trigger a run — beyond clearing this field's
-   * sync contribution to {@linkcode error} if the new array is empty — so a
+   * Reassigning doesn't itself trigger a run, beyond clearing this field's
+   * sync contribution to {@linkcode error} if the new array is empty, so a
    * conditionally-different array takes effect on the next value change or
    * explicit {@linkcode validate} call (`force: true` if only something the
    * validators read, not the value or validators themselves, changed).
@@ -466,7 +466,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   dependents: Array<DeepKey<TParentValue>>;
 
   /**
-   * The ultimate ancestor of this field — its {@linkcode parent}'s
+   * The ultimate ancestor of this field: its {@linkcode parent}'s
    * {@linkcode root}, or itself if it has no parent.
    */
   override get root(): BaseApi {
@@ -474,7 +474,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   }
 
   /**
-   * The registry of child fields created so far via {@linkcode field} —
+   * The registry of child fields created so far via {@linkcode field},
    * populated lazily, so a field that's never been requested (e.g. because
    * its input never rendered) won't appear here yet.
    *
@@ -504,8 +504,8 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * {@linkcode validators} entry and {@linkcode asyncValidator}) and is never
    * distributed to children.
    *
-   * - `schemaErrorMap` is a flat map — typically from one whole-field
-   * Standard Schema (see `@kin-form/validators`'s `toSchemaValidator()`) — keyed
+   * - `schemaErrorMap` is a flat map, typically from one whole-field
+   * Standard Schema (see `@kin-form/validators`'s `toSchemaValidator()`), keyed
    * by the path of the field each issue belongs to. It is *not* automatically
    * copied onto the individual child fields' own `.error`; a child field that
    * wants to surface its slice of this map reads it via its own
@@ -520,7 +520,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   /**
    * This field's {@linkcode SchemaValidator}, if any.
    *
-   * Same reassignment semantics as {@linkcode validators} — reassigning doesn't
+   * Same reassignment semantics as {@linkcode validators}: reassigning doesn't
    * itself trigger a run (beyond clearing to `null` if unset);
    * a conditionally-different validator takes effect on the next trigger
    * (a value change, or calling `validate(true)`).
@@ -540,7 +540,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   /**
    * This field's {@linkcode AsyncValidator}, if any.
    *
-   * Same reassignment semantics as {@linkcode schemaValidator} — reassigning
+   * Same reassignment semantics as {@linkcode schemaValidator}: reassigning
    * doesn't itself trigger a run (beyond settling to `null` if unset); a
    * conditionally-different validator takes effect on the next  trigger
    * (a value change, or calling `validate(true)`).
@@ -563,11 +563,11 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * successive changes (e.g. fast typing) don't each trigger their own run.
    * Defaults to `0`.
    *
-   * Has no effect on {@linkcode validators} — those always run immediately,
+   * Has no effect on {@linkcode validators}: those always run immediately,
    * undebounced.
    *
-   * Reassigning only affects future debounced runs — same as
-   * {@linkcode DebouncedTask.setDelay}'s own caveat — it doesn't reschedule a
+   * Reassigning only affects future debounced runs, same as
+   * {@linkcode DebouncedTask.setDelay}'s own caveat: it doesn't reschedule a
    * timer already ticking down from a previous change.
    */
   get validationDebounceMs(): number {
@@ -582,10 +582,10 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
 
   #name: DeepKeyOrRoot<TParentValue>;
   #value!: TValue;
-  // Only meaningful when `parent` is null — see the `initialValue`
+  // Only meaningful when `parent` is null; see the `initialValue`
   // accessor below.
   #initialValue!: TValue;
-  // Always `false` at construction — `value` starts out equal to
+  // Always `false` at construction: `value` starts out equal to
   // `initialValue` either way (seeded from it directly, or, for a child,
   // synced from `parent.value`, which is itself no different at that point).
   // Kept in sync by `#recomputeDirty` from then on.
@@ -594,13 +594,13 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   #touched = false;
   #disabled = false;
   #validators: Array<Validator<TValue, TParentValue>>;
-  // The last result #runSyncValidators() produced — kept in sync by
+  // The last result #runSyncValidators() produced. Kept in sync by
   // #scheduleValidation (every value change) and the `validators` setter's
-  // empty-array clear, so #asyncValidatorTask's `onSettled` below can favor
-  // it over a stale/irrelevant async result without re-running validators
-  // (which run() from the settle path can't safely trigger, since a fresh
+  // empty-array clear. Lets #asyncValidatorTask's `onSettled` below favor it
+  // over a stale/irrelevant async result, without re-running validators.
+  // (`run()` from the settle path can't safely trigger validators: a fresh
   // sync failure needs to *stay* visible through a settle that only ever
-  // carries an async result).
+  // carries an async result.)
   #syncError: ValidationError = null;
   #onValueChanged?: FieldApiOptions<TValue, TParentValue>["onValueChanged"];
 
@@ -634,9 +634,9 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
     parent: FieldApi<TParentValue> | null,
     name: DeepKeyOrRoot<TParentValue>,
     // `initialValue` isn't part of the public `FieldApiOptions` a child
-    // field's `options` accepts (see `field`) — a child always reads its
+    // field's `options` accepts (see `field`); a child always reads its
     // initial value from `parent` instead. It's still accepted here,
-    // internally, for a field constructed with no `parent` at all — only
+    // internally, for a field constructed with no `parent` at all: only
     // `FormApi` legitimately does that (via its own required
     // `FormApiOptions.initialValue`).
     options: FieldApiOptions<TValue, TParentValue> & { initialValue?: TValue } =
@@ -649,7 +649,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
     this.#disabled = options.disabled ?? parent?.disabled ?? false;
     // A parent's schemaValidator may have already settled before this field
     // was constructed (e.g. a group resolved lazily, after the form's own
-    // schema already ran) — compute the current value instead of assuming
+    // schema already ran), so compute the current value instead of assuming
     // `null` until some future change happens to trigger a refresh.
     this.#schemaError = this.#computeSchemaError();
     this.#validators = makeArray(options.validators);
@@ -664,11 +664,11 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
       {
         delayMs: this.#validationDebounceMs,
         // A settle can flip both `error` and (via `wasPending`) `validating`
-        // at once — batch them into a single notification instead of two.
+        // at once, so batch them into a single notification instead of two.
         // Favors `#syncError` over this settle's own result: a settle can
         // arrive here purely to reset pending state (e.g. sync validators
         // just failed, so this task was settled to `null` without actually
-        // running `asyncValidator`) — applying that `null` unconditionally
+        // running `asyncValidator`), and applying that `null` unconditionally
         // would clobber a fresher sync error with a stale/irrelevant one.
         onSettled: (error, wasPending) => {
           this.batch(() => {
@@ -719,12 +719,12 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * {@linkcode schemaValidator}'s), then unregisters and destroys its own
    * children.
    *
-   * Idempotent — a second call is a no-op, so it's safe for a parent's
+   * Idempotent: a second call is a no-op, so it's safe for a parent's
    * {@linkcode unregisterField} and this field's own recursive teardown of
    * its children to each reach the same field without double-destroying it.
    *
    * Called automatically whenever a child's path stops existing in its
-   * parent's value, on every value change — not just through helpers like
+   * parent's value, on every value change, not just through helpers like
    * {@linkcode removeItem}.
    */
   [kDestroy](): void {
@@ -740,10 +740,10 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   }
 
   /**
-   * Applies a fresh set of {@linkcode FieldApiOptions} to this field —
+   * Applies a fresh set of {@linkcode FieldApiOptions} to this field:
    * `disabled`, `validators`, `asyncValidator`, `dependents`,
    * `validationDebounceMs`, `onValueChanged`, and `schemaValidator`, if
-   * present — without touching {@linkcode value}.
+   * present, without touching {@linkcode value}.
    *
    * Called every time {@linkcode field} resolves an already-registered field,
    * so option props/closures stay in sync with the latest render.
@@ -766,7 +766,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
 
   /**
    * Marks this field as touched and immediately flushes any pending debounced
-   * validation — this field's own {@linkcode asyncValidator} and its
+   * validation: this field's own {@linkcode asyncValidator} and its
    * {@linkcode schemaValidator}'s.
    *
    * Bind directly to an input's `onBlur`.
@@ -786,7 +786,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   /**
    * Sets {@linkcode value}.
    *
-   * Bind directly to an input's `onChange` — `handleChange` takes the new value
+   * Bind directly to an input's `onChange`. `handleChange` takes the new value
    * directly (not a DOM event), so a plain `<input>` needs a one-line adapter
    * to pull `.value`/`.checked` out of the event first. This keeps `core/`
    * free of any DOM dependency.
@@ -810,21 +810,21 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * Re-runs {@linkcode validators} immediately (they're synchronous, so
    * there's nothing to wait on there), then runs (or joins an
    * already-running, or already up to date, run of) {@linkcode asyncValidator}
-   * and {@linkcode schemaValidator}, resolving once both have settled — read
+   * and {@linkcode schemaValidator}, resolving once both have settled. Read
    * {@linkcode error}/{@linkcode schemaErrorMap} (or just {@linkcode invalid})
    * afterward.
    *
-   * Safe to call concurrently and redundantly — each async validator is
+   * Safe to call concurrently and redundantly: each async validator is
    * invoked at most once per generation of the state it reads
    * ({@linkcode value}/{@linkcode asyncValidator} for the former,
    * {@linkcode value}/{@linkcode schemaValidator} for the latter), unless
    * {@linkcode force} is `true`. `asyncValidator` is never forced (or even
-   * run) when {@linkcode validators} currently reports an error — an
+   * run) when {@linkcode validators} currently reports an error: an
    * already-known-invalid value has nothing left to check asynchronously.
    *
-   * Pass `force: true` when something a validator reads — but that isn't
+   * Pass `force: true` when something a validator reads, but that isn't
    * reflected in this field's own {@linkcode value}, {@linkcode validators},
-   * {@linkcode asyncValidator}, or {@linkcode schemaValidator} — changed out
+   * {@linkcode asyncValidator}, or {@linkcode schemaValidator}, changed out
    * of band, e.g. a sibling field this one isn't declared as a
    * {@linkcode dependents} target of, or some external state entirely.
    * Without it, calling `validate()` on a field that's already settled just
@@ -846,7 +846,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   async validate(force = false): Promise<void> {
     // A disabled field is always valid and never runs any validator.
     if (this.disabled) return;
-    // Only actually re-run `validators` when forced — they already ran
+    // Only actually re-run `validators` when forced: they already ran
     // synchronously on the last genuine trigger (a value change, or a prior
     // `force` call), so re-running them here unconditionally would silently
     // break "safe to call concurrently and redundantly" for the sync case.
@@ -862,7 +862,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
           : this.#asyncValidatorTask.run())
         : this.#asyncValidatorTask.wait(),
       // Only actually force the schema task when there's a schemaValidator
-      // to re-check — otherwise it's already settled to `null` (see
+      // to re-check; otherwise it's already settled to `null` (see
       // `#scheduleSchemaValidation`), and forcing it anyway would flip
       // `validating` true for no reason.
       force && this.#schemaValidator
@@ -968,11 +968,11 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * Runs {@linkcode validators} immediately and sets {@linkcode error} from
    * the result. If every one passed and {@linkcode asyncValidator} is
    * configured, schedules it (debounced) and returns `true`; otherwise
-   * settles it to `null` — discarding a stale in-flight/pending run from a
+   * settles it to `null`, discarding a stale in-flight/pending run from a
    * previous, faster generation so it can't later overwrite a fresher sync
-   * error — and returns `false`.
+   * error, and returns `false`.
    *
-   * Runs nothing and settles straight to `null` while {@linkcode disabled} —
+   * Runs nothing and settles straight to `null` while {@linkcode disabled}:
    * a disabled field is always valid.
    */
   #scheduleValidation(): boolean {
@@ -1032,7 +1032,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * applies {@linkcode options} (if given) to the existing field via
    * {@linkcode updateOptions} instead of creating a new one.
    *
-   * `name` must be this field's path *relative to this field* — a
+   * `name` must be this field's path *relative to this field*: a
    * multi-segment path that bypasses an already-registered intermediate
    * field throws instead of silently registering a disconnected duplicate;
    * resolve the intermediate field first in that case.
@@ -1043,7 +1043,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    *   validators: [required("Email is required")],
    * });
    *
-   * // A field nested under another — resolve the parent first, don't
+   * // A field nested under another: resolve the parent first, don't
    * // address "address.line1" directly from `form`.
    * const address = form.field("address");
    * const line1 = address.field("line1");
@@ -1076,11 +1076,11 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   /**
    * Throws if registering a new entry under {@linkcode name} would collide
    * with an existing entry whose key is a dot-prefix of {@linkcode name}, or
-   * vice versa — the two ways a dotted path can bypass (or be bypassed by)
+   * vice versa: the two ways a dotted path can bypass (or be bypassed by)
    * an already-registered intermediate field, leaving two disconnected fields
    * tracking the same slice of value (e.g. calling `field("address.line1")`
    * directly after `field("address")` already registered `"address"`, or
-   * vice versa). Only relevant when creating a new entry — an exact-match
+   * vice versa). Only relevant when creating a new entry; an exact-match
    * lookup of an existing key is the normal re-fetch path and never reaches
    * here.
    */
@@ -1135,7 +1135,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   }
 
   /**
-   * Unregisters the field at {@linkcode name} — the counterpart to
+   * Unregisters the field at {@linkcode name}: the counterpart to
    * {@linkcode field}.
    *
    * Destroys the field (cancelling its own pending debounced
@@ -1160,7 +1160,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   }
 
   //#region Array helpers
-  // Every method below takes `name: DeepKeyOrRoot<TValue>` — not just names
+  // Every method below takes `name: DeepKeyOrRoot<TValue>`, not just names
   // of array-typed *fields* on this field, but also `""`, meaning "this
   // field's own value" (see `DeepKeyOrRoot`'s doc comment in `types.ts`).
   // Both forms are shown together on `pushItem` below; the rest work the
@@ -1170,7 +1170,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * Inserts {@linkcode item} at {@linkcode index} in the array at
    * {@linkcode name}, shifting later items up.
    *
-   * `name` can be `""` to address this field's own value — see
+   * `name` can be `""` to address this field's own value; see
    * {@linkcode pushItem}'s example.
    */
   insertItem<TName extends DeepKeyOrRoot<TValue>>(
@@ -1194,11 +1194,11 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   /**
    * Moves the item at {@linkcode fromIndex} to {@linkcode toIndex}, shifting
    * every item strictly between the two indices one slot the other way to
-   * close/open the gap — the same result as `Array#splice`-ing the item out
+   * close/open the gap, the same result as `Array#splice`-ing the item out
    * and back in elsewhere, unlike {@linkcode swapItems}, which only touches
    * the two endpoints.
    *
-   * `name` can be `""` to address this field's own value — see
+   * `name` can be `""` to address this field's own value; see
    * {@linkcode pushItem}'s example.
    */
   moveItem<TName extends DeepKeyOrRoot<TValue>>(
@@ -1226,7 +1226,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
   /**
    * Appends {@linkcode item} to the end of the array at {@linkcode name}.
    *
-   * `name` can address a named array field on this field, or — pass `""` —
+   * `name` can address a named array field on this field, or, pass `""`,
    * this field's own value, when the field itself already *is* the array. The
    * latter is what a reusable "array field" component built around a
    * `FieldApi<Item[]>` uses, so it stays generic over where in the tree it's
@@ -1238,7 +1238,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * form.pushItem("items", newItem);
    *
    * // Addressing this field's own value, when the field itself already IS
-   * // the array — e.g. inside a reusable component that only ever
+   * // the array, e.g. inside a reusable component that only ever
    * // receives a `FieldApi<Item[]>`, regardless of where it's mounted:
    * const itemsField = form.field("items");
    * itemsField.pushItem("", newItem);
@@ -1259,7 +1259,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * Removes the item at {@linkcode index} from the array at {@linkcode name},
    * destroying its field(s) and shifting later items down.
    *
-   * `name` can be `""` to address this field's own value — see
+   * `name` can be `""` to address this field's own value; see
    * {@linkcode pushItem}'s example.
    */
   removeItem<TName extends DeepKeyOrRoot<TValue>>(
@@ -1279,7 +1279,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * Replaces the item at {@linkcode index} in the array at {@linkcode name}
    * with {@linkcode newItem}.
    *
-   * `name` can be `""` to address this field's own value — see
+   * `name` can be `""` to address this field's own value; see
    * {@linkcode pushItem}'s example.
    */
   replaceItem<TName extends DeepKeyOrRoot<TValue>>(
@@ -1302,7 +1302,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * Swaps the items at {@linkcode index1} and {@linkcode index2},
    * leaving every item in between untouched.
    *
-   * `name` can be `""` to address this field's own value — see
+   * `name` can be `""` to address this field's own value; see
    * {@linkcode pushItem}'s example.
    *
    * For a shift-based reorder (remove from one slot, insert at another,
@@ -1327,7 +1327,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
 
   /**
    * The prefix a registered field's key must start with to be one of
-   * {@linkcode base}'s own array items (or a nested child of one) — `""`
+   * {@linkcode base}'s own array items (or a nested child of one): `""`
    * itself (not `"."`) when `base` is `""`, since a self-addressed array's
    * item keys are the bare index (`"0"`, `"0.label"`), with no leading dot.
    */
@@ -1499,7 +1499,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
     this.#anyChildTouched = this.#anyChild((f) => f.touched);
     this.#anyChildValidating = this.#anyChild((f) => f.validating);
 
-    // Up to three independent flags can flip here — batch them so
+    // Up to three independent flags can flip here; batch them so
     // subscribers (this instance's and, via propagation to `parent`, any
     // ancestor's) see one notification instead of up to three synchronous
     // ones for what is a single logical change.
@@ -1591,12 +1591,12 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    *
    * Resolves `path` (dot-joined, relative to this field) against this
    * field's own {@linkcode schemaErrorMap} if a {@linkcode schemaValidator}
-   * is configured here — a configured validator at this level always wins
+   * is configured here: a configured validator at this level always wins
    * over one further up, even if its last result was clean.
    *
    * Otherwise climbs into {@linkcode parent} with `path` prefixed by this
    * field's own `name`, returning `undefined` once it reaches the root with
-   * no owning ancestor found..
+   * no owning ancestor found.
    */
   [kResolveSchemaError](path: string): ValidationError | undefined {
     return this.#schemaValidator

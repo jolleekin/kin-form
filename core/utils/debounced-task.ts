@@ -14,8 +14,8 @@ import type { PromiseOr } from "../types.ts";
  * once per "generation" (the state between two calls that actually change
  * anything).
  *
- * Every caller — whether it triggered the run itself or merely called in
- * while one was already in flight — resolves to the result of whichever run
+ * Every caller, whether it triggered the run itself or merely called in
+ * while one was already in flight, resolves to the result of whichever run
  * turns out to be the last one requested, never a stale one abandoned
  * mid-flight.
  */
@@ -44,13 +44,13 @@ export class DebouncedTask<T> {
        * already-settled run).
        *
        * `wasPending` reflects whether {@linkcode pending} was `true` right
-       * before this settle — i.e. whether this call is *also* the moment
+       * before this settle: i.e. whether this call is *also* the moment
        * `pending` flips back to `false`. Bundled into this single callback
        * (rather than firing as a separate `pending`-transition callback,
        * the way becoming pending does via `onPending`) so a caller that
        * needs to react to both the result and the `pending` transition can
-       * do so in one place — e.g. batched together, instead of as two
-       * separately-notifying callbacks — since a task can only stop being
+       * do so in one place (e.g. batched together, instead of as two
+       * separately-notifying callbacks), since a task can only stop being
        * pending by settling, the two always coincide.
        */
       onSettled?: (result: T, wasPending: boolean) => void;
@@ -81,7 +81,7 @@ export class DebouncedTask<T> {
    */
   schedule(): void {
     clearTimeout(this.#timer);
-    // Must read `pending` before bumping `#generation` below — once bumped,
+    // Must read `pending` before bumping `#generation` below; once bumped,
     // `#settledGeneration !== #generation` unconditionally, so `pending`
     // would just read back `true` regardless of what it actually was.
     const wasPending = this.pending;
@@ -97,7 +97,7 @@ export class DebouncedTask<T> {
 
   /**
    * Bypasses running {@linkcode task}, immediately settling the current
-   * generation with {@linkcode result} instead — for callers that already
+   * generation with {@linkcode result} instead, for callers that already
    * know the outcome out-of-band (e.g. "there's nothing configured to
    * check"), without waiting out the debounce delay.
    */
@@ -126,7 +126,7 @@ export class DebouncedTask<T> {
 
   /**
    * Runs (or joins an already-running or already-settled) {@linkcode task}
-   * for the current generation. Safe to call redundantly and concurrently —
+   * for the current generation. Safe to call redundantly and concurrently:
    * `task` is invoked at most once per generation.
    */
   async run(): Promise<T> {
@@ -162,7 +162,7 @@ export class DebouncedTask<T> {
   /**
    * Cancels the debounce delay and immediately runs (or joins an
    * already-running, or already-settled) {@linkcode task} for the current
-   * generation — same as {@linkcode run}, but without waiting out
+   * generation: same as {@linkcode run}, but without waiting out
    * {@linkcode delayMs} first.
    *
    * Use this for triggers that are themselves naturally infrequent (e.g. a
@@ -176,13 +176,13 @@ export class DebouncedTask<T> {
 
   /**
    * Forces a fresh run even if the current generation has already
-   * settled — unlike {@linkcode run}, which just returns
+   * settled, unlike {@linkcode run}, which just returns
    * {@linkcode lastResult} in that case. Still debounced by
    * {@linkcode delayMs} like any other {@linkcode schedule} call; use
    * {@linkcode flush} too if the caller also wants to bypass that.
    *
    * For a caller that knows something {@linkcode task} depends on changed
-   * out of band — a value {@linkcode task} reads but that isn't reflected in
+   * out of band: a value {@linkcode task} reads but that isn't reflected in
    * whatever normally triggers {@linkcode schedule}.
    */
   forceRun(): Promise<T> {

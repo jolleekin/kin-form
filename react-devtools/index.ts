@@ -1,5 +1,5 @@
 /**
- * `@kin-form/react-devtools` — an inspector panel (`DevtoolsProvider`,
+ * `@kin-form/react-devtools`: an inspector panel (`DevtoolsProvider`,
  * `useFormDevtools`) for visualizing a `@kin-form/react` form's live tree
  * state during development.
  *

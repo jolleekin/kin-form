@@ -1,5 +1,5 @@
 /**
- * Shared render-counting registry for the speed benchmark — every field
+ * Shared render-counting registry for the speed benchmark: every field
  * component in every harness bumps one entry of this map once per render, so
  * re-render counts are comparable across libraries without each harness
  * reinventing the same bookkeeping.
@@ -22,8 +22,8 @@ export function bump(counters: Counters, key: string): void {
 }
 
 /**
- * Zeroes every counter. Call once mount has fully settled (some libraries —
- * React Hook Form's `useController` among them — render a field more than
+ * Zeroes every counter. Call once mount has fully settled (some libraries,
+ * React Hook Form's `useController` among them, render a field more than
  * once at mount, via an effect-driven subscription resync, before any user
  * interaction), and before a burst starts, so `postMountRenders`/
  * `sumPostMountRenders` reflect only renders the burst itself caused, not an
@@ -46,7 +46,7 @@ export function sumPostMountRenders(
   return sum;
 }
 
-/** One counter's render count since the last `resetCounters` call — 0 if it never mounted (a library with no addressable node for this key). */
+/** One counter's render count since the last `resetCounters` call; 0 if it never mounted (a library with no addressable node for this key). */
 export function postMountRenders(counters: Counters, key: string): number {
   const counter = counters.get(key);
   return counter ? counter.current : 0;

@@ -159,7 +159,7 @@ Deno.test("BaseApi", async (t) => {
       api2.subscribe(() => order.push("api2"));
 
       api1.batch(() => {
-        api2.notifyPublic(); // Unrelated tree — fires immediately.
+        api2.notifyPublic(); // Unrelated tree, fires immediately.
         order.push("mid-batch");
         api1.notifyPublic(); // Deferred until this batch() call returns.
       });

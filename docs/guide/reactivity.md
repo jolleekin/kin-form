@@ -1,7 +1,7 @@
 # Reactivity
 
-Every node in the tree (field, group, or form) is a pub/sub primitive under
-the hood: `subscribe(cb)` registers a callback, and any state change (`value`,
+Every node in the tree (field, group, or form) is a pub/sub primitive under the
+hood: `subscribe(cb)` registers a callback, and any state change (`value`,
 `error`, `touched`, `validating`, ...) calls `notify()`, invoking every
 subscriber.
 
@@ -30,8 +30,8 @@ once per intermediate mutation. Batching is scoped per tree, so mutating two
 unrelated forms in the same call never coalesces one form's notifications with
 the other's.
 
-Call `batch` on any node in the tree: it always coalesces across the whole
-tree, not just the node you called it on. For example, updating two sub-paths of
+Call `batch` on any node in the tree: it always coalesces across the whole tree,
+not just the node you called it on. For example, updating two sub-paths of
 `form.value` directly with `setIn`:
 
 ```ts
@@ -101,10 +101,10 @@ to narrow the subscription to a derived slice, passed as `children`'s second
 argument.
 
 ```tsx
-// Re-render only when submitting or dirty changes.
-<Watch api={form} select={(f) => [f.submitting, f.dirty] as const}>
-  {(form, [submitting, dirty]) => (
-    <button type="submit" disabled={submitting || !dirty}>
+// Re-render only when `submitting || !dirty` changes.
+<Watch api={form} select={(f) => f.submitting || !f.dirty}>
+  {(form, disabled) => (
+    <button type="submit" disabled={disabled}>
       Save
     </button>
   )}

@@ -40,7 +40,7 @@ export type DevtoolsPanelProps = {
 const DOCK_POSITION_STORAGE_KEY = "kin-form-devtools:position";
 
 // `iconX`/`iconY` place the filled corner square within `DockIcon`'s 16x16
-// viewBox — order matches reading order.
+// viewBox; order matches reading order.
 const DOCK_POSITIONS: readonly {
   value: DockPosition;
   iconX: number;
@@ -112,7 +112,7 @@ function insetStyle(position: DockPosition, nearOffset: number): CSSProperties {
   return { [vSide]: nearOffset, [hSide]: 12 } as CSSProperties;
 }
 
-// Hoisted module-level constants, not object literals inline in JSX — built
+// Hoisted module-level constants, not object literals inline in JSX: built
 // once, not re-allocated on every render. The position-dependent inset
 // (`insetStyle`) is merged in at render time since it varies with state.
 const toggleBaseStyle: CSSProperties = {
@@ -206,8 +206,8 @@ function flagLabel(form: FormApi<unknown>): string {
 
 /**
  * The floating devtools panel. Mounted once by {@linkcode DevtoolsProvider}.
- * Subscribes to `registry` for the live set of registered forms, and — only
- * for whichever one is currently selected — renders {@linkcode FieldTreeRow}
+ * Subscribes to `registry` for the live set of registered forms, and, only
+ * for whichever one is currently selected, renders {@linkcode FieldTreeRow}
  * for its tree.
  */
 export function DevtoolsPanel({
@@ -223,7 +223,7 @@ export function DevtoolsPanel({
 
   const forms = [...registry.forms.values()];
   // Falls back to `forms[0]` whenever `selectedId` doesn't resolve to a
-  // currently-registered form — not just when it's `null` — so selecting a
+  // currently-registered form (not just when it's `null`), so selecting a
   // form that later unregisters (e.g. its owning component unmounts) lands
   // on another registered form instead of a blank "no form" pane while the
   // dropdown still lists others.
@@ -292,7 +292,7 @@ export function DevtoolsPanel({
                     // is fixed at `TParentValue = never`, and `never` in a
                     // contravariant (function-parameter) position defeats
                     // `AnyNode` substitution several layers down through
-                    // `validators`/`handleChange` — see `types.ts`'s comment.
+                    // `validators`/`handleChange`; see `types.ts`'s comment.
                     node={selected}
                     depth={0}
                   />

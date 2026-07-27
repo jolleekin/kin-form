@@ -39,7 +39,7 @@ function isEmpty(value: unknown): boolean {
  *
  * The format-specific validators below ({@linkcode url}, {@linkcode email},
  * {@linkcode pattern}) deliberately pass an empty value through instead of
- * also flagging it — combine them with `required()` for a mandatory field,
+ * also flagging it. Combine them with `required()` for a mandatory field,
  * or use them alone for a field that's optional but must be well-formed when
  * present.
  */
@@ -135,7 +135,7 @@ export function pattern<TParentValue = never>(
 /**
  * Flags a `File` larger than {@linkcode bytes}.
  *
- * Passes through a missing file — combine with {@linkcode required} to make
+ * Passes through a missing file; combine with {@linkcode required} to make
  * the upload mandatory.
  */
 export function maxFileSize<TParentValue = never>(
@@ -167,7 +167,7 @@ export interface PasswordOptions {
  * lowercase/symbol character).
  *
  * Unlike the single-rule validators above, this reports one shared `message`
- * for any failing rule rather than identifying which one — pair it with a
+ * for any failing rule rather than identifying which one: pair it with a
  * requirements checklist in the UI (rendered from the same `options`)
  * rather than relying on `message` to explain what's missing.
  */

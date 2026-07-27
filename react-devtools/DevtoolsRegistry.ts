@@ -11,7 +11,7 @@ import type { FormApi } from "@kin-form/core/index.ts";
  * {@linkcode useFormDevtools}.
  *
  * A small dedicated subscribe/notify pair rather than reusing `core`'s
- * `BaseApi` — `BaseApi` isn't part of `@kin-form/core`'s public exports (only
+ * `BaseApi`: `BaseApi` isn't part of `@kin-form/core`'s public exports (only
  * `index.ts` is), and this registry's needs (a flat set of forms, no
  * tree/batching semantics) don't warrant widening that surface.
  */
