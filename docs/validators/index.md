@@ -38,7 +38,7 @@ deno add jsr:@kin-form/validators
 | `password(options, message?)`  | A non-empty string that doesn't meet every enabled rule.                          |
 
 The format-specific validators (`url`, `email`, `pattern`) deliberately pass an
-empty value through instead of also flagging it — combine them with `required()`
+empty value through instead of also flagging it: combine them with `required()`
 for a mandatory field, or use them alone for a field that's optional but must be
 well-formed when present. `maxFileSize` passes through a missing file the same
 way.
@@ -53,7 +53,7 @@ form.field("email", {
 
 Every factory's default `message` is its own name (`"required"`, `"minLength"`,
 `"maxLength"`, `"min"`, `"max"`, `"url"`, `"email"`, `"pattern"`,
-`"maxFileSize"`, `"password"`) — not an English sentence — so it doubles as a
+`"maxFileSize"`, `"password"`), not an English sentence, so it doubles as a
 stable i18n lookup key rather than display text:
 
 ```tsx
@@ -68,7 +68,7 @@ e.g. `required("This field is required")`.
 ## `password`
 
 Reports one shared `message` for any failing rule rather than identifying which
-one — pair it with a requirements checklist in the UI (rendered from the same
+one: pair it with a requirements checklist in the UI (rendered from the same
 options) rather than relying on `message` to explain what's missing:
 
 ```ts
@@ -90,13 +90,13 @@ form.field("password", {
 
 A rule left `undefined` isn't checked.
 
-## `toSchemaValidator()` — Standard Schema adapter
+## `toSchemaValidator()`: Standard Schema adapter
 
 Adapts any [Standard Schema](https://standardschema.dev)-compliant library (zod
 v4+, valibot v1+, arktype, ...) into a `SchemaValidator`, for
 whole-group/whole-form validation. Attach it as a group's or form's
 `schemaValidator`, and it runs the group's own `~standard` validation and
-populates `schemaErrorMap` — a flat, dot-joined path -> message map — from the
+populates `schemaErrorMap` (a flat, dot-joined path -> message map) from the
 result's issues:
 
 ```ts
@@ -114,4 +114,4 @@ child field with that exact `name` can read its own slice of it via
 `field.schemaError`, without any per-field wiring. Use it for whole-tree schema
 validation; individual fields should keep using regular field validators
 (`required`, `pattern`, a hand-written one, ...) rather than a schema of their
-own — mixing the two invites them to disagree.
+own. Mixing the two invites them to disagree.

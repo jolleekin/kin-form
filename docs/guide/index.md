@@ -8,44 +8,44 @@ shows up differently in each library below, but the gap is the same.
 
 ## React Hook Form's problems
 
-- Arrays need a separate hook, `useFieldArray` — no group node for a nested
+- Arrays need a separate hook, `useFieldArray`: no group node for a nested
   object at all.
-- Reusable group/array components need manual casts to stay type-safe — the
+- Reusable group/array components need manual casts to stay type-safe: the
   compile-time path check doesn't survive a generic wrapper.
-- No selective subscription — a component re-renders on any change to a
+- No selective subscription: a component re-renders on any change to a
   field-state key it touches, not on whether the value it computes from those
   keys changed.
-- Inefficient by design — dirty/subscriber bookkeeping runs across every
+- Inefficient by design: dirty/subscriber bookkeeping runs across every
   registered field on every update, not just the one that changed, regardless
   of how many components actually re-render.
-- Heavy — 13.0 KB gzip.
+- Heavy: 13.0 KB gzip.
 
 See [vs React Hook Form](/comparison/react-hook-form) for the full comparison.
 
 ## Formik's problems
 
-- No type safety — `name` is a plain string with no compile-time path check,
+- No type safety: `name` is a plain string with no compile-time path check,
   and neither a field's value nor a group/array's items are typed; a typo'd
   path fails silently at runtime instead of at compile time.
 - Its Context re-renders every consumer on any change, by design.
-- Heavy — 13.9 KB gzip.
+- Heavy: 13.9 KB gzip.
 
 ## TanStack Form's problems
 
-- Validation is ceremony-heavy — named validator slots per event, and
+- Validation is ceremony-heavy: named validator slots per event, and
   cross-field rules are awkward to wire up.
-- Heaviest bundle - 18.5 KB.
+- Heaviest bundle: 18.5 KB.
 - The slowest of the three.
 
 ## Kin Form
 
 Kin Form starts from a different premise: **a form is a tree, and every node in
-that tree — leaf field, nested group, or the form itself — is the same kind of
+that tree (leaf field, nested group, or the form itself) is the same kind of
 thing.**
 
 ### One state machine, one shape
 
-Every node — leaf input, nested object/array, or the form itself — is the same
+Every node (leaf input, nested object/array, or the form itself) is the same
 class, `FieldApi`: `value`, `error`, `touched`, `validating`, `dirty`,
 validators (sync, async, and schema), plus a lazily-populated registry of its
 own child fields.
@@ -60,9 +60,9 @@ That means the same mental model applies everywhere:
 
 - Setting a node's `value` bubbles up into the parent's value.
 - Setting a node's `value` cascades down into every registered child.
-- `touched`/`invalid`/`validating` aggregate from children automatically — a
+- `touched`/`invalid`/`validating` aggregate from children automatically: a
   node is `invalid` if it or any registered child is.
-- Every node can be subscribed to independently — a node's own change never
+- Every node can be subscribed to independently. A node's own change never
   notifies unrelated siblings, and `react/`'s `useWatch`/`Watch` add
   selector-based diffing on top, so a component re-renders only when what it
   computes changes.
@@ -93,7 +93,7 @@ form.field("items.0.id").value; // number
 `DeepKey<T>` computes every dot-joined path into `T` (through objects and arrays
 alike) as a literal string union; `DeepValue<T, Key>` resolves the value type at
 that path. A typo'd path is a compile error, not a silent `undefined` at
-runtime — `field(name, options)` type-checks against your form's actual value
+runtime: `field(name, options)` type-checks against your form's actual value
 type, no manual generics needed.
 
 ### Validation that doesn't fight you
@@ -101,21 +101,21 @@ type, no manual generics needed.
 kin-form supports flexible validation strategies: sync or async, per-node or
 per-subtree.
 
-- **`validators`** — plain sync functions on any node (field, group, or form):
+- **`validators`**: plain sync functions on any node (field, group, or form):
   `(field) => result`, run in order immediately, no debounce; first truthy
   result wins.
-- **`asyncValidator`** — a separate, singular option alongside `validators`,
+- **`asyncValidator`**: a separate, singular option alongside `validators`,
   for a check that needs to hit a server. Debounced, and only fires once
   every `validators` entry already passes.
-- **`schemaValidator`** — one schema (zod, valibot, ...) validating a whole
+- **`schemaValidator`**: one schema (zod, valibot, ...) validating a whole
   subtree's value in one pass, instead of a rule per field. Runs alongside
   `validators`/`asyncValidator`, not instead of them.
 
 Whichever combination is running:
 
-- **Coalesced** — concurrent or redundant `validate()` calls join a single
+- **Coalesced**: concurrent or redundant `validate()` calls join a single
   in-flight run instead of stacking up duplicate work.
-- **Stale-safe** — if a newer run supersedes an older one, the older result is
+- **Stale-safe**: if a newer run supersedes an older one, the older result is
   discarded when it resolves, so it can never clobber a fresher answer.
 
 Cross-field rules are declarative, not manual subscriptions:
@@ -132,8 +132,8 @@ form.field("confirmPassword", {
 });
 ```
 
-Whenever `password` changes, `confirmPassword` re-validates automatically — no
-manual wiring, no re-render-everything.
+Whenever `password` changes, `confirmPassword` re-validates automatically, with
+no manual wiring and no re-render-everything.
 
 ### Stable array item identity
 
@@ -141,12 +141,12 @@ manual wiring, no re-render-everything.
 value and re-key the field registry together, so a field's identity follows its
 item through a reorder, not whatever value now sits at its old index. Every
 field also carries a stable `id`, independent of `name`, that survives the same
-reorders — the right React `key` for a list of array items (`key={field.id}`,
-not `key={index}`).
+reorders. It's the right React `key` for a list of array items
+(`key={field.id}`, not `key={index}`).
 
 ### Opt-in complexity
 
-`@kin-form/core` has no UI framework dependency — it's just the state machine.
+`@kin-form/core` has no UI framework dependency: it's just the state machine.
 `@kin-form/react` adds hooks and render-prop components on top.
 `@kin-form/validators` is a separate package on purpose: validator wording and
 edge cases churn far more than the engine does, so the two version

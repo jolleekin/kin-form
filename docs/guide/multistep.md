@@ -2,7 +2,7 @@
 
 ::: info
 
-React only for now — other framework bindings are planned.
+React only for now: other framework bindings are planned.
 
 :::
 
@@ -63,13 +63,13 @@ to `onBeforeNext`.
    invalid, marks it `touched` (so errors on never-blurred fields become
    visible) and returns `false` without advancing.
 2. Calls `onBeforeNext`, if given.
-3. Advances to the next linear index — unless `onBeforeNext` redirected
+3. Advances to the next linear index, unless `onBeforeNext` redirected
    elsewhere (see below).
 
 ## Branching and persisting progress
 
 `onBeforeNext` runs after the current step passes validation but before it
-advances — the hook for persisting progress (e.g. saving a draft) or branching
+advances: the hook for persisting progress (e.g. saving a draft) or branching
 to a non-linear next step:
 
 ```tsx
@@ -90,7 +90,7 @@ unchanged. Returning a step name (or `null`) redirects there instead.
 
 ## `back()` and `jump()`
 
-Neither validates — they're for navigation the user triggers directly (a step
+Neither validates: they're for navigation the user triggers directly (a step
 list, a "Skip" control), not for the current step's own "Next" action:
 
 ```tsx
@@ -102,7 +102,7 @@ wizard.jump("payment"); // By step name.
 ## `onStepChanged`
 
 Runs after `stepIndex` actually changes, from `next()`, `back()`, or `jump()`
-alike. Purely informational — it can't cancel anything:
+alike. Purely informational: it can't cancel anything.
 
 ```tsx
 useMultistep(form, steps, {

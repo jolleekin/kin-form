@@ -1,7 +1,7 @@
 # Basic
 
 [Concepts](/guide/concepts) covered the state machine in the abstract; this page
-builds an actual form with it — starting with `Watch`, the simplest way to bind
+builds an actual form with it, starting with `Watch`, the simplest way to bind
 an input, then promoting that into a reusable `TextField`. The rest of these
 guides assume a component like it exists.
 
@@ -69,7 +69,7 @@ whatever `api` it's given.
 
 ## Promoting to a reusable `TextField`
 
-The `email`/`password` fields above are nearly identical — only the field name
+The `email`/`password` fields above are nearly identical: only the field name
 and `type` differ. That repetition is the signal to extract a component, not a
 `Watch` render prop:
 
@@ -105,12 +105,12 @@ export function TextField<TParentValue>(
 }
 ```
 
-Note the swap from `Watch` to `useWatch` — the general rule, not specific to
-this example: `Watch` is for a shape that appears once; once it's a named,
+Note the swap from `Watch` to `useWatch`. That's the general rule, not specific
+to this example: `Watch` is for a shape that appears once; once it's a named,
 reused component, call the hook directly instead of wrapping a render prop
 around it.
 
-`TextField` also takes an already-resolved `api` rather than `parent`+`name` —
+`TextField` also takes an already-resolved `api` rather than `parent`+`name`:
 the caller resolves the field (and its options) once, at the call site, the same
 way it already does for `Watch` above. `TextField` only needs to know it's
 rendering _some_ `FieldApi<string, TParentValue>`, not where in the tree it
@@ -118,7 +118,7 @@ lives or how it was configured.
 
 ## Promoting to a reusable `SubmitButton`
 
-The submit button's `Watch` follows the same shape as the fields above — pull it
+The submit button's `Watch` follows the same shape as the fields above. Pull it
 into a component that calls `useWatch` directly, and every form in the app
 agrees on when submission is disabled:
 
@@ -172,7 +172,7 @@ function LoginForm() {
 ```
 
 In the same way, a `SelectField`, `AddressField`, `ItemsField`, or a wrapper
-around any third-party input all follow this shape — an already-resolved `api`
+around any third-party input all follow this shape: an already-resolved `api`
 in, `useWatch` to subscribe, whatever markup and value-parsing that input needs
 in between. Write each one once per app and every call site collapses to a
 single component call, typed against whatever value shape it's mounted on.

@@ -1,22 +1,22 @@
 # Flat vs. Nested Structure
 
 Kin Form doesn't force one tree shape for a nested value. You can build a form
-structure that mirrors it exactly — one `FieldApi` per object/array level — or
-flatten some subtrees, or flatten the whole thing to dotted paths off the form
+structure that mirrors it exactly, with one `FieldApi` per object/array level,
+or flatten some subtrees, or flatten the whole thing to dotted paths off the form
 root. The choice is made independently at each level, not picked for you.
-Default to flat; reach for a nested field only where it needs its own node — its
+Default to flat; reach for a nested field only where it needs its own node: its
 own `validators`/`schemaValidator`, its own aggregated `touched`/`invalid`, or
 stable per-item identity for a reorderable array.
 
 It's the same call a React app makes about where state lives: most of it doesn't
 need to be in the root component, but the piece genuinely local to one part of
 the tree owns itself there instead of being threaded down from the top. A Kin
-Form nested field is that same move applied to one slice of the form — `value`
+Form nested field is that same move applied to one slice of the form: `value`
 stays one coherent object across the tree either way; a nested field just lets a
 slice of it additionally own its _own_ `error`/`touched`/`validating` and
 validators, where that's worth it.
 
-Nested structure is native, not a workaround bolted onto a flat model — which is
+Nested structure is native, not a workaround bolted onto a flat model, which is
 what makes it possible to pull a subtree into a reusable field component that
 only needs to know its own slice of the form, not the whole shape. An
 `AddressField` built against `FieldApi<Address, TParentValue>` works the same
@@ -45,7 +45,7 @@ type Checkout = {
 
 ## Nested: a field per level
 
-A `FieldApi` per object/array level — `shipping` and each `items` entry are
+A `FieldApi` per object/array level: `shipping` and each `items` entry are
 resolved nodes of their own, with `email` staying a direct child of the form:
 
 ```
@@ -112,15 +112,15 @@ function CheckoutForm() {
 
 Each level is its own node: `shippingGroup.invalid`/`shippingGroup.touched`
 aggregate from just its own children, and `shippingGroup` can carry `validators`
-or a `schemaValidator` scoped to the address alone — see
+or a `schemaValidator` scoped to the address alone. See
 [Nested Objects](/guide/nested-objects) and
 [Form Composition](/guide/form-composition#nested-fields-addressfield) for
 building reusable `AddressField`/`ItemsField` components.
 
 ## Flat: dotted paths off the root
 
-No intermediate `shipping` or `items.0` node is ever resolved — every leaf is a
-direct child of the form, addressed by its full dotted path:
+No intermediate `shipping` or `items.0` node is ever resolved: every leaf is a
+direct child of the form, addressed by its full dotted path.
 
 ```
 FormApi<Checkout>
@@ -180,15 +180,15 @@ function CheckoutForm() {
 
 :::
 
-There's no `shipping`-level or `items`-level aggregate state — every field
+There's no `shipping`-level or `items`-level aggregate state: every field
 reports directly to `form`. See
 [Resolve the intermediate field first](/guide/nested-objects#resolve-the-intermediate-field-first).
 
 ::: tip
 
 The [array mutation helpers](/guide/dynamic-arrays) still work without resolving
-`items` as its own field — they only need the array's name, not a resolved node:
-`form.pushItem("items", { code: "", quantity: 1 })`. What's missing is a stable
+`items` as its own field: they only need the array's name, not a resolved node,
+e.g. `form.pushItem("items", { code: "", quantity: 1 })`. What's missing is a stable
 per-item key, since that only exists on a resolved `FieldApi`.
 
 If reordering is needed, stamp one on yourself. A `Symbol`-keyed property stays
@@ -224,7 +224,7 @@ A [schema validator](/guide/schema-validation) checks the whole tree in one pass
 and already produces a flat, dot-joined path -> message map (`schemaErrorMap`);
 `field.schemaError` reads a field's own slice by walking up through any
 intermediate fields to find it. So unlike hand-written per-field `validators`, a
-`schemaValidator` doesn't push you toward one shape over the other — nest where
+`schemaValidator` doesn't push you toward one shape over the other: nest where
 it's worth its own `validators`/aggregate `touched`/`invalid`, stay flat where
 it isn't, without worrying about where the schema was attached.
 
@@ -236,10 +236,10 @@ its keep.
 ## Mixing the two
 
 Nothing stops you from resolving some levels as their own nested fields and
-leaving others flat in the same tree — e.g. keep `shipping` as its own field
+leaving others flat in the same tree, e.g. keep `shipping` as its own field
 (its own validators, its own "please fix the address" banner) while leaving
 `items` flat because item-level errors are read straight off a schema's
-`schemaErrorMap`. That's the default outcome, not a special case — most real
+`schemaErrorMap`. That's the default outcome, not a special case: most real
 forms end up a mix, the same way most React trees mix lifted and component-local
 state without it being notable.
 

@@ -1,7 +1,7 @@
 # Concepts
 
-Every node in a Kin Form tree — a leaf input, a nested object, a nested array,
-or the form itself — is the same class, `FieldApi`:
+Every node in a Kin Form tree (a leaf input, a nested object, a nested array,
+or the form itself) is the same class, `FieldApi`:
 
 ```
 BaseApi → FieldApi<TValue, TParentValue> → FormApi<TValue>
@@ -17,14 +17,14 @@ This mirrors the DOM's own `EventTarget → Node → Document` shape: one node t
 with optional children, not a separate class per leaf/container. Whether an
 object/array-valued field is treated as one atomic leaf (bind `handleChange`
 straight to a custom control) or decomposed into children (call `field()` per
-sub-path) is entirely up to you — nothing in the engine forces either.
+sub-path) is entirely up to you; nothing in the engine forces either.
 `FormApi` is just the `FieldApi` at the tree's root, with `parent` `null` and
 `name` `""`, plus `submitting`/`reset`/`resetField`/`handleSubmit` added on
 top.
 
 ## Shared state
 
-Every node — leaf, nested field, or form — exposes:
+Every node (leaf, nested field, or form) exposes:
 
 | Property         | Type                            | Meaning                                                                                                                                                                   |
 | ---------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -40,14 +40,14 @@ Every node — leaf, nested field, or form — exposes:
 | `id`             | `number`                        | A stable identity for this instance, independent of `name` — survives [array re-keying](/guide/dynamic-arrays).                                                          |
 
 Every node also has `handleBlur`/`handleChange`, convenience handlers for
-binding to a single control — meaningful whether that node is a leaf input or a
+binding to a single control, meaningful whether that node is a leaf input or a
 whole nested object/array edited atomically as one control (see
 [Nested Objects](/guide/nested-objects)).
 
 ## Getting a field
 
 `field` is called **relative to the node it's called on**, not the whole form,
-and is idempotent — calling it again with the same name returns the same
+and is idempotent: calling it again with the same name returns the same
 instance, applying the given options instead of creating a new one:
 
 ```ts

@@ -82,21 +82,21 @@ function LoginForm() {
 
 That "one line" row is a real cost, not a rounding error: for a form with a
 handful of native inputs each used once, `register` genuinely produces less code
-than a `<Watch>` render prop. Kin Form's bet is the opposite direction — build
+than a `<Watch>` render prop. Kin Form's bet is the opposite direction: build
 the field component once (`TextField`, `AddressField`, `SubmitButton`; see
 [Form composition](#form-composition) below) and every call site collapses to
 one line too, typed against that form's value shape. That trade pays for itself
-fast in an app with many forms, or a field library shared across several apps —
-a single one-off form is the case where it doesn't pay off yet, and reaching for
+fast in an app with many forms, or a field library shared across several apps.
+A single one-off form is the case where it doesn't pay off yet, and reaching for
 `<Watch>` inline is the right call there too.
 
 This is the one section where that distinction matters. Wrapping a plain
-`<input>` in `Controller` just to force it controlled wouldn't prove anything —
-nobody writes that in real code, since `register` already does the job.
+`<input>` in `Controller` just to force it controlled wouldn't prove anything,
+since nobody writes that in real code: `register` already does the job.
 Everywhere else on this page, both sides instead bind to a controlled
 `<TextInput>` component (the same kind of stand-in `CountrySelect` is below), so
 `Controller`/`useController` on the React Hook Form side is only reached for
-where it's actually earning its keep — bridging a controlled component — and the
+where it's actually earning its keep (bridging a controlled component), and the
 topic each section is actually about doesn't get muddled by the binding-model
 difference covered here.
 
@@ -393,7 +393,7 @@ Both need a thin adapter from a separate package to plug a schema in:
 - React Hook Form: `standardSchemaResolver` from `@hookform/resolvers`
 - Kin Form: `toSchemaValidator()` from `@kin-form/validators`
 
-Both adapters can be used with any Standard Schema library — zod, valibot, ...
+Both adapters can be used with any Standard Schema library: zod, valibot, ...
 
 <SideBySide>
 
@@ -593,7 +593,7 @@ function SignupForm() {
 
 ## Dirty tracking & reset
 
-Both track dirtiness at both levels — whole form and per field — but
+Both track dirtiness at both levels (whole form and per field), but
 differently.
 
 <SideBySide>
@@ -799,14 +799,14 @@ function ProfileForm({ initialValue }: { initialValue: Profile }) {
 ## Reactivity & selective re-rendering
 
 React Hook Form's `watch()` subscribing the _calling component_ is a common
-footgun — it's easy to reach for it inside a large form component and
+footgun: it's easy to reach for it inside a large form component and
 re-introduce a re-render on every keystroke across the whole thing, which is why
 the docs recommend `useWatch()` instead for anything beyond reading a value once
 at submit time. React Hook Form also splits _value_ from _field state_ (errors,
-touched, dirty, ...) into two separate hooks — `useWatch` only watches values,
+touched, dirty, ...) into two separate hooks: `useWatch` only watches values,
 so reading a field's error or touched status means also subscribing to
 `useFormState`. `FieldApi` carries both on the same object, so Kin Form's single
-`useWatch` — via `select` — subscribes to either, or both together, in one call.
+`useWatch`, via `select`, subscribes to either, or both together, in one call.
 
 <SideBySide>
 
@@ -875,7 +875,7 @@ function Field<TParentValue>({ api }: { api: FieldApi<string, TParentValue> }) {
 
 ## Form composition
 
-Both let you build a reusable field component — leaf or group/array alike —
+Both let you build a reusable field component (leaf or group/array alike)
 instead of repeating markup at every call site.
 
 ### Leaf field
@@ -941,8 +941,8 @@ function TextField<TParent>(
 
 </SideBySide>
 
-The shapes end up close in spirit — both return one component reusable across
-every form — but the type-safety story differs:
+The shapes end up close in spirit (both return one component reusable across
+every form), but the type-safety story differs:
 
 **What's different:**
 
@@ -1101,7 +1101,7 @@ function Form() {
 
 ## Multistep forms
 
-Neither ships an official multi-step/wizard _component_ — Kin Form ships a
+Neither ships an official multi-step/wizard _component_. Kin Form ships a
 dedicated hook instead, [`useMultistep`](/guide/multistep); React Hook Form's
 docs demonstrate the hand-rolled version.
 

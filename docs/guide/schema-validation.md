@@ -1,6 +1,6 @@
 # Schema Validation
 
-The second validation mechanism — see
+The second validation mechanism. See
 [Per-node Validation](/guide/per-node-validation#two-kinds-of-validation) for
 how it relates to `validators`. `toSchemaValidator()` (from
 `@kin-form/validators`) adapts any
@@ -8,7 +8,7 @@ how it relates to `validators`. `toSchemaValidator()` (from
 valibot v1+, arktype, ...) into a `SchemaValidator` that validates a whole
 group's or form's value in one pass.
 
-Pass it as `schemaValidator`, not `validators` — it's a distinct option on
+Pass it as `schemaValidator`, not `validators`, since it's a distinct option on
 `FieldApi`/`FormApi`:
 
 ```ts
@@ -27,8 +27,8 @@ const form = new FormApi({
 
 Running the schema populates `schemaErrorMap`, a flat dot-joined path -> message
 map (e.g. `{ "email": "Invalid email", "items.0.code": "Required" }`) built from
-every issue's `path`. A field reads its own slice via `field.schemaError` — no
-per-field wiring needed, even through [intermediate fields](/guide/nested-objects),
+every issue's `path`. A field reads its own slice via `field.schemaError`, with
+no per-field wiring needed, even through [intermediate fields](/guide/nested-objects),
 since the lookup walks up `parent` until it finds a map with an answer:
 
 ```tsx
@@ -52,7 +52,7 @@ validator's `error` and a schema's `schemaError` at once.
 ## Works the same nested or flat
 
 One schema covers the whole subtree, so nested fields don't need
-[intermediate fields](/guide/nested-objects) just to be addressed — a schema on
+[intermediate fields](/guide/nested-objects) just to be addressed: a schema on
 `form` validates `contact.name` or `guests.0.email` whether or not anything
 called `field("contact")` first:
 
@@ -71,7 +71,7 @@ const contact = form.field("contact");
 ```
 
 Exception: if `contact` has its own `schemaValidator`, it takes precedence over
-`form`'s for everything under it — the nearer validator always wins, so
+`form`'s for everything under it. The nearer validator always wins, so
 `contact.name` would read from `contact`'s own map instead. An issue on the
 array itself (e.g. Zod's `.min(1, "Add at least one guest")` on `guests`) has no
 field at that exact path, so read it off the map directly:
@@ -82,6 +82,6 @@ worth it.
 ## Debouncing
 
 Like `asyncValidator`, runs are debounced by `validationDebounceMs` (default
-`0`) — same debounce/coalescing/`handleBlur`-flush behavior as
+`0`), with the same debounce/coalescing/`handleBlur`-flush behavior as
 [described here](/guide/per-node-validation#async-validator-and-debouncing).
 

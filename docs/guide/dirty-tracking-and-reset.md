@@ -19,7 +19,7 @@ separate aggregation: its `value` already unions every descendant's, so one
 check against its baseline slice covers everything underneath.
 
 The baseline is set once, at construction, and only moves via
-`reset()`/`resetField()` — not on every render, even with a fresh `initialValue`
+`reset()`/`resetField()`, not on every render, even with a fresh `initialValue`
 object each time (as a re-rendering React hook would pass). This keeps it stable
 no matter how often `updateOptions` runs underneath.
 
@@ -53,10 +53,10 @@ form.resetField("email", saved);
 ```
 
 It moves that field's slice of the baseline (defaulting to its current value, a
-no-op) the same way `reset` does for the whole tree — siblings and the rest of
+no-op) the same way `reset` does for the whole tree: siblings and the rest of
 the baseline stay untouched. If the field is currently registered (mounted),
 `resetField` also restores its `value` and clears its `touched`. If not, only
-the baseline moves — it never registers a field just to reset it, so a
+the baseline moves; it never registers a field just to reset it, so a
 conditionally-rendered field you haven't mounted yet stays unregistered but
 starts clean whenever it does.
 

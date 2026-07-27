@@ -1,7 +1,7 @@
 # Dynamic Arrays
 
-Every [`FieldApi`](/guide/nested-objects) exposes array mutation helpers —
-called with a path whose value is an array — that update the immutable value
+Every [`FieldApi`](/guide/nested-objects) exposes array mutation helpers,
+called with a path whose value is an array, that update the immutable value
 **and** re-key the field registry, so field identity survives a reorder:
 
 ```ts
@@ -15,14 +15,14 @@ form.replaceItem("items", 1, updatedItem);
 
 `swapItems` exchanges only the two given indices; everything between stays
 untouched. `moveItem` shifts every item strictly between `fromIndex` and
-`toIndex` one slot over — the same result as splicing the item out and
+`toIndex` one slot over, the same result as splicing the item out and
 re-inserting it elsewhere. `removeItem` unregisters the removed item's field(s)
 first, so they don't leak.
 
 ## Addressing the node's own value
 
 Every array method also accepts `""` for `name`, addressing **the node's own
-value** — for a reusable component that receives a
+value**, for a reusable component that receives a
 `FieldApi<Item[], TParentValue>` and shouldn't need the dotted path to it:
 
 ::: code-group
@@ -61,7 +61,7 @@ function ArrayField<Item, TParentValue>(
 Without re-keying, a field bound to array index 2 would silently read/write
 whatever value now lives at index 2 after a reorder, not the item the user was
 actually editing. `id` (see [Concepts](/guide/concepts#shared-state)) stays
-stable across a reorder even as `name` (the index-based path) changes — the
+stable across a reorder even as `name` (the index-based path) changes: it's the
 right key for a React list (`key={field.id}` instead of `key={index}`).
 
 ## What's next

@@ -1,6 +1,6 @@
 # Reactivity
 
-Every node in the tree — field, group, or form — is a pub/sub primitive under
+Every node in the tree (field, group, or form) is a pub/sub primitive under
 the hood: `subscribe(cb)` registers a callback, and any state change (`value`,
 `error`, `touched`, `validating`, ...) calls `notify()`, invoking every
 subscriber.
@@ -16,21 +16,21 @@ unsubscribe();
 
 ::: info
 
-Registering or unregistering a child field doesn't notify through this channel —
+Registering or unregistering a child field doesn't notify through this channel;
 that's `onChildrenChanged`, meant for introspection tooling like devtools.
 
 :::
 
 ## Batching
 
-A single logical change can touch more than one node — setting a field's `value`
+A single logical change can touch more than one node: setting a field's `value`
 also updates the parent group's aggregate state. These are coalesced: within one
 synchronous operation, each affected node notifies its subscribers **once**, not
 once per intermediate mutation. Batching is scoped per tree, so mutating two
 unrelated forms in the same call never coalesces one form's notifications with
 the other's.
 
-Call `batch` on any node in the tree — it always coalesces across the whole
+Call `batch` on any node in the tree: it always coalesces across the whole
 tree, not just the node you called it on. For example, updating two sub-paths of
 `form.value` directly with `setIn`:
 
@@ -47,7 +47,7 @@ console.log(notifications); // 1, not 2.
 ```
 
 Without `batch`, the same two assignments would notify `form`'s subscribers
-twice — once per `value` set.
+twice, once per `value` set.
 
 ## Subscribing from your UI layer
 

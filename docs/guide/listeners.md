@@ -10,11 +10,11 @@ form.field("country", {
 });
 ```
 
-It fires whenever `value` settles to something new, from any source , but not
+It fires whenever `value` settles to something new, from any source, but not
 for the initial value seeded at construction. Like `validators`/`dependents`,
 it's refreshed on every `field` call, so a caller passing a fresh closure each
 time (e.g. a React re-render) never invokes a stale one. This works identically
-on any node — leaf, nested field, or the form root — since it's a plain
+on any node (leaf, nested field, or the form root) since it's a plain
 `FieldApiOptions` option, not something bolted onto leaves specifically.
 
 ## At the form root: persisting form state
@@ -47,11 +47,11 @@ const form = useForm({
 
 ## Debouncing
 
-`onValueChanged` fires on every settled change — for a text input bound via
+`onValueChanged` fires on every settled change: for a text input bound via
 `handleChange`, that's every keystroke. Unlike `asyncValidator`
 (`validationDebounceMs`), there's no built-in debounce for `onValueChanged`:
 it's a synchronous, no-return-value callback, so debouncing it is just wrapping
-it in a timer. That's left to you on purpose — trailing vs. leading edge,
+it in a timer. That's left to you on purpose. Trailing vs. leading edge,
 `maxWait`, and so on are real choices a single built-in policy wouldn't fit
 everyone.
 
@@ -95,9 +95,9 @@ const form = useForm({
 
 ## Listening for `touched`/`invalid`/`validating`
 
-There's no dedicated callback for those — `onValueChanged` is deliberately
+There's no dedicated callback for those: `onValueChanged` is deliberately
 scoped to values, the case that comes up most in practice (validation side
-effects, persistence). To react to a different property, subscribe directly —
+effects, persistence). To react to a different property, subscribe directly;
 see [Reactivity](/guide/reactivity).
 
 ::: code-group

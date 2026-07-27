@@ -22,7 +22,7 @@ features:
     details: <code>FieldApi</code> for leaf inputs, nested objects and arrays alike; <code>FormApi</code> is just the <code>FieldApi</code> at the root, plus submit handling. A form is just a tree of nodes, mirroring the DOM's own <code>Node</code>/<code>Document</code> shape.
   - icon: 🔑
     title: Type-safe dot paths
-    details: <code>form.field("address.line1")</code> or <code>form.field("items.0.code")</code> type-checks against your value type. <code>DeepKey</code>/<code>DeepValue</code> compute every valid path and its value type — typos are compile errors, not runtime surprises.
+    details: <code>form.field("address.line1")</code> or <code>form.field("items.0.code")</code> type-checks against your value type. <code>DeepKey</code>/<code>DeepValue</code> compute every valid path and its value type, so typos are compile errors, not runtime surprises.
   - icon: 🧩
     title: Build once, reuse anywhere
     details: Build a field, group, or button component once — <code>TextField</code>, <code>AddressField</code>, <code>SubmitButton</code> — and mount it anywhere.

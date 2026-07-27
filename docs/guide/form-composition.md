@@ -2,13 +2,13 @@
 
 ::: info
 
-React only for now — other framework bindings are planned.
+React only for now: other framework bindings are planned.
 
 :::
 
 `Watch` is convenient for a field that appears once, but repeating a render prop
-doesn't scale past a couple of fields. For anything reused — a text input, an
-address block, a line-item list, a submit button — build a named, typed
+doesn't scale past a couple of fields. For anything reused (a text input, an
+address block, a line-item list, a submit button), build a named, typed
 component around `useWatch` once and reuse it.
 
 ## Leaf fields: `TextField`, `NumberField`
@@ -28,7 +28,7 @@ than repeated wiring:
 ```
 
 Both take an already-resolved `api: FieldApi<TValue, TParentValue>` rather than
-`parent`+`name` — the caller resolves the field (and its `validators`,
+`parent`+`name`: the caller resolves the field (and its `validators`,
 `dependents`, ...) once, at the call site, via `parent.field(name, options)`.
 `TextField`/`NumberField` only need to know they're rendering _some_
 `FieldApi<string, TParentValue>`/`FieldApi<number, TParentValue>`, not where in
@@ -36,7 +36,7 @@ the tree it lives or how it was configured.
 
 ## Nested fields: `AddressField`
 
-A component composes fields — leaf or nested — under its own slice of the value,
+A component composes fields (leaf or nested) under its own slice of the value,
 as a resolved field. It doesn't need the dotted path leading to it, only that it
 owns an `Address`:
 
@@ -84,7 +84,7 @@ function AddressField<TParentValue>(
 
 An array component composes the same way, plus array mutation helpers and a
 stable React key. Use `field.id` (or `group.id`), not the array index, as the
-`key` — index-as-key misattributes uncontrolled DOM state (focus, cursor
+`key`: index-as-key misattributes uncontrolled DOM state (focus, cursor
 position) to the wrong row after a reorder, since the item that _renders_ at
 index 2 changes but the component instance React reuses for index 2 doesn't:
 
@@ -131,15 +131,15 @@ array changes; `api.field(i)` resolves the stable `item.id` without subscribing
 to each item.
 
 `Item` here is a nested object, so each element is decomposed into its own
-`FieldApi` too — hence `ItemField` taking a resolved `item`. For a leaf item
-type (e.g. `string[]`), the same `api.field(i)` call works unchanged — there's
+`FieldApi` too, hence `ItemField` taking a resolved `item`. For a leaf item
+type (e.g. `string[]`), the same `api.field(i)` call works unchanged: there's
 no separate array-of-leaves API.
 
 ## `SubmitButton`
 
 [Basic](/guide/basic) builds a `SubmitButton` that disables while `submitting`.
-This one also disables while the form isn't `dirty` — nothing to submit until
-something's changed — but the shape is the same: `useWatch` directly, no render
+This one also disables while the form isn't `dirty` (nothing to submit until
+something's changed), but the shape is the same: `useWatch` directly, no render
 prop, so every form in the app agrees on when submission is disabled:
 
 ```tsx
