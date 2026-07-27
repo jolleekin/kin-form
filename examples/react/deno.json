@@ -14,6 +14,7 @@
   "imports": {
     "@deno/vite-plugin": "npm:@deno/vite-plugin@^2.0.2",
     "@tailwindcss/vite": "npm:@tailwindcss/vite@^4.3.2",
+    "@tanstack/react-virtual": "npm:@tanstack/react-virtual@^3.14.8",
     "@types/react": "npm:@types/react@^19.2.14",
     "@types/react-dom": "npm:@types/react-dom@^19.2.3",
     "@vitejs/plugin-react": "npm:@vitejs/plugin-react@^6.0.1",

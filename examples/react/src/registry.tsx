@@ -160,4 +160,18 @@ export const examples: ExampleEntry[] = [
     ),
     Component: lazy(() => import("./examples/flat-array-validation/App.tsx")),
   },
+  {
+    slug: "virtual-list",
+    title: "Virtual list",
+    description: (
+      <>
+        A 10,000-row contact directory windowed with{" "}
+        <code>@tanstack/react-virtual</code>, one <code>FieldApi</code>{" "}
+        per row. Scrolling a row out of view unmounts it, but its value,
+        touched, and error state live in the field tree, not the DOM node, so
+        scroll back and they're still there.
+      </>
+    ),
+    Component: lazy(() => import("./examples/virtual-list/App.tsx")),
+  },
 ];

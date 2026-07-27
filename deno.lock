@@ -14,6 +14,7 @@
     "npm:@standard-schema/spec@^1.1.0": "1.1.0",
     "npm:@tailwindcss/vite@^4.3.2": "4.3.2_vite@8.1.3",
     "npm:@tanstack/react-form@1": "1.33.1_react@19.2.7_react-dom@19.2.7__react@19.2.7",
+    "npm:@tanstack/react-virtual@^3.14.8": "3.14.8_react@19.2.7_react-dom@19.2.7__react@19.2.7",
     "npm:@testing-library/react@^16.3.2": "16.3.2_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.7_react-dom@19.2.7__react@19.2.7",
     "npm:@types/react-dom@^19.2.3": "19.2.3_@types+react@19.2.17",
     "npm:@types/react@^19.2.14": "19.2.17",
@@ -894,8 +895,19 @@
         "use-sync-external-store"
       ]
     },
+    "@tanstack/react-virtual@3.14.8_react@19.2.7_react-dom@19.2.7__react@19.2.7": {
+      "integrity": "sha512-O39GJQpAYEJcIu3uN1//YtmhjSEOyw75vg9CKCatBDPiD5hKtZQoJHfferyrB/LdOD3UWaoMLWtdEjarwIwdDw==",
+      "dependencies": [
+        "@tanstack/virtual-core",
+        "react",
+        "react-dom"
+      ]
+    },
     "@tanstack/store@0.11.0": {
       "integrity": "sha512-WlzzCt3xi0G6pCAJu1U+2jiECwabETDpQDi3hfkFZvJii9AuZqEKbOiVarX1/bWhTNjU486yQtJCCasi/0q+Cw=="
+    },
+    "@tanstack/virtual-core@3.17.6": {
+      "integrity": "sha512-h0/Ebo18CkOrChlQIhNtQkM5ySUnh/GumQ/D1st3hG2HWUPEF+ILUc2k29UtivCi/9G7w7G3/f7Xyd5cCFbKBw=="
     },
     "@testing-library/dom@10.4.1": {
       "integrity": "sha512-o4PXJQidqJl82ckFaXUeoAW+XysPLauYI43Abki5hABd853iMhitooc6znOnczgbTYmEP6U6/y1ZyKAIsvMKGg==",
@@ -1845,6 +1857,7 @@
         "dependencies": [
           "npm:@deno/vite-plugin@^2.0.2",
           "npm:@tailwindcss/vite@^4.3.2",
+          "npm:@tanstack/react-virtual@^3.14.8",
           "npm:@types/react-dom@^19.2.3",
           "npm:@types/react@^19.2.14",
           "npm:@vitejs/plugin-react@^6.0.1",
