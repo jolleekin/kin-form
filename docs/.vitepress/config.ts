@@ -1,4 +1,5 @@
 import { defineConfig } from "vitepress";
+import llmstxt from "vitepress-plugin-llms";
 
 // TODO: replace with the real docs hostname once hosting is decided (see
 // ROADMAP.md). Everything below (sitemap.xml, canonical links, og:url) keys
@@ -15,6 +16,26 @@ export default defineConfig({
 
   sitemap: {
     hostname: SITE_URL,
+  },
+
+  vite: {
+    plugins: [
+      // llms.txt itself is hand-written (docs/public/llms.txt); this only
+      // preserves each page's raw Markdown alongside its rendered HTML.
+      llmstxt({
+        domain: SITE_URL,
+        generateLLMsTxt: false,
+        generateLLMsFullTxt: false,
+        // Not a doc page: a Vue component authored as Markdown for the
+        // homepage layout (see .vitepress/theme/index.ts).
+        ignoreFiles: [".vitepress/theme/home-snippets.md"],
+        // The cast works around examples/react's vite@8 (a different
+        // workspace member) getting hoisted over vitepress's own vite@5 in
+        // this Deno workspace's shared node_modules, which leaves
+        // vitepress-plugin-llms (no vite dependency of its own) typed
+        // against the wrong instance of `Plugin`.
+      }) as never,
+    ],
   },
 
   transformHead: ({ pageData }) => {

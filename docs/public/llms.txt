@@ -1,0 +1,56 @@
+# Kin Form
+
+> Form state that stays out of your way. A framework-agnostic form-state
+> engine (`@kin-form/core`) with React bindings (`@kin-form/react`), typed
+> nested field paths, and per-node or whole-tree validation.
+
+Kin Form models a form as a tree: every node, from a single input to a nested
+group or array to the form itself, is the same `FieldApi` class. Reusable
+field/group/array components, type-safe dot-path field access
+(`form.field("address.line1")`), and declarative cross-field validation all
+follow from that one idea.
+
+## Guide
+
+- [Why Kin Form?](/guide.md): the core mental model, and how it differs from
+  React Hook Form, Formik, and TanStack Form
+- [Getting Started](/guide/getting-started.md)
+- [Concepts](/guide/concepts.md)
+- [Basic](/guide/basic.md): building a `TextField` component from `Watch`
+- [Per-node Validation](/guide/per-node-validation.md)
+- [Schema Validation](/guide/schema-validation.md)
+- [Linked Fields](/guide/linked-fields.md)
+- [Listeners](/guide/listeners.md)
+- [Nested Objects](/guide/nested-objects.md)
+- [Dynamic Arrays](/guide/dynamic-arrays.md)
+- [Flat vs. Nested Structure](/guide/flat-vs-nested.md)
+- [Dirty Tracking & Reset](/guide/dirty-tracking-and-reset.md)
+- [Submission Handling](/guide/submission-handling.md)
+- [Async Initial Values](/guide/async-initial-values.md)
+- [Reactivity](/guide/reactivity.md)
+- [Form Composition](/guide/form-composition.md)
+- [Multistep Forms](/guide/multistep.md)
+- [Devtools](/guide/devtools.md)
+
+## Packages
+
+- [@kin-form/core](https://jsr.io/@kin-form/core): the framework-agnostic
+  engine, `FieldApi`/`FormApi`, zero runtime dependencies
+- [@kin-form/react](https://jsr.io/@kin-form/react): React bindings,
+  `useForm`/`useWatch`/`Watch`/`useMultistep`
+- [@kin-form/validators](https://jsr.io/@kin-form/validators): validator
+  factories plus `toSchemaValidator()` for zod/valibot and other Standard
+  Schema libraries
+- [@kin-form/react-devtools](https://jsr.io/@kin-form/react-devtools): a
+  dev-only inspector panel for a form's live tree state
+
+## Comparison
+
+- [Overview](/comparison.md)
+- [vs React Hook Form](/comparison/react-hook-form.md)
+
+## Optional
+
+- [Source](https://github.com/jolleekin/kin-form)
+- [Roadmap](https://github.com/jolleekin/kin-form/blob/main/ROADMAP.md)
+- [Contributing](https://github.com/jolleekin/kin-form/blob/main/CONTRIBUTING.md)
