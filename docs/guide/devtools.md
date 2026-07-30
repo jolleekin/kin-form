@@ -68,8 +68,7 @@ function CheckoutForm() {
 ```
 
 The optional `name` (`"checkout"` above) is shown in the panel's form selector
-instead of the form's numeric id, useful once more than one form is
-registered.
+instead of the form's numeric id, useful once more than one form is registered.
 
 `useFormDevtools` is a no-op without an ancestor `DevtoolsProvider`: no
 subscriber is added to the form's tree, so it's safe to leave the call in place
@@ -79,8 +78,8 @@ and mount `DevtoolsProvider` conditionally based on environment.
 
 The panel docks to a corner of the viewport (`"top-left"`, `"top-right"`,
 `"bottom-left"`, or `"bottom-right"`), defaulting to `"bottom-right"`. Set a
-different default with `initialPosition`, or let the user reposition it from
-the panel (the choice persists across reloads):
+different default with `initialPosition`, or let the user reposition it from the
+panel (the choice persists across reloads):
 
 ```tsx
 <DevtoolsProvider initialPosition="top-right">

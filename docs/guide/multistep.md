@@ -52,10 +52,10 @@ function CheckoutWizard() {
 
 ## Step names
 
-Each entry in the second argument of `useMultistep` (`stepNames`) is the `DeepKey` of that step's own `FieldApi`, or `null`
-for a step with no `FieldApi` (e.g. a final review screen that only reads other
-steps' values). `next()` treats a `null` step as always valid, skipping straight
-to `onBeforeNext`.
+Each entry in the second argument of `useMultistep` (`stepNames`) is the
+`DeepKey` of that step's own `FieldApi`, or `null` for a step with no `FieldApi`
+(e.g. a final review screen that only reads other steps' values). `next()`
+treats a `null` step as always valid, skipping straight to `onBeforeNext`.
 
 ## `next()`
 
@@ -63,14 +63,14 @@ to `onBeforeNext`.
    invalid, marks it `touched` (so errors on never-blurred fields become
    visible) and returns `false` without advancing.
 2. Calls `onBeforeNext`, if given.
-3. Advances to the next linear index, unless `onBeforeNext` redirected
-   elsewhere (see below).
+3. Advances to the next linear index, unless `onBeforeNext` redirected elsewhere
+   (see below).
 
 ## Branching and persisting progress
 
 `onBeforeNext` runs after the current step passes validation but before it
-advances: the hook for persisting progress (e.g. saving a draft) or branching
-to a non-linear next step:
+advances: the hook for persisting progress (e.g. saving a draft) or branching to
+a non-linear next step:
 
 ```tsx
 const wizard = useMultistep(form, ["account", "shipping", "billing", null], {

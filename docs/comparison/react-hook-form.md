@@ -86,8 +86,8 @@ than a `<Watch>` render prop. Kin Form's bet is the opposite direction: build
 the field component once (`TextField`, `AddressField`, `SubmitButton`; see
 [Form composition](#form-composition) below) and every call site collapses to
 one line too, typed against that form's value shape. That trade pays for itself
-fast in an app with many forms, or a field library shared across several apps.
-A single one-off form is the case where it doesn't pay off yet, and reaching for
+fast in an app with many forms, or a field library shared across several apps. A
+single one-off form is the case where it doesn't pay off yet, and reaching for
 `<Watch>` inline is the right call there too.
 
 This is the one section where that distinction matters. Wrapping a plain
@@ -593,8 +593,7 @@ function SignupForm() {
 
 ## Dirty tracking & reset
 
-Both track dirtiness at both levels (whole form and per field), but
-differently.
+Both track dirtiness at both levels (whole form and per field), but differently.
 
 <SideBySide>
 
@@ -728,11 +727,11 @@ const form = useForm<Signup>({
 
 **What's different:**
 
-|                          | React Hook Form                                       | Kin Form                                                                                                                 |
-| ------------------------ | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Validation failed        | `onInvalid` callback (2nd arg to `handleSubmit`)      | `onSubmitInvalid`                                                                                                        |
-| `onSubmit` itself throws | Rethrown after updating state — no dedicated callback | `onSubmitError`, invoked automatically                                                                                   |
-| Binding to `<form>`      | `onSubmit={handleSubmit(onValid, onInvalid)}`         | `onSubmit={form.handleSubmit}`                                                                                           |
+|                          | React Hook Form                                       | Kin Form                                                                                                                                                   |
+| ------------------------ | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Validation failed        | `onInvalid` callback (2nd arg to `handleSubmit`)      | `onSubmitInvalid`                                                                                                                                          |
+| `onSubmit` itself throws | Rethrown after updating state — no dedicated callback | `onSubmitError`, invoked automatically                                                                                                                     |
+| Binding to `<form>`      | `onSubmit={handleSubmit(onValid, onInvalid)}`         | `onSubmit={form.handleSubmit}`                                                                                                                             |
 | Preventing page reload   | Automatic — `handleSubmit` calls it internally        | Automatic when given an event — `handleSubmit`'s `event` param is optional, so the same call also works from a React Native `onPress` with nothing to pass |
 
 ## Async initial values
@@ -803,8 +802,8 @@ footgun: it's easy to reach for it inside a large form component and
 re-introduce a re-render on every keystroke across the whole thing, which is why
 the docs recommend `useWatch()` instead for anything beyond reading a value once
 at submit time. React Hook Form also splits _value_ from _field state_ (errors,
-touched, dirty, ...) into two separate hooks: `useWatch` only watches values,
-so reading a field's error or touched status means also subscribing to
+touched, dirty, ...) into two separate hooks: `useWatch` only watches values, so
+reading a field's error or touched status means also subscribing to
 `useFormState`. `FieldApi` carries both on the same object, so Kin Form's single
 `useWatch`, via `select`, subscribes to either, or both together, in one call.
 
@@ -866,12 +865,12 @@ function Field<TParentValue>({ api }: { api: FieldApi<string, TParentValue> }) {
 
 **What's different:**
 
-|                         | React Hook Form                                           | Kin Form                                       |
-| ----------------------- | --------------------------------------------------------- | ---------------------------------------------- |
-| Default subscription    | `watch()` — re-renders the whole calling component        | `useWatch(api)` — isolated per field/form      |
-| Narrowing               | `useWatch({ control, name })` — separate hook             | `select: (f) => ...` on the same hook          |
-| Value vs field state    | `useWatch` + `useFormState` — two hooks, combined by hand | One `useWatch(api, select)` returning both     |
-| Arbitrary derived slice | `useWatch` + `select`, or compute after `watch()`         | `useWatch(api, select, equal?)` |
+|                         | React Hook Form                                           | Kin Form                                   |
+| ----------------------- | --------------------------------------------------------- | ------------------------------------------ |
+| Default subscription    | `watch()` — re-renders the whole calling component        | `useWatch(api)` — isolated per field/form  |
+| Narrowing               | `useWatch({ control, name })` — separate hook             | `select: (f) => ...` on the same hook      |
+| Value vs field state    | `useWatch` + `useFormState` — two hooks, combined by hand | One `useWatch(api, select)` returning both |
+| Arbitrary derived slice | `useWatch` + `select`, or compute after `watch()`         | `useWatch(api, select, equal?)`            |
 
 ## Form composition
 

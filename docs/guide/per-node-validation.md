@@ -24,8 +24,8 @@ several fields at once (a cross-field `.refine()`) without hand-wiring
 
 ## Validators
 
-Validators are plain, synchronous functions, run against any node in the tree:
-a field, a group, or the form itself.
+Validators are plain, synchronous functions, run against any node in the tree: a
+field, a group, or the form itself.
 
 ```ts
 export type Validator<TValue, TParentValue = never> = (
@@ -50,11 +50,11 @@ the built-in factories (`required`, `minLength`, `email`, `password`, ...), or
 with zod/valibot instead of one hand-written validator per field.
 
 Reassigning `validators` to a new value does **not** itself trigger a new
-validation run; it takes effect the next time something actually triggers one
-(a value change, or an explicit `validate(true)` call). This is deliberate:
+validation run; it takes effect the next time something actually triggers one (a
+value change, or an explicit `validate(true)` call). This is deliberate:
 validator factories return a new closure on every call, so re-running on
-reference change alone would turn every render into a validation run:
-notifying subscribers, triggering a re-render, reassigning validators again, a
+reference change alone would turn every render into a validation run: notifying
+subscribers, triggering a re-render, reassigning validators again, a
 self-sustaining loop. If a field's validators rarely change and you want
 reassigning the same set to be a cheap no-op, cache the array yourself (a
 module-level constant, or `useMemo` in React).
@@ -81,8 +81,8 @@ form.field("username", {
 ```
 
 It only runs once every `validators` entry has already passed, so an
-expensive/network-calling check never fires for a value already known invalid
-by a cheap one. `validators` are always immediate, never debounced;
+expensive/network-calling check never fires for a value already known invalid by
+a cheap one. `validators` are always immediate, never debounced;
 `asyncValidator` and [`schemaValidator`](/guide/schema-validation) are the two
 places `validationDebounceMs` applies. Rapid successive changes (fast typing)
 coalesce into a single run fired after the debounce window, rather than one per
@@ -95,10 +95,10 @@ yourself inside that one function if you need more than one, e.g.
 `async (field) => (await checkA(field)) ?? (await checkB(field))`.
 
 While `asyncValidator` is in flight, `validating` is `true` on that node and
-every ancestor up to the root. Concurrent or redundant `validate()` calls join
-a single in-flight run instead of stacking up duplicate work, and if a newer
-run supersedes an older one, the older result is discarded when it resolves, so
-it can never clobber a fresher answer.
+every ancestor up to the root. Concurrent or redundant `validate()` calls join a
+single in-flight run instead of stacking up duplicate work, and if a newer run
+supersedes an older one, the older result is discarded when it resolves, so it
+can never clobber a fresher answer.
 
 ## Running validation explicitly
 
@@ -109,11 +109,11 @@ const error = emailField.error;
 
 Safe to call concurrently and redundantly: `asyncValidator` runs at most once
 per generation of `value`/`asyncValidator`, and a plain `validate()` doesn't
-re-run `validators` at all (they're already current from the last value
-change). Pass `validate(true)` to force a full re-run, including `validators`,
-when something a validator reads changed out of band, not reflected in this
-node's own `value`, `validators`, or `asyncValidator` (e.g. external state, or
-a sibling field this one isn't a [dependent](/guide/linked-fields) of):
+re-run `validators` at all (they're already current from the last value change).
+Pass `validate(true)` to force a full re-run, including `validators`, when
+something a validator reads changed out of band, not reflected in this node's
+own `value`, `validators`, or `asyncValidator` (e.g. external state, or a
+sibling field this one isn't a [dependent](/guide/linked-fields) of):
 
 ```ts
 // Re-check "available" against a username tracked outside the form tree.
@@ -124,9 +124,9 @@ await form.field("username").validate(true);
 
 ## `validators` on nested fields and forms
 
-Because every node is the same `FieldApi`, a nested field or the form itself
-can carry its own `validators` too, independent of its children's, useful for
-a single rule spanning multiple fields rather than living on any one of them:
+Because every node is the same `FieldApi`, a nested field or the form itself can
+carry its own `validators` too, independent of its children's, useful for a
+single rule spanning multiple fields rather than living on any one of them:
 
 ```ts
 form.field("shipping", {

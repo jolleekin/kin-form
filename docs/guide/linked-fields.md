@@ -21,8 +21,8 @@ Every time `password` changes, `confirmPassword` is force-validated.
 `dependents` paths are relative to this field's parent, not the form root, so a
 nested field only reaches its own siblings, not the whole tree.
 
-`dependents` only re-runs a sibling's _validators_; it can't push a new value
-or run arbitrary code. For that, see [Listeners](/guide/listeners).
+`dependents` only re-runs a sibling's _validators_; it can't push a new value or
+run arbitrary code. For that, see [Listeners](/guide/listeners).
 
 ## Multiple dependents
 

@@ -2,8 +2,8 @@
 
 Kin Form doesn't force one tree shape for a nested value. You can build a form
 structure that mirrors it exactly, with one `FieldApi` per object/array level,
-or flatten some subtrees, or flatten the whole thing to dotted paths off the form
-root. The choice is made independently at each level, not picked for you.
+or flatten some subtrees, or flatten the whole thing to dotted paths off the
+form root. The choice is made independently at each level, not picked for you.
 Default to flat; reach for a nested field only where it needs its own node: its
 own `validators`/`schemaValidator`, its own aggregated `touched`/`invalid`, or
 stable per-item identity for a reorderable array.
@@ -188,8 +188,8 @@ reports directly to `form`. See
 
 The [array mutation helpers](/guide/dynamic-arrays) still work without resolving
 `items` as its own field: they only need the array's name, not a resolved node,
-e.g. `form.pushItem("items", { code: "", quantity: 1 })`. What's missing is a stable
-per-item key, since that only exists on a resolved `FieldApi`.
+e.g. `form.pushItem("items", { code: "", quantity: 1 })`. What's missing is a
+stable per-item key, since that only exists on a resolved `FieldApi`.
 
 If reordering is needed, stamp one on yourself. A `Symbol`-keyed property stays
 out of `Object.keys`/`JSON.stringify` (so it won't leak into submission or trip
@@ -236,9 +236,9 @@ its keep.
 ## Mixing the two
 
 Nothing stops you from resolving some levels as their own nested fields and
-leaving others flat in the same tree, e.g. keep `shipping` as its own field
-(its own validators, its own "please fix the address" banner) while leaving
-`items` flat because item-level errors are read straight off a schema's
+leaving others flat in the same tree, e.g. keep `shipping` as its own field (its
+own validators, its own "please fix the address" banner) while leaving `items`
+flat because item-level errors are read straight off a schema's
 `schemaErrorMap`. That's the default outcome, not a special case: most real
 forms end up a mix, the same way most React trees mix lifted and component-local
 state without it being notable.

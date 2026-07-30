@@ -48,9 +48,9 @@ duplicate. Use whichever form you reach for consistently for that path.
 ## Binding to a nested field
 
 `parent.field(name)` works the same way regardless of whether the path resolves
-to a leaf or a nested object: a group `api` is passed into a reusable
-component the same way a leaf `api` is, following the same shape as `TextField`
-in [Basic](/guide/basic#promoting-to-a-reusable-textfield):
+to a leaf or a nested object: a group `api` is passed into a reusable component
+the same way a leaf `api` is, following the same shape as `TextField` in
+[Basic](/guide/basic#promoting-to-a-reusable-textfield):
 
 ::: code-group
 
@@ -87,9 +87,9 @@ address.invalid; // true if `address` itself has a node-level error,
 ```
 
 Setting `touched` cascades to every registered child. `handleBlur`/
-`handleChange` still make sense on a node with children: bind them directly to
-a custom control that edits the whole nested object atomically (e.g. a
-date-range picker backed by `{ start, end }`), same as for a leaf. Avoid calling
+`handleChange` still make sense on a node with children: bind them directly to a
+custom control that edits the whole nested object atomically (e.g. a date-range
+picker backed by `{ start, end }`), same as for a leaf. Avoid calling
 `handleBlur` on a node you're _also_ decomposing into individually-focusable
 child inputs; that forces every descendant `touched` for what wasn't really a
 single control's blur event.

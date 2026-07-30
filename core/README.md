@@ -26,20 +26,20 @@ at the tree's root (`parent` `null`, `name` `""`), with
 
 ### Type-safe paths, not string soup
 
-`DeepKey<T>` computes every dot-joined path into `T` (through objects and
-arrays alike) as a literal string union; `DeepValue<T, Key>` resolves the value
-type at that path. `form.field("address.line1")` or `form.field("items.0.code")`
+`DeepKey<T>` computes every dot-joined path into `T` (through objects and arrays
+alike) as a literal string union; `DeepValue<T, Key>` resolves the value type at
+that path. `form.field("address.line1")` or `form.field("items.0.code")`
 type-check against your form's actual value type: a typo'd path is a compile
 error, not a silent `undefined` at runtime.
 
 ### Stable array item identity
 
-`pushItem`/`insertItem`/`moveItem`/`swapItems`/`removeItem` update the
-immutable value and re-key the field registry together, so a field's identity
-follows its item through a reorder, not whatever value now happens to sit at
-its old index. Every field also carries a stable `id`, independent of `name`,
-that survives the same reorders: the right React `key` for a list of array
-items (`key={field.id}`, not `key={index}`).
+`pushItem`/`insertItem`/`moveItem`/`swapItems`/`removeItem` update the immutable
+value and re-key the field registry together, so a field's identity follows its
+item through a reorder, not whatever value now happens to sit at its old index.
+Every field also carries a stable `id`, independent of `name`, that survives the
+same reorders: the right React `key` for a list of array items
+(`key={field.id}`, not `key={index}`).
 
 ---
 

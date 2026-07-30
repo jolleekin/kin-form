@@ -1,8 +1,8 @@
 # Dynamic Arrays
 
-Every [`FieldApi`](/guide/nested-objects) exposes array mutation helpers,
-called with a path whose value is an array, that update the immutable value
-**and** re-key the field registry, so field identity survives a reorder:
+Every [`FieldApi`](/guide/nested-objects) exposes array mutation helpers, called
+with a path whose value is an array, that update the immutable value **and**
+re-key the field registry, so field identity survives a reorder:
 
 ```ts
 form.pushItem("items", newItem);

@@ -131,9 +131,9 @@ array changes; `api.field(i)` resolves the stable `item.id` without subscribing
 to each item.
 
 `Item` here is a nested object, so each element is decomposed into its own
-`FieldApi` too, hence `ItemField` taking a resolved `item`. For a leaf item
-type (e.g. `string[]`), the same `api.field(i)` call works unchanged: there's
-no separate array-of-leaves API.
+`FieldApi` too, hence `ItemField` taking a resolved `item`. For a leaf item type
+(e.g. `string[]`), the same `api.field(i)` call works unchanged: there's no
+separate array-of-leaves API.
 
 ## `SubmitButton`
 

@@ -28,8 +28,9 @@ const form = new FormApi({
 Running the schema populates `schemaErrorMap`, a flat dot-joined path -> message
 map (e.g. `{ "email": "Invalid email", "items.0.code": "Required" }`) built from
 every issue's `path`. A field reads its own slice via `field.schemaError`, with
-no per-field wiring needed, even through [intermediate fields](/guide/nested-objects),
-since the lookup walks up `parent` until it finds a map with an answer:
+no per-field wiring needed, even through
+[intermediate fields](/guide/nested-objects), since the lookup walks up `parent`
+until it finds a map with an answer:
 
 ```tsx
 {
@@ -84,4 +85,3 @@ worth it.
 Like `asyncValidator`, runs are debounced by `validationDebounceMs` (default
 `0`), with the same debounce/coalescing/`handleBlur`-flush behavior as
 [described here](/guide/per-node-validation#async-validator-and-debouncing).
-

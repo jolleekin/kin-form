@@ -71,15 +71,14 @@ function LoginForm() {
 Creates a `FormApi` once and calls `updateOptions` on it every render, so
 `onSubmit`/`onSubmitInvalid`/`onSubmitError` (and validators/dependents) stay in
 sync with the latest render's closures instead of going stale. Doesn't itself
-subscribe the calling component; pass the returned instance to `Watch` for
-that.
+subscribe the calling component; pass the returned instance to `Watch` for that.
 
 ## Resolving a field
 
 `parent.field(name, options)` (see [`@kin-form/core`](../core/README.md)) gets
-(creating on first call) the `FieldApi` registered under `name` on `parent`,
-for a leaf value, a nested object/array, or an array item alike, the same
-accessor either way. It's safe to call inline in JSX on every render: on an
+(creating on first call) the `FieldApi` registered under `name` on `parent`, for
+a leaf value, a nested object/array, or an array item alike, the same accessor
+either way. It's safe to call inline in JSX on every render: on an
 already-registered field, `options` is applied via `updateOptions` the same way
 every time, so re-calling it doesn't re-create anything. For an array, the
 field's own _value_ is the array, so array methods are called on it with `""`.
@@ -123,8 +122,8 @@ second argument, instead of re-rendering on every change:
 </Watch>;
 ```
 
-Works the same way for a nested object or array: resolve the parent field
-first, then call `field`/`Watch` again on it:
+Works the same way for a nested object or array: resolve the parent field first,
+then call `field`/`Watch` again on it:
 
 ```tsx
 <Watch api={form.field("address")}>

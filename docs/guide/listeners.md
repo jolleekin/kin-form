@@ -10,11 +10,11 @@ form.field("country", {
 });
 ```
 
-It fires whenever `value` settles to something new, from any source, but not
-for the initial value seeded at construction. Like `validators`/`dependents`,
-it's refreshed on every `field` call, so a caller passing a fresh closure each
-time (e.g. a React re-render) never invokes a stale one. This works identically
-on any node (leaf, nested field, or the form root) since it's a plain
+It fires whenever `value` settles to something new, from any source, but not for
+the initial value seeded at construction. Like `validators`/`dependents`, it's
+refreshed on every `field` call, so a caller passing a fresh closure each time
+(e.g. a React re-render) never invokes a stale one. This works identically on
+any node (leaf, nested field, or the form root) since it's a plain
 `FieldApiOptions` option, not something bolted onto leaves specifically.
 
 ## At the form root: persisting form state
@@ -95,10 +95,10 @@ const form = useForm({
 
 ## Listening for `touched`/`invalid`/`validating`
 
-There's no dedicated callback for those: `onValueChanged` is deliberately
-scoped to values, the case that comes up most in practice (validation side
-effects, persistence). To react to a different property, subscribe directly;
-see [Reactivity](/guide/reactivity).
+There's no dedicated callback for those: `onValueChanged` is deliberately scoped
+to values, the case that comes up most in practice (validation side effects,
+persistence). To react to a different property, subscribe directly; see
+[Reactivity](/guide/reactivity).
 
 ::: code-group
 

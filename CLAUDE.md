@@ -127,14 +127,13 @@ class enforces one or the other, and the same instance can be read either way.
   already the union of every descendant's value (via `kChildValueChanged`), so
   one `deepEqual` against the group's own `initialValue` slice already reflects
   changes anywhere underneath it. Moving `initialValue` (only
-  `FormApi.reset`/`resetField` do) cascades a recompute down through
-  `children` via `kParentInitialValueChanged`, the same way
-  `kParentSchemaErrorsChanged` cascades schema errors — needed because a
-  `reset`/`resetField` call can move the baseline to a value that already
-  matches the current live value, so the `value` setter's reference-equality
-  check short-circuits before `valueChanged` ever runs.
-  Also holds `#children: Map<DeepKey<TValue>, FieldApi>`, a registry of child
-  fields created lazily via `field(name)`, with array mutation helpers
+  `FormApi.reset`/`resetField` do) cascades a recompute down through `children`
+  via `kParentInitialValueChanged`, the same way `kParentSchemaErrorsChanged`
+  cascades schema errors — needed because a `reset`/`resetField` call can move
+  the baseline to a value that already matches the current live value, so the
+  `value` setter's reference-equality check short-circuits before `valueChanged`
+  ever runs. Also holds `#children: Map<DeepKey<TValue>, FieldApi>`, a registry
+  of child fields created lazily via `field(name)`, with array mutation helpers
   (`pushItem`, `insertItem`, `moveItem`, `swapItems`, `removeItem`,
   `replaceItem`) and aggregation of `touched`/`invalid`/`validating` up from
   children (`#anyChildTouched` etc., updated via the parent/child protocol
@@ -157,10 +156,10 @@ class enforces one or the other, and the same instance can be read either way.
   by `DebouncedTask` (`core/utils/debounced-task.ts`), which `FieldApi`
   delegates to rather than implementing itself. Array mutation helpers both
   update the immutable value (via `updateIn`) _and_ re-key `#children` so field
-  identity follows array index shifts, via one shared `#rekeyArrayFields(base,
-  remapIndex)` helper. `moveItem` shifts everything between the two indices
-  (like removing and re-inserting the item elsewhere); `swapItems` only
-  exchanges the two endpoints.
+  identity follows array index shifts, via one shared
+  `#rekeyArrayFields(base, remapIndex)` helper. `moveItem` shifts everything
+  between the two indices (like removing and re-inserting the item elsewhere);
+  `swapItems` only exchanges the two endpoints.
 - **`FormApi`** (`core/FormApi.ts`) — the tree root: a `FieldApi` with `parent`
   `null` and `name` `""`. Adds `submitting`, `reset` (moves `initialValue`,
   inherited from `FieldApi`, and clears `touched` for the whole tree),
@@ -169,14 +168,14 @@ class enforces one or the other, and the same instance can be read either way.
   field is actually registered there; never registers one just to reset it — see
   `#findRegisteredField`, which walks already-registered `children` the same way
   `field()`'s own `#assertNoPathCollision` does, without creating), and
-  `handleSubmit` (optionally takes an `{ preventDefault(): void }`-shaped
-  event, so it's bindable straight to `<form onSubmit={form.handleSubmit}>`
-  with no wrapper needed, while still working unchanged from a React Native
-  `onPress` or any other caller with no event to pass), which waits for
-  pending validation, calls `onSubmitInvalid` if invalid, otherwise calls
-  `onSubmit`/`onSubmitError` — unlike `reset`, doesn't move `initialValue` on
-  its own; call `reset(form.value)` after a successful submit if the baseline
-  should follow it too.
+  `handleSubmit` (optionally takes an `{ preventDefault(): void }`-shaped event,
+  so it's bindable straight to `<form onSubmit={form.handleSubmit}>` with no
+  wrapper needed, while still working unchanged from a React Native `onPress` or
+  any other caller with no event to pass), which waits for pending validation,
+  calls `onSubmitInvalid` if invalid, otherwise calls `onSubmit`/`onSubmitError`
+  — unlike `reset`, doesn't move `initialValue` on its own; call
+  `reset(form.value)` after a successful submit if the baseline should follow it
+  too.
 
 Data flow is bidirectional: setting `field.value` propagates **up** into the
 parent's value via `setIn`; setting a field's `value` propagates values **down**
