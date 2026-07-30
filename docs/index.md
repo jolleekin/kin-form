@@ -4,7 +4,7 @@ layout: home
 hero:
   name: Kin Form
   text: Form state that stays out of your way
-  tagline: "Fast. Lightweight. Framework-agnostic. 100% type-safe."
+  tagline: "A form is a tree. Every node in it, from a single input to the form itself, is the same kind of thing."
   actions:
     - theme: brand
       text: Get Started
