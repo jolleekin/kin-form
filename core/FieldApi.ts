@@ -54,7 +54,8 @@ import { shallowEqual } from "./utils/shallow-equal.ts";
  * immediately, synchronously, on every value change; for a check that's
  * expensive or needs debouncing, see {@linkcode AsyncValidator} instead.
  *
- * Must not throw; return a {@linkcode ValidatorResult} instead.
+ * Must not throw; return a {@linkcode ValidatorResult} instead. A thrown
+ * error is treated as passing and logged, not a supported error signal.
  */
 export type Validator<TValue, TParentValue = never> = (
   field: FieldApi<TValue, TParentValue>,
@@ -73,7 +74,9 @@ export type Validator<TValue, TParentValue = never> = (
  * full control over ordering/concurrency instead, e.g.
  * `async (field) => (await checkA(field)) ?? (await checkB(field))`.
  *
- * Must not throw; return/resolve a {@linkcode ValidatorResult} instead.
+ * Must not throw/reject; return/resolve a {@linkcode ValidatorResult}
+ * instead. A thrown/rejected error is treated as passing and logged, not a
+ * supported error signal.
  * Doesn't actually have to be `async`: a validator placed here that happens
  * to resolve synchronously still goes through the debounced path, which is
  * the point of putting it here instead of in {@linkcode FieldApiOptions.validators}
@@ -92,7 +95,9 @@ export type AsyncValidator<TValue, TParentValue = never> = (
  * schema is the single source of truth for every field under this field,
  * rather than duplicating rules per field.
  *
- * Must not throw; return/resolve `null`/`undefined` for "no errors". See
+ * Must not throw/reject; return/resolve `null`/`undefined` for "no errors".
+ * A thrown/rejected error is treated as "no errors" and logged, not a
+ * supported error signal. See
  * `@kin-form/validators`'s `toSchemaValidator()` for a ready-made adapter from
  * any Standard Schema-compliant library.
  */
@@ -873,15 +878,40 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
 
   #runSyncValidators(): ValidationError {
     for (const v of this.#validators) {
-      const error = v(this);
-      if (error) return error;
+      try {
+        const error = v(this);
+        if (error) return error;
+      } catch (thrown) {
+        this.#warnValidatorThrew("validators", thrown);
+      }
     }
     return null;
   }
 
   async #runAsyncValidator(): Promise<ValidationError> {
     if (!this.#asyncValidator) return null;
-    return (await this.#asyncValidator(this)) || null;
+    try {
+      return (await this.#asyncValidator(this)) || null;
+    } catch (thrown) {
+      this.#warnValidatorThrew("asyncValidator", thrown);
+      return null;
+    }
+  }
+
+  // Validators must not throw (see the `validators`/`asyncValidator`/
+  // `schemaValidator` doc comments), but a thrown/rejected one shouldn't be
+  // able to break the rest of this field's validation or its batch. Treated
+  // as "no error from this validator" rather than a validation failure, so a
+  // buggy validator can't permanently block submission for reasons the user
+  // can't see or fix; surfaced loudly instead, so the actual bug isn't
+  // silently swallowed.
+  #warnValidatorThrew(kind: string, thrown: unknown): void {
+    console.error(
+      `[kin-form] a ${kind} on field ${JSON.stringify(this.name)} threw ` +
+        `instead of returning a result. Treating it as passing for now, ` +
+        `but validators must not throw.`,
+      thrown,
+    );
   }
 
   /** Resolves once this field's own validation, its {@linkcode schemaValidator}'s, and every registered child's have settled. */
@@ -1044,7 +1074,12 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
     Partial<Record<DeepKeyOrRoot<TValue>, ValidationError>> | null
   > {
     if (!this.#schemaValidator) return null;
-    return (await this.#schemaValidator(this)) ?? null;
+    try {
+      return (await this.#schemaValidator(this)) ?? null;
+    } catch (thrown) {
+      this.#warnValidatorThrew("schemaValidator", thrown);
+      return null;
+    }
   }
 
   #setSchemaErrors(

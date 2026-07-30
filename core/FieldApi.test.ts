@@ -1,5 +1,5 @@
 import { assertEquals, assertGreater, assertThrows } from "@std/assert";
-import { assertSpyCalls, spy } from "@std/testing/mock";
+import { assertSpyCalls, spy, stub } from "@std/testing/mock";
 import { FieldApi } from "./FieldApi.ts";
 import type { AsyncValidator, Validator } from "./FieldApi.ts";
 import { kParentValueChanged } from "./FieldApi.internal.ts";
@@ -129,6 +129,29 @@ Deno.test("FieldApi", async (t) => {
     assertSpyCalls(validator2, 0);
   });
 
+  await t.step(
+    "should treat a throwing validator as passing, log it, and still run later validators",
+    async () => {
+      using consoleError = stub(console, "error");
+
+      const throwing = spy((): never => {
+        throw new Error("boom");
+      });
+      const passing = spy((): string => "Error from a later validator");
+
+      const field = new FieldApi(null, "", {
+        initialValue: "test",
+        validators: [throwing, passing],
+      });
+
+      await field.validate();
+      assertEquals(field.error, "Error from a later validator");
+      assertSpyCalls(throwing, 1);
+      assertSpyCalls(passing, 1);
+      assertSpyCalls(consoleError, 1);
+    },
+  );
+
   await t.step("should handle async validator", async () => {
     const validator: AsyncValidator<string> = () => {
       return new Promise((resolve) => {
@@ -144,6 +167,22 @@ Deno.test("FieldApi", async (t) => {
     await field.validate();
     assertEquals(field.error, null);
   });
+
+  await t.step(
+    "should treat a rejecting asyncValidator as passing and log it",
+    async () => {
+      using consoleError = stub(console, "error");
+
+      const field = new FieldApi(null, "", {
+        initialValue: "test",
+        asyncValidator: () => Promise.reject(new Error("boom")),
+      });
+
+      await field.validate();
+      assertEquals(field.error, null);
+      assertSpyCalls(consoleError, 1);
+    },
+  );
 
   await t.step(
     "should not re-invoke asyncValidator for concurrent validate() calls when nothing changed",
@@ -1723,6 +1762,24 @@ Deno.test("FieldApi", async (t) => {
 
     assertEquals(group.schemaErrorMap, { a: "Required" });
   });
+
+  await t.step(
+    "should treat a throwing schemaValidator as having no errors and log it",
+    async () => {
+      using consoleError = stub(console, "error");
+
+      const group = new FieldApi<{ a: string }>(null, "", {
+        initialValue: { a: "" },
+        schemaValidator: () => {
+          throw new Error("boom");
+        },
+      });
+
+      await group.waitForValidation();
+      assertEquals(group.schemaErrorMap, null);
+      assertSpyCalls(consoleError, 1);
+    },
+  );
 
   await t.step(
     "should not synchronously notify an already-subscribed parent when constructing a child field with a schemaValidator, but should still notify it on a microtask",
