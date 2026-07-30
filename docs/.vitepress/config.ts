@@ -1,13 +1,44 @@
 import { defineConfig } from "vitepress";
 
+// TODO: replace with the real docs hostname once hosting is decided (see
+// ROADMAP.md). Everything below (sitemap.xml, canonical links, og:url) keys
+// off this constant, so updating it here is the only change needed later.
+const SITE_URL = "https://kin-form.pages.dev";
+
+const description =
+  "Fast, lightweight, framework-agnostic form state library for TypeScript. Zero-dependencies core, 100% type-safe field paths, React bindings built in.";
+
 export default defineConfig({
   cleanUrls: true,
   title: "Kin Form",
-  description:
-    "Fast, lightweight, framework-agnostic form state library for TypeScript. Zero-dependencies core, 100% type-safe field paths, React bindings built in.",
+  description,
+
+  sitemap: {
+    hostname: SITE_URL,
+  },
+
+  transformHead: ({ pageData }) => {
+    const path = pageData.relativePath
+      .replace(/index\.md$/, "")
+      .replace(/\.md$/, "");
+    const canonicalUrl = `${SITE_URL}/${path}`;
+    return [
+      ["link", { rel: "canonical", href: canonicalUrl }],
+      ["meta", { property: "og:url", content: canonicalUrl }],
+    ];
+  },
 
   head: [
     ["link", { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }],
+    ["meta", { property: "og:type", content: "website" }],
+    ["meta", { property: "og:site_name", content: "Kin Form" }],
+    ["meta", { property: "og:title", content: "Kin Form" }],
+    ["meta", { property: "og:description", content: description }],
+    ["meta", { property: "og:image", content: `${SITE_URL}/logo.svg` }],
+    ["meta", { name: "twitter:card", content: "summary" }],
+    ["meta", { name: "twitter:title", content: "Kin Form" }],
+    ["meta", { name: "twitter:description", content: description }],
+    ["meta", { name: "twitter:image", content: `${SITE_URL}/logo.svg` }],
   ],
 
   markdown: {
