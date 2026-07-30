@@ -4,10 +4,8 @@ Where Kin Form is headed, and roughly in what order. This is the public summary;
 day-to-day tracking happens in [TODO.md](./TODO.md) and the issue tracker.
 
 Guiding principle: everything shipped either teaches a concept or builds trust.
-The engine and API are the settled part; making them legible and trustworthy
-from outside is the current work.
 
-## In progress: trust and clarity
+## Done: trust and clarity
 
 - Governance basics: `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`, issue/PR
   templates (this file included)
@@ -16,7 +14,7 @@ from outside is the current work.
   feature/benchmark grid
 - `llms.txt`, a sitemap, and standard meta tags on the docs site
 
-## Next: teach and prove
+## In progress: teach and prove
 
 - Honest, dedicated comparison pages against React Hook Form and TanStack Form
 - A regular cadence of engineering articles about the underlying problems (forms
