@@ -7,7 +7,7 @@ import {
   render,
   screen,
 } from "@testing-library/react";
-import { FieldApi, FormApi } from "@kin-form/core/index.ts";
+import { FieldApi, FormApi } from "@kin-form/core";
 import { Watch } from "./Watch.tsx";
 
 type Person = { name: string; address: { city: string } };

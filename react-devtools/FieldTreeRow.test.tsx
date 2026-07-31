@@ -7,7 +7,7 @@ import {
   render,
   screen,
 } from "@testing-library/react";
-import { FormApi } from "@kin-form/core/index.ts";
+import { FormApi } from "@kin-form/core";
 import { FieldTreeRow } from "./FieldTreeRow.tsx";
 import type { AnyNode } from "./types.ts";
 

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { type FormApi, useWatch } from "@kin-form/react/index.ts";
+import { type FormApi, useWatch } from "@kin-form/react";
 
 export type SubmitButtonProps<TValue> = {
   api: FormApi<TValue>;

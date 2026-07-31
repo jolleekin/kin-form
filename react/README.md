@@ -29,8 +29,8 @@ deno add jsr:@kin-form/react
 ## Quick start
 
 ```tsx
-import { useForm, Watch } from "@kin-form/react/index.ts";
-import { required } from "@kin-form/validators/index.ts";
+import { useForm, Watch } from "@kin-form/react";
+import { required } from "@kin-form/validators";
 
 function LoginForm() {
   const form = useForm({

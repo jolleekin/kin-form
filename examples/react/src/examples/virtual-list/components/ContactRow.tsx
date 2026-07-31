@@ -1,10 +1,6 @@
 import type { ReactNode } from "react";
-import {
-  type FieldApi,
-  FieldApiOptions,
-  Watch,
-} from "@kin-form/react/index.ts";
-import { email, required } from "@kin-form/validators/index.ts";
+import { type FieldApi, FieldApiOptions, Watch } from "@kin-form/react";
+import { email, required } from "@kin-form/validators";
 import { TextField } from "./TextField.tsx";
 
 export type Contact = {

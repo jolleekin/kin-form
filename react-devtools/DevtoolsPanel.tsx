@@ -11,7 +11,7 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
-import type { FormApi } from "@kin-form/core/index.ts";
+import type { FormApi } from "@kin-form/core";
 import type { DevtoolsRegistry } from "./DevtoolsRegistry.ts";
 import { FieldTreeRow } from "./FieldTreeRow.tsx";
 import { colors, monoFont } from "./styles.ts";

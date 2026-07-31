@@ -1,6 +1,6 @@
 import { assertEquals } from "@std/assert";
 import type { StandardSchemaV1 } from "@standard-schema/spec";
-import { FieldApi } from "@kin-form/core/index.ts";
+import { FieldApi } from "@kin-form/core";
 import { toSchemaValidator } from "./schema.ts";
 
 function fakeObjectSchema<T>(

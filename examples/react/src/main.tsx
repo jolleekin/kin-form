@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { DevtoolsProvider } from "@kin-form/react-devtools/index.ts";
+import { DevtoolsProvider } from "@kin-form/react-devtools";
 import App from "./App.tsx";
 import "./index.css";
 

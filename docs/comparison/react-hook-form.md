@@ -38,8 +38,8 @@ function LoginForm() {
 ```
 
 ```tsx [Kin Form]
-import { useForm, Watch } from "@kin-form/react/index.ts";
-import { required } from "@kin-form/validators/index.ts";
+import { useForm, Watch } from "@kin-form/react";
+import { required } from "@kin-form/validators";
 
 type LoginValues = { email: string };
 
@@ -137,8 +137,8 @@ function ProfileForm() {
 ```
 
 ```tsx [Kin Form]
-import { useForm, Watch } from "@kin-form/react/index.ts";
-import { required } from "@kin-form/validators/index.ts";
+import { useForm, Watch } from "@kin-form/react";
+import { required } from "@kin-form/validators";
 
 type ProfileValues = { country: string };
 
@@ -243,7 +243,7 @@ function Form() {
 ```
 
 ```tsx [Kin Form]
-import { useForm, Watch } from "@kin-form/react/index.ts";
+import { useForm, Watch } from "@kin-form/react";
 
 function Form() {
   const form = useForm<{ items: string[] }>({ initialValue: { items: [] } });
@@ -351,7 +351,7 @@ function SignupForm() {
 ```
 
 ```tsx [Kin Form]
-import { useForm, Watch } from "@kin-form/react/index.ts";
+import { useForm, Watch } from "@kin-form/react";
 
 function SignupForm() {
   const form = useForm<{ username: string }>({
@@ -434,8 +434,8 @@ function SignupForm() {
 ```
 
 ```tsx [Kin Form]
-import { useForm, Watch } from "@kin-form/react/index.ts";
-import { required, toSchemaValidator } from "@kin-form/validators/index.ts";
+import { useForm, Watch } from "@kin-form/react";
+import { required, toSchemaValidator } from "@kin-form/validators";
 import { z } from "zod";
 
 const signupSchema = z.object({
@@ -839,7 +839,7 @@ function Field<T extends FieldValues>(
 ```
 
 ```tsx [Kin Form]
-import { type FieldApi, useWatch } from "@kin-form/react/index.ts";
+import { type FieldApi, useWatch } from "@kin-form/react";
 
 function Field<TParentValue>({ api }: { api: FieldApi<string, TParentValue> }) {
   // One hook covers both value and field state.
@@ -910,7 +910,7 @@ function TextField<T extends FieldValues>(
 ```
 
 ```tsx [Kin Form]
-import { type FieldApi, useWatch } from "@kin-form/react/index.ts";
+import { type FieldApi, useWatch } from "@kin-form/react";
 
 function TextField<TParent>(
   { api, label }: { api: FieldApi<string, TParent>; label: string },
@@ -1035,7 +1035,7 @@ function Form() {
 ```
 
 ```tsx [Kin Form]
-import { FieldApi, useForm, useWatch, Watch } from "@kin-form/react/index.ts";
+import { FieldApi, useForm, useWatch, Watch } from "@kin-form/react";
 
 function ItemsField<TParentValue>(
   { api }: { api: FieldApi<string[], TParentValue> },
@@ -1178,7 +1178,7 @@ function SignupWizard() {
 ```
 
 ```tsx [Kin Form]
-import { useForm, useMultistep, Watch } from "@kin-form/react/index.ts";
+import { useForm, useMultistep, Watch } from "@kin-form/react";
 
 type Signup = {
   credentials: { email: string; password: string };

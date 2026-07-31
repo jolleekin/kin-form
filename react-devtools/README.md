@@ -27,7 +27,7 @@ Mount `DevtoolsProvider` once, near the root of your app, typically only in
 development:
 
 ```tsx
-import { DevtoolsProvider } from "@kin-form/react-devtools/index.ts";
+import { DevtoolsProvider } from "@kin-form/react-devtools";
 
 function App() {
   return (
@@ -41,8 +41,8 @@ function App() {
 Then opt each form in with `useFormDevtools`, right next to `useForm`:
 
 ```tsx
-import { useForm } from "@kin-form/react/index.ts";
-import { useFormDevtools } from "@kin-form/react-devtools/index.ts";
+import { useForm } from "@kin-form/react";
+import { useFormDevtools } from "@kin-form/react-devtools";
 
 function CheckoutForm() {
   const form = useForm({ initialValue: { email: "", items: [] } });

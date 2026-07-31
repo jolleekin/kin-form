@@ -1,12 +1,7 @@
 import type { ReactNode } from "react";
-import {
-  type FieldApi,
-  type FormApi,
-  useForm,
-  Watch,
-} from "@kin-form/react/index.ts";
-import { useFormDevtools } from "@kin-form/react-devtools/index.ts";
-import { required } from "@kin-form/validators/index.ts";
+import { type FieldApi, type FormApi, useForm, Watch } from "@kin-form/react";
+import { useFormDevtools } from "@kin-form/react-devtools";
+import { required } from "@kin-form/validators";
 
 type Address = { line1: string; city: string; zip: string };
 type Contact = { address: Address; tags: string[] };

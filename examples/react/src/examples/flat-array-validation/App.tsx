@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import { useForm, Watch } from "@kin-form/react/index.ts";
-import { useFormDevtools } from "@kin-form/react-devtools/index.ts";
-import { toSchemaValidator } from "@kin-form/validators/index.ts";
+import { useForm, Watch } from "@kin-form/react";
+import { useFormDevtools } from "@kin-form/react-devtools";
+import { toSchemaValidator } from "@kin-form/validators";
 import { z } from "zod";
 import { SubmitButton } from "./components/SubmitButton.tsx";
 import { TextField } from "./components/TextField.tsx";

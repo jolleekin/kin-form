@@ -60,7 +60,7 @@ deno add jsr:@kin-form/core
 ## Quick start
 
 ```ts
-import { FormApi } from "@kin-form/core/index.ts";
+import { FormApi } from "@kin-form/core";
 
 const form = new FormApi({
   initialValue: { email: "", address: { line1: "" }, items: [{ code: "" }] },

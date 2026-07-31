@@ -8,7 +8,7 @@ import type {
   DeepKeyOrRoot,
   SchemaValidator,
   ValidationError,
-} from "@kin-form/core/index.ts";
+} from "@kin-form/core";
 
 /**
  * Converts a Standard Schema `Issue`'s `path` into `@kin-form`'s dot-joined

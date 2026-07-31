@@ -4,7 +4,7 @@
  * @module
  */
 
-import type { FormApi } from "@kin-form/core/index.ts";
+import type { FormApi } from "@kin-form/core";
 
 /**
  * A registry that tracks every `FormApi` currently opted into devtools via

@@ -15,9 +15,9 @@ import {
   type FieldApi,
   FormApi,
   type SchemaValidator,
-} from "@kin-form/core/index.ts";
-import { useWatch } from "@kin-form/react/index.ts";
-import { toSchemaValidator } from "@kin-form/validators/index.ts";
+} from "@kin-form/core";
+import { useWatch } from "@kin-form/react";
+import { toSchemaValidator } from "@kin-form/validators";
 import {
   ADDRESS_LEAF_KEYS,
   allLeafKeys,

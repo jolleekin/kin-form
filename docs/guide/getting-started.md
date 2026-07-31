@@ -49,8 +49,8 @@ deno add jsr:@kin-form/validators
 ::: code-group
 
 ```ts [Vanilla]
-import { FormApi } from "@kin-form/core/index.ts";
-import { email, required } from "@kin-form/validators/index.ts";
+import { FormApi } from "@kin-form/core";
+import { email, required } from "@kin-form/validators";
 
 const form = new FormApi({
   initialValue: { email: "", password: "" },
@@ -72,8 +72,8 @@ formEl.addEventListener("submit", form.handleSubmit);
 ```
 
 ```tsx [React]
-import { useForm, Watch } from "@kin-form/react/index.ts";
-import { email, required } from "@kin-form/validators/index.ts";
+import { useForm, Watch } from "@kin-form/react";
+import { email, required } from "@kin-form/validators";
 
 function LoginForm() {
   const form = useForm({

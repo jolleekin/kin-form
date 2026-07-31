@@ -1,6 +1,6 @@
 import { type KeyboardEvent, type ReactNode, useCallback, useRef } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import type { FieldApi } from "@kin-form/react/index.ts";
+import type { FieldApi } from "@kin-form/react";
 import { type Contact, ContactRow } from "./ContactRow.tsx";
 
 const ROW_HEIGHT = 56;

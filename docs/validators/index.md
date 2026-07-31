@@ -101,7 +101,7 @@ result's issues:
 
 ```ts
 import { z } from "zod";
-import { toSchemaValidator } from "@kin-form/validators/index.ts";
+import { toSchemaValidator } from "@kin-form/validators";
 
 const form = useForm({
   initialValue: { email: "", password: "" },

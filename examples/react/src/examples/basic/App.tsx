@@ -1,6 +1,6 @@
-import { useForm, type Validator, Watch } from "@kin-form/react/index.ts";
-import { useFormDevtools } from "@kin-form/react-devtools/index.ts";
-import { email, minLength, required } from "@kin-form/validators/index.ts";
+import { useForm, type Validator, Watch } from "@kin-form/react";
+import { useFormDevtools } from "@kin-form/react-devtools";
+import { email, minLength, required } from "@kin-form/validators";
 import { SubmitButton } from "./components/SubmitButton.tsx";
 
 type Login = {

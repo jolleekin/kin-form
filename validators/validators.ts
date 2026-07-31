@@ -18,7 +18,7 @@
  * @module
  */
 
-import type { Validator } from "@kin-form/core/index.ts";
+import type { Validator } from "@kin-form/core";
 
 // The same regex WHATWG specifies for `<input type="email">`, so validation
 // here matches what a native email input would already accept.

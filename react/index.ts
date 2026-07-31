@@ -5,7 +5,7 @@
  * @module
  */
 
-export * from "@kin-form/core/index.ts";
+export * from "@kin-form/core";
 export * from "./useForm.ts";
 export * from "./useMultistep.ts";
 export * from "./useWatch.ts";

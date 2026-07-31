@@ -1,9 +1,5 @@
 import { assertEquals } from "@std/assert";
-import {
-  FieldApi,
-  type ValidationError,
-  type Validator,
-} from "@kin-form/core/index.ts";
+import { FieldApi, type ValidationError, type Validator } from "@kin-form/core";
 import {
   email,
   max,

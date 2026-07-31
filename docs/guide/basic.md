@@ -8,7 +8,7 @@ guides assume a component like it exists.
 ## A login form with `Watch`
 
 ```tsx
-import { useForm, Watch } from "@kin-form/react/index.ts";
+import { useForm, Watch } from "@kin-form/react";
 
 function LoginForm() {
   const form = useForm({
@@ -75,7 +75,7 @@ and `type` differ. That repetition is the signal to extract a component, not a
 
 ```tsx
 import type { ReactNode } from "react";
-import { type FieldApi, useWatch } from "@kin-form/react/index.ts";
+import { type FieldApi, useWatch } from "@kin-form/react";
 
 export type TextFieldProps<TParentValue> = {
   api: FieldApi<string, TParentValue>;
@@ -124,7 +124,7 @@ agrees on when submission is disabled:
 
 ```tsx
 import type { ReactNode } from "react";
-import { type FormApi, useWatch } from "@kin-form/react/index.ts";
+import { type FormApi, useWatch } from "@kin-form/react";
 
 export type SubmitButtonProps<TValue> = {
   api: FormApi<TValue>;

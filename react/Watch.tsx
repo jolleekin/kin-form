@@ -5,7 +5,7 @@
  */
 
 import type { ReactNode } from "react";
-import type { FieldApi, FormApi } from "@kin-form/core/index.ts";
+import type { FieldApi, FormApi } from "@kin-form/core";
 import {
   type EqualFn as EqualFn,
   type FieldSelector,

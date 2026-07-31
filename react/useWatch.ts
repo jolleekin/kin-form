@@ -6,8 +6,8 @@
  */
 
 import { useRef, useSyncExternalStore } from "react";
-import { shallowEqual } from "@kin-form/core/index.ts";
-import type { FieldApi, FormApi } from "@kin-form/core/index.ts";
+import { shallowEqual } from "@kin-form/core";
+import type { FieldApi, FormApi } from "@kin-form/core";
 
 /**
  * Narrows a {@linkcode useWatch} subscription down to a derived slice (e.g.

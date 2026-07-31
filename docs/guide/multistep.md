@@ -11,7 +11,7 @@ named `FieldApi`. It validates the current step, waits for it to settle, and
 gates the advance, so a hand-rolled multistep form doesn't repeat that per step.
 
 ```tsx
-import { useForm, useMultistep, Watch } from "@kin-form/react/index.ts";
+import { useForm, useMultistep, Watch } from "@kin-form/react";
 
 type Checkout = {
   shipping: { address: string; city: string };

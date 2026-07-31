@@ -56,7 +56,7 @@ the same way a leaf `api` is, following the same shape as `TextField` in
 
 ```tsx [React]
 import type { ReactNode } from "react";
-import type { FieldApi } from "@kin-form/react/index.ts";
+import type { FieldApi } from "@kin-form/react";
 
 export type AddressFieldProps<TParentValue> = {
   api: FieldApi<Address, TParentValue>;

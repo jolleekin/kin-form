@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { type FieldApi, useWatch } from "@kin-form/react/index.ts";
+import { type FieldApi, useWatch } from "@kin-form/react";
 
 export type ArrayFieldProps<TItem, TParentValue> = {
   api: FieldApi<TItem[], TParentValue>;

@@ -2,7 +2,7 @@ import "./_test-setup.ts";
 import { assertEquals, assertStrictEquals } from "@std/assert";
 import { cleanup, renderHook } from "@testing-library/react";
 import type { ReactNode } from "react";
-import { FormApi } from "@kin-form/core/index.ts";
+import { FormApi } from "@kin-form/core";
 import { DevtoolsContext } from "./DevtoolsProvider.tsx";
 import { DevtoolsRegistry } from "./DevtoolsRegistry.ts";
 import { useFormDevtools } from "./useFormDevtools.ts";

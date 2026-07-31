@@ -7,8 +7,8 @@
 ::: code-group
 
 ```tsx{12-13,28-29} [1. Form with Watch]
-import { useForm, Watch } from "@kin-form/react/index.ts";
-import { required } from "@kin-form/validators/index.ts";
+import { useForm, Watch } from "@kin-form/react";
+import { required } from "@kin-form/validators";
 
 function LoginForm() {
   const form = useForm({
@@ -47,7 +47,7 @@ function LoginForm() {
 
 ```tsx{13} [2. Reusable TextField]
 import type { ReactNode } from "react";
-import { type FieldApi, useWatch } from "@kin-form/react/index.ts";
+import { type FieldApi, useWatch } from "@kin-form/react";
 
 export type TextFieldProps<TParentValue> = {
   api: FieldApi<string, TParentValue>;
@@ -79,7 +79,7 @@ export function TextField<TParentValue>(
 
 ```tsx{12} [3. Reusable SubmitButton]
 import type { ReactNode } from "react";
-import { type FormApi, useWatch } from "@kin-form/react/index.ts";
+import { type FormApi, useWatch } from "@kin-form/react";
 
 export type SubmitButtonProps<TValue> = {
   api: FormApi<TValue>;

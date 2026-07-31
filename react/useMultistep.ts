@@ -12,7 +12,7 @@ import type {
   FieldApi,
   FormApi,
   PromiseOr,
-} from "@kin-form/core/index.ts";
+} from "@kin-form/core";
 import { type FieldSelector, useWatch } from "./useWatch.ts";
 
 /** Options for {@linkcode useMultistep}. */

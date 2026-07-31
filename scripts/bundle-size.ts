@@ -24,7 +24,7 @@ const REACT_ENTRY = new URL("../react/index.ts", import.meta.url).pathname
 const VALIDATORS_ENTRY = new URL("../validators/index.ts", import.meta.url)
   .pathname.slice(1);
 
-const CORE_SPECIFIER = "@kin-form/core/index.ts";
+const CORE_SPECIFIER = "@kin-form/core";
 
 /** Serves an in-memory entry so subjects can be described as strings instead of temp files. */
 function virtualEntryPlugin(id: string, code: string): Plugin {
@@ -87,7 +87,7 @@ const subjects: Subject[] = [
       `export * from "${CORE_ENTRY}";\nexport * from "${REACT_ENTRY}";`,
       ["react"],
     ),
-    // Dedupe the bindings' internal "@kin-form/core/index.ts" import with
+    // Dedupe the bindings' internal "@kin-form/core" import with
     // the same file already pulled in directly above, instead of leaving it
     // as a second, unresolved external import.
     alias: { [CORE_SPECIFIER]: CORE_ENTRY },
