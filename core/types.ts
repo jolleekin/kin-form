@@ -33,7 +33,7 @@ export type ValidationError = string | null;
 export type ValidatorResult = ValidationError | false | undefined;
 
 /**
- * Registry of object types that {@linkcode NonemptyDeepKey} should treat as
+ * Registry of object types that {@linkcode DeepKey} should treat as
  * opaque leaves instead of traversing into their properties.
  *
  * Consumers can add their own leaf types via declaration merging:
