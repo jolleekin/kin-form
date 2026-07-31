@@ -29,10 +29,9 @@ packages, structured as a Deno workspace with four members:
 There is no bundler/build step for development — this is Deno-native TypeScript,
 run and type-checked directly.
 
-`react/`'s files each import `core` via the package specifier
-`@kin-form/core`, resolved through the Deno workspace (no explicit
-`imports` entry needed in `react/deno.json` for that).
-`deno check react/index.ts` currently passes.
+`react/`'s files each import `core` via the package specifier `@kin-form/core`,
+resolved through the Deno workspace (no explicit `imports` entry needed in
+`react/deno.json` for that). `deno check react/index.ts` currently passes.
 
 ## Commands
 
