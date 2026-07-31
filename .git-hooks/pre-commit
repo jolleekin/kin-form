@@ -1,0 +1,8 @@
+#!/bin/sh
+deno fmt --check || exit 1
+deno lint || exit 1
+
+# Only pay for the full test run when a commit actually touches published-package code.
+if git diff --cached --name-only | grep -qE '^(core|react|react-devtools|validators)/.*\.tsx?$'; then
+  deno test -A core react react-devtools validators || exit 1
+fi

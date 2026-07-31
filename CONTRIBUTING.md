@@ -4,6 +4,10 @@ Kin Form is a [Deno](https://deno.com) workspace; there's no separate build step
 for development. You'll need Deno installed
 ([deno.land/manual/getting_started/installation](https://docs.deno.com/runtime/getting_started/installation/)).
 
+```sh
+git config core.hooksPath .git-hooks   # enables the pre-commit fmt/lint/test hook
+```
+
 ## Project layout
 
 - `core/` (`@kin-form/core`), the framework-agnostic form engine
@@ -41,9 +45,12 @@ deno lint
 deno fmt --check
 ```
 
-`deno lint` and `deno test -A core react react-devtools validators` are what CI
-runs on every push and pull request; please run both locally before opening a
-PR.
+`deno fmt --check`, `deno lint`, and
+`deno test -A core react react-devtools
+validators` are what CI runs on every
+push and pull request; the pre-commit hook runs the same checks (skipping the
+test run unless the commit touches `core/`, `react/`, `react-devtools/`, or
+`validators/`) and will block a commit that fails them.
 
 ## Making a change
 
