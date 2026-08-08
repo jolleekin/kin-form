@@ -109,6 +109,7 @@ export default defineConfig({
       { text: "Validators", link: "/validators/" },
       { text: "Comparison", link: "/comparison/" },
       { text: "API Reference", link: "https://jsr.io/@kin-form" },
+      { text: "Kin Store", link: "https://kinstore.dev" },
     ],
 
     sidebar: {
