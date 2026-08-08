@@ -36,8 +36,8 @@ const rows: Array<{
     label: 'Standard Schema support',
     kin: '⚠️', rhf: '⚠️', formik: '❌', tanstack: '✅',
     notes: {
-      kin: 'Via toSchemaValidator() from the separate @kin-form/validators package — a generic ~15-line adapter, not a per-schema-library one.',
-      rhf: 'Via standardSchemaResolver() from the separate @hookform/resolvers package.',
+      kin: 'Via toSchemaValidator() from @kin-form/validators package.',
+      rhf: 'Via standardSchemaResolver() from @hookform/resolvers package.',
     },
   },
   {
@@ -50,8 +50,9 @@ const rows: Array<{
   },
   {
     label: 'Selective re-rendering',
-    kin: '✅', rhf: '✅', formik: '⚠️', tanstack: '✅',
+    kin: '✅', rhf: '⚠️', formik: '⚠️', tanstack: '✅',
     notes: {
+      rhf: 'useWatch(name) subscribes to a whole field path only',
       formik: 'Field-level optimization exists, but the default context re-renders more broadly.',
     },
   },
@@ -75,72 +76,33 @@ const visibleRows = computed(() =>
 </script>
 
 <template>
-  <section class="feature-matrix" :class="{ 'is-full': full }">
-    <div class="feature-matrix-inner">
-      <h2 v-if="!full" class="feature-matrix-heading">How it compares</h2>
-      <div class="matrix-wrapper">
-        <table class="matrix-table">
-          <thead>
-            <tr>
-              <th></th>
-              <th class="kin">Kin Form</th>
-              <th>React Hook Form</th>
-              <th>Formik</th>
-              <th>TanStack Form</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="row in visibleRows" :key="row.label">
-              <td>
-                <a v-if="!full" href="/comparison/" class="row-link">{{ row.label }}</a>
-                <template v-else>{{ row.label }}</template>
-              </td>
-              <td v-if="row.kin === 'bundle'" class="kin">
-                <div class="size-grid">
-                  <span class="size-line">4.7 KB</span><span class="size-label">core + react</span>
-                </div>
-              </td>
-              <td v-else class="kin" :class="{ noted: !!row.notes?.kin }" :title="row.notes?.kin">{{ row.kin }}</td>
-              <td :class="{ na: row.rhf === '—', noted: !!row.notes?.rhf }" :title="row.notes?.rhf">{{ row.rhf }}</td>
-              <td :class="{ na: row.formik === '—', noted: !!row.notes?.formik }" :title="row.notes?.formik">{{ row.formik }}</td>
-              <td :class="{ na: row.tanstack === '—', noted: !!row.notes?.tanstack }" :title="row.notes?.tanstack">{{ row.tanstack }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="feature-matrix-legend">✅ full support · ⚠️ partial or conditional · ❌ not supported</p>
-    </div>
-  </section>
+  <div class="feature-matrix">
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>Features</th>
+          <th class="kin">Kin Form</th>
+          <th>React Hook Form</th>
+          <th>Formik</th>
+          <th>TanStack Form</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="row in visibleRows" :key="row.label">
+          <td>{{ row.label }}</td>
+          <td class="kin" :class="{ noted: !!row.notes?.kin }" :title="row.notes?.kin">{{ row.kin }}</td>
+          <td :class="{ na: row.rhf === '—', noted: !!row.notes?.rhf }" :title="row.notes?.rhf">{{ row.rhf }}</td>
+          <td :class="{ na: row.formik === '—', noted: !!row.notes?.formik }" :title="row.notes?.formik">{{ row.formik }}</td>
+          <td :class="{ na: row.tanstack === '—', noted: !!row.notes?.tanstack }" :title="row.notes?.tanstack">{{ row.tanstack }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="feature-matrix-legend">✅ full support · ⚠️ partial or conditional · ❌ not supported</p>
 </template>
 
 <style scoped>
 .feature-matrix {
-  padding: 0 24px;
-}
-
-.feature-matrix.is-full {
-  padding: 0;
-}
-
-.feature-matrix-inner {
-  max-width: 740px;
-  margin: 0 auto;
-}
-
-.feature-matrix.is-full .feature-matrix-inner {
-  max-width: 100%;
-}
-
-.feature-matrix-heading {
-  font-size: 20px;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 24px;
-  color: var(--vp-c-text-1);
-  letter-spacing: -0.01em;
-}
-
-.matrix-wrapper {
   overflow-x: auto;
 }
 
@@ -149,6 +111,7 @@ const visibleRows = computed(() =>
   border-collapse: collapse;
   font-size: 14px;
   line-height: 1.5;
+  background-color: white;
 }
 
 .matrix-table th,
@@ -204,29 +167,9 @@ const visibleRows = computed(() =>
   text-decoration: underline;
 }
 
-.size-grid {
-  display: grid;
-  grid-template-columns: auto auto;
-  gap: 0 8px;
-}
-
-.size-line {
-  text-align: right;
-  line-height: 20px;
-}
-
-.size-label {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--vp-c-text-2);
-  line-height: 20px;
-  text-align: left;
-}
-
 .feature-matrix-legend {
   text-align: center;
   margin-top: 12px;
   font-size: 12px;
-  color: var(--vp-c-text-3);
 }
 </style>

@@ -97,7 +97,7 @@ function heightOf(value: number): string {
 }
 
 .bar-fill.accent {
-  background: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-2);
 }
 
 .bar-label {

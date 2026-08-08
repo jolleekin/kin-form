@@ -1,5 +1,8 @@
-import { defineConfig } from "vitepress";
+import { defineConfig, type ThemeOptions } from "vitepress";
 import llmstxt from "vitepress-plugin-llms";
+import poimandresLight from "./theme/poimandres-light.json" with {
+  type: "json",
+};
 
 // TODO: replace with the real docs hostname once hosting is decided (see
 // ROADMAP.md). Everything below (sitemap.xml, canonical links, og:url) keys
@@ -11,6 +14,11 @@ const description =
 
 export default defineConfig({
   cleanUrls: true,
+  // The whole theme (palette, Shiki theme) is light-only by design, with no
+  // .dark counterpart defined anywhere — DefaultTheme's dark-mode toggle
+  // would otherwise render but do nothing, since this theme's CSS overrides
+  // are unconditional. Disabling it removes the dead toggle instead.
+  appearance: false,
   title: "Kin Form",
   description,
 
@@ -26,9 +34,6 @@ export default defineConfig({
         domain: SITE_URL,
         generateLLMsTxt: false,
         generateLLMsFullTxt: false,
-        // Not a doc page: a Vue component authored as Markdown for the
-        // homepage layout (see .vitepress/theme/index.ts).
-        ignoreFiles: [".vitepress/theme/home-snippets.md"],
         // The cast works around examples/react's vite@8 (a different
         // workspace member) getting hoisted over vitepress's own vite@5 in
         // this Deno workspace's shared node_modules, which leaves
@@ -51,6 +56,19 @@ export default defineConfig({
 
   head: [
     ["link", { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }],
+    ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
+    [
+      "link",
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
+    ],
+    [
+      "link",
+      {
+        rel: "stylesheet",
+        href:
+          "https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap",
+      },
+    ],
     ["meta", { property: "og:type", content: "website" }],
     ["meta", { property: "og:site_name", content: "Kin Form" }],
     ["meta", { property: "og:title", content: "Kin Form" }],
@@ -63,6 +81,11 @@ export default defineConfig({
   ],
 
   markdown: {
+    // poimandres has no official light variant, so this remaps its own
+    // token colors (soft blue identifiers, teal keywords/strings, rose
+    // for errors/null) onto a white background instead of picking an
+    // unrelated light theme with a different color language.
+    theme: poimandresLight as unknown as ThemeOptions,
     codeTransformers: [
       {
         name: "comment-lines",
