@@ -1,5 +1,17 @@
 # Why Kin Form?
 
+## Build field components once, then reuse them
+
+Kin Form is designed around reusable form UI, not one-off bindings. A
+`TextField`, `AddressField`, `ItemsField`, or `SubmitButton` takes the resolved
+`FieldApi` it needs and nothing else: no dotted path, form context, or bespoke
+callback plumbing. The same component can render a field wherever its value type
+fits, across forms and applications.
+
+Because a leaf, a nested group, an array item, and the form root share the same
+state model, the component pattern never changes as a form grows. See
+[Form Composition](/guide/form-composition) for the complete pattern.
+
 Kin Form starts from one premise: **a form is a tree, and every node in that
 tree (leaf field, nested group, or the form itself) is the same kind of thing.**
 Most form libraries make the form object the sole owner of state: register a

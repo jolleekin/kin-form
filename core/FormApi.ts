@@ -110,6 +110,20 @@ export class FormApi<TValue = unknown> extends FieldApi<TValue> {
   }
 
   /**
+   * Narrows {@linkcode FieldApi.initialValue} back down to `TValue`: a root
+   * (`parent === null`) always has a real baseline, stored directly by
+   * {@linkcode FieldApi}'s constructor, never derived through a `parent`
+   * that might itself lack one.
+   */
+  protected override get initialValue(): TValue {
+    return super.initialValue as TValue;
+  }
+
+  protected override set initialValue(value: TValue) {
+    super.initialValue = value;
+  }
+
+  /**
    * Resets the form to {@linkcode value}.
    *
    * Clears {@linkcode touched} throughout the tree, and sets this form's value
@@ -157,6 +171,7 @@ export class FormApi<TValue = unknown> extends FieldApi<TValue> {
     value: DeepValue<TValue, TName> = getIn(
       this.initialValue,
       name,
+      undefined,
     ),
   ): void {
     this.batch(() => {

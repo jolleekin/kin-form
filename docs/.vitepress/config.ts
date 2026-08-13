@@ -66,7 +66,7 @@ export default defineConfig({
       {
         rel: "stylesheet",
         href:
-          "https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap",
+          "https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap",
       },
     ],
     ["meta", { property: "og:type", content: "website" }],

@@ -9,19 +9,38 @@ markdownStyles: false
 <div class="home">
 
 <section class="hero">
-  <h1>Kin Form</h1>
-  <p class="tagline">A reactive form state library for TypeScript.<br/>Framework-agnostic core, type-safe field paths, React bindings built in.</p>
+  <h1 class="section-header">Kin Form</h1>
+  <p class="lede">Build your field components once. Reuse them everywhere.</p>
+  <p class="prose">A framework-agnostic form state library for TypeScript.</p>
   <div class="actions">
     <a class="btn-primary" href="/guide/getting-started">Get Started</a>
     <a class="btn-secondary" href="https://github.com/jolleekin/kin-form">View on GitHub</a>
   </div>
 </section>
 
+<section class="reuse">
+<h2 class="section-header">The payoff</h2>
+<p class="lede">Forms read like composition, not wiring.</p>
+
+```tsx
+<form onSubmit={form.handleSubmit}>
+  <TextField api={form.field("email")} label="Email" />
+  <AddressField api={form.field("shipping")} />
+  <AddressField api={form.field("billing")} />
+  <ItemsField api={form.field("items")} />
+  <SubmitButton api={form}>Place order</SubmitButton>
+</form>;
+```
+
+<p class="prose">Each component receives a resolved <code>FieldApi</code>, not a path or form context. Define the UI and behavior once, then mount it anywhere its value type fits. Kin Form keeps that component independently subscribed, so a change only updates the part of the form that depends on it.</p>
+<p class="reuse-cta"><a href="/guide/form-composition">Build reusable field components →</a></p>
+</section>
+
 <section class="why">
-<p class="eyebrow">Why it exists</p>
-<p class="why-lede">Every form library I'd used was either not type-safe, too heavy, or overcomplicated, often some combination of all three. Most treat the form and its fields as different things: the form owns the state, fields are just proxies into it.</p>
-<p class="why-lede">Form state management doesn't need to be that heavy or complicated. A form is a tree, and every node in it, leaf field, group field, or the form itself, is the same thing, with its own state, configuration, and subscribers.</p>
-<p class="why-lede">Nothing forces one shape on a given value. Same <code>{ email, address: { line1, line2 } }</code>, three valid trees:</p>
+<h2 class="section-header">Why it exists</h2>
+<p class="prose">Reusable field components become awkward when a library treats the form as the only stateful object and fields as proxies into it. Nested objects, arrays, and shared validation then need their own special mechanisms.</p>
+<p class="prose">Kin Form treats a form as a tree where every node (leaf, group, or the form itself) is the same thing, with its own state, configuration, and subscribers. That is why one component pattern works at every level.</p>
+<p class="prose">Nothing forces one shape on a given value. Same <code>{ email, address: { line1, line2 } }</code>, three valid trees:</p>
 <div class="why-trees">
 
 <div class="tree-example">
@@ -100,20 +119,45 @@ markdownStyles: false
 </section>
 
 <section class="system">
-  <p class="eyebrow">What it does differently</p>
+  <h2 class="section-header">What it does differently</h2>
   <div class="system-card principle-grid">
-    <div class="principle"><h4>One state machine, not two</h4><p>A nested group and a leaf field are the same class, not a special case bolted onto it.</p></div>
-    <div class="principle"><h4>Type-safe paths</h4><p><code>field("items.0.code")</code> type-checks against your value type, so a typo'd path is a compile error.</p></div>
-    <div class="principle"><h4>No special-case array API</h4><p>Push, insert, move, swap, and remove live on the same class every field already has, not a separate <code>useFieldArray</code> hook.</p></div>
-    <div class="principle"><h4>Declarative cross-field rules</h4><p>List <code>dependents</code> on a field to re-validate siblings, instead of wiring a manual subscription.</p></div>
-    <div class="principle"><h4>Localized subscriptions</h4><p>Each node notifies only its own subscribers, so <code>useWatch</code>/<code>select</code> narrows a re-render to exactly the field, or selected state, that changed.</p></div>
-    <div class="principle"><h4>Composable fields</h4><p>Your reusable <code>TextField</code>, <code>AddressField</code>, and <code>SubmitButton</code> each take a <code>FieldApi</code>, so they work the same way whether bound to a leaf, a subtree, or the whole form.</p></div>
+    <div class="principle"><h3 class="lede">One state machine, not two</h3><p>A nested group and a leaf field are the same class, not a special case bolted onto it.</p></div>
+    <div class="principle"><h3 class="lede">Type-safe paths</h3><p><code>field("items.0.code")</code> type-checks against your value type, so a typo'd path is a compile error.</p></div>
+    <div class="principle"><h3 class="lede">No special-case array API</h3><p>Push, insert, move, swap, and remove live on the same class every field already has, not a separate <code>useFieldArray</code> hook.</p></div>
+    <div class="principle"><h3 class="lede">Declarative cross-field rules</h3><p>List <code>dependents</code> on a field to re-validate siblings, instead of wiring a manual subscription.</p></div>
+    <div class="principle"><h3 class="lede">Selective re-rendering</h3><p>A change propagates only to the nodes it affects, so each subscriber re-renders only when the field, or selected state, it's watching actually changed.</p></div>
+    <div class="principle"><h3 class="lede">Composable fields</h3><p>Your reusable <code>TextField</code>, <code>AddressField</code>, and <code>SubmitButton</code> each take a <code>FieldApi</code>, so they work the same way whether bound to a leaf, a subtree, or the whole form.</p></div>
   </div>
 </section>
 
+<section class="fit">
+<h2 class="section-header">Is Kin Form a fit?</h2>
+<div class="fit-card">
+<div>
+<h3 class="lede">Use it when forms become reusable UI.</h3>
+<ul>
+  <li>You maintain field components across forms or apps.</li>
+  <li>Your forms have nested groups, repeatable rows, or multiple steps.</li>
+  <li>You need stable array item identity and narrowly scoped re-renders.</li>
+  <li>Field state must survive UI unmounts and remounts, such as rows in a virtual list.</li>
+  <li>You want typed field paths without a separate array API.</li>
+  <li>You need sync or async validation, scoped per field or subtree.</li>
+</ul>
+</div>
+<div>
+<h3 class="lede">Skip it when the simple thing is enough.</h3>
+<ul>
+  <li>The form is a small, one-off contact or login form.</li>
+  <li>Component-local state is already simpler.</li>
+  <li>Your team has a form-library standard that is working well and no pain worth migrating for.</li>
+</ul>
+</div>
+</div>
+</section>
+
 <section class="numbers">
-  <p class="eyebrow">How it compares</p>
-  <FeatureMatrix />
+  <h2 class="section-header">How it compares</h2>
+  <FeatureMatrix full />
   <div class="numbers-grid">
     <div class="system-card">
       <BundleSizeChart title="Bundle size (React usage, gzip)" />
@@ -126,7 +170,7 @@ markdownStyles: false
 </section>
 
 <section class="demo">
-  <p class="eyebrow">See it for yourself</p>
+  <h2 class="section-header">See it for yourself</h2>
 
 <FrameworkSnippet>
 <template #react>
@@ -148,6 +192,7 @@ function LoginForm() {
   return (
     <form onSubmit={form.handleSubmit}>
 
+      {/* Watch is great for one-off UI or prototyping. */}
       {/* Only re-render when the email field changes. */}
       <Watch api={form.field("email", { validators: required("Required") })}>
         {(field) => (
@@ -213,7 +258,7 @@ import type { ReactNode } from "react";
 import { type FormApi, useWatch } from "@kin-form/react";
 
 export type SubmitButtonProps<TValue> = {
-  api: FormApi<TValue>;
+  api: FormApi<TValue>; // Subclass of FieldApi.
   children: ReactNode;
 };
 

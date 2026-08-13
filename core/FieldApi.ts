@@ -274,15 +274,24 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * constructed with no `parent` (only `FormApi` legitimately is), the
    * value it was constructed with.
    *
+   * `undefined` if `name` doesn't resolve within `parent`'s own baseline at
+   * all, e.g. a field registered under an array index pushed after the
+   * baseline was last moved: there's no corresponding slot to derive a
+   * baseline from, so the field is simply dirty against `undefined` rather
+   * than throwing. `FormApi` overrides this back down to `TValue`, since a
+   * root's baseline (`parent === null`) is always a real value.
+   *
    * Assignable only so `FormApi.reset`/`FormApi.resetField` can move it;
    * not part of the public surface otherwise. Only ever assigned on a field
    * with no `parent`: every other field's `initialValue` is purely derived,
    * so assigning it there would just be stored and never read.
    */
-  protected get initialValue(): TValue {
-    return this.parent
-      ? getIn(this.parent.initialValue, this.name) as TValue
-      : this.#initialValue;
+  protected get initialValue(): TValue | undefined {
+    if (!this.parent) return this.#initialValue;
+    const parentInitialValue = this.parent.initialValue;
+    return parentInitialValue === undefined
+      ? undefined
+      : getIn(parentInitialValue, this.name, undefined) as TValue | undefined;
   }
 
   protected set initialValue(value: TValue) {
