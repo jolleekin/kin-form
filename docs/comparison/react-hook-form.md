@@ -863,7 +863,7 @@ function Field<T extends FieldValues>(
 | Default subscription    | `useWatch(api)` — isolated per field/form  | `watch()` — re-renders the whole calling component                                                          |
 | Narrowing               | `select: (f) => ...` on the same hook      | `useWatch({ control, name })` — separate hook                                                               |
 | Value vs field state    | One `useWatch(api, select)` returning both | `useWatch` + `useFormState` — two hooks, combined by hand                                                   |
-| Arbitrary derived slice | `useWatch(api, select, equal?)`            | Not supported — `useWatch({ control, name })` only subscribes to a whole path; combine/derive by hand after |
+| Arbitrary derived value | `useWatch(api, select, equal?)`            | Not supported — `useWatch({ control, name })` only subscribes to a whole path; combine/derive by hand after |
 
 ## Form composition
 

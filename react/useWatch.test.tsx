@@ -75,7 +75,7 @@ Deno.test("useWatch", async (t) => {
   });
 
   await t.step(
-    "a select re-renders only when the selected slice changes",
+    "a select re-renders only when the selected value changes",
     () => {
       try {
         const field = new FieldApi<string>(null, "", {
@@ -97,7 +97,7 @@ Deno.test("useWatch", async (t) => {
         });
         assertEquals(renders, 1);
 
-        // Different length -> re-render with the new slice.
+        // Different length -> re-render with the new selected value.
         act(() => {
           field.value = "efg";
         });
@@ -195,7 +195,7 @@ Deno.test("useWatch", async (t) => {
       assertEquals(renders, 1);
 
       // `b` changed but `equal` only compares `a` -> no re-render, and the
-      // cached slice reference is preserved.
+      // cached selected-value reference is preserved.
       act(() => {
         field.value = { a: 1, b: 2 };
       });
@@ -287,7 +287,7 @@ Deno.test("useWatch", async (t) => {
   );
 
   await t.step(
-    "a FieldSelector on a nested field re-renders only when the selected slice changes",
+    "a FieldSelector on a nested field re-renders only when the selected value changes",
     async () => {
       try {
         const group = new FieldApi<{ a: string }>(null, "", {

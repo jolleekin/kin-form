@@ -233,12 +233,12 @@ by `DeepKey` name — used for both leaf fields and group-like fields, since
 render, since `options` is applied to an already-registered field via
 `updateOptions` the same way every time) and subscribed via `useWatch`
 (`useSyncExternalStore` underneath), re-rendering on every notify by default or,
-when `select` is given, only when the derived slice it returns changes (compared
-shallowly by default — own keys for a record, index-by-index for an array/tuple
-— so a selector can return a fresh literal every call without forcing extra
-re-renders). `Watch` is the render-prop form of `useWatch`, for an
+when `select` is given, only when the selected value it returns changes
+(compared shallowly by default — own keys for a record, index-by-index for an
+array/tuple — so a selector can return a fresh literal every call without
+forcing extra re-renders). `Watch` is the render-prop form of `useWatch`, for an
 already-resolved `FieldApi`/`FormApi` — its `children` always receives the api
-as the first argument, plus the selected slice as the second when `select` is
+as the first argument, plus the selected value as the second when `select` is
 given. Resolving a field and rendering/watching it are deliberately two separate
 steps as of 2026-07-19 — no `useField`-style hook that does both at once, and no
 `Field` component (`Watch` covers that render-prop case now, taking an

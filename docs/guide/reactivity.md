@@ -89,7 +89,7 @@ above doesn't force a re-render on every notify.
 </template>
 </FrameworkSnippet>
 
-### Selecting a derived slice
+### Selecting a derived value
 
 <FrameworkSnippet>
 <template #react>
@@ -97,7 +97,7 @@ above doesn't force a re-render on every notify.
 `Watch` is a general-purpose subscription component for any already-resolved
 `FieldApi`/`FormApi`, without writing a custom component around `useWatch`.
 `children` always receives the field/form as its first argument; pass `select`
-to narrow the subscription to a derived slice, passed as `children`'s second
+to narrow the subscription to a selected value, passed as `children`'s second
 argument.
 
 ```tsx
@@ -110,7 +110,7 @@ argument.
   )}
 </Watch>
 
-// Re-render only when the derived slice changes.
+// Re-render only when the selected value changes.
 <Watch api={itemsGroup} select={(g) => g.value.length}>
   {(_group, count) => <span>{count} items</span>}
 </Watch>

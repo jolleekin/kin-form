@@ -10,15 +10,17 @@ import { shallowEqual } from "@kin-form/core";
 import type { FieldApi, FormApi } from "@kin-form/core";
 
 /**
- * Narrows a {@linkcode useWatch} subscription down to a derived slice (e.g.
+ * Narrows a {@linkcode useWatch} subscription down to a selected value (e.g.
  * `f => f.value.length`) instead of re-rendering on every change to `api`.
  */
-export type FieldSelector<TValue, TParentValue, TSlice> = (
+export type FieldSelector<TValue, TParentValue, TSelected> = (
   api: FieldApi<TValue, TParentValue>,
-) => TSlice;
+) => TSelected;
 
 /** Like {@linkcode FieldSelector}, for a {@linkcode FormApi}. */
-export type FormSelector<TValue, TSlice> = (api: FormApi<TValue>) => TSlice;
+export type FormSelector<TValue, TSelected> = (
+  api: FormApi<TValue>,
+) => TSelected;
 
 /**
  * Compares two selector results to decide whether a re-render is needed.
@@ -29,7 +31,7 @@ export type FormSelector<TValue, TSlice> = (api: FormApi<TValue>) => TSlice;
  * `f => [f.value, f.touched] as const`) without forcing a re-render on every
  * notify. Pass one of these to compare some other way, e.g. deep equality.
  */
-export type EqualFn<TSlice> = (a: TSlice, b: TSlice) => boolean;
+export type EqualFn<TSelected> = (a: TSelected, b: TSelected) => boolean;
 
 /**
  * Subscribes the calling component to {@linkcode api} via
@@ -38,8 +40,8 @@ export type EqualFn<TSlice> = (a: TSlice, b: TSlice) => boolean;
  * With no `select`, re-renders on any change (matching `api.getVersion`'s
  * coarse snapshot) and returns `api` itself. With `select`
  * ({@linkcode FieldSelector}/{@linkcode FormSelector}), only re-renders when
- * the selected slice changes (compared via `equal`, see
- * {@linkcode EqualFn}) and returns that slice instead of `api`.
+ * the selected value changes (compared via `equal`, see
+ * {@linkcode EqualFn}) and returns that selected value instead of `api`.
  *
  * Public so consumers can build their own low-level components subscribed to
  * a `FieldApi`/`FormApi` (e.g. a shared `TextField`, or an `ActionButtons`
@@ -61,16 +63,16 @@ export function useWatch<TValue, TParentValue>(
   api: FieldApi<TValue, TParentValue>,
   select?: never,
 ): FieldApi<TValue, TParentValue>;
-export function useWatch<TValue, TSlice>(
+export function useWatch<TValue, TSelected>(
   api: FormApi<TValue>,
-  select: FormSelector<TValue, TSlice>,
-  equal?: EqualFn<TSlice>,
-): TSlice;
-export function useWatch<TValue, TParentValue, TSlice>(
+  select: FormSelector<TValue, TSelected>,
+  equal?: EqualFn<TSelected>,
+): TSelected;
+export function useWatch<TValue, TParentValue, TSelected>(
   api: FieldApi<TValue, TParentValue>,
-  select: FieldSelector<TValue, TParentValue, TSlice>,
-  equal?: EqualFn<TSlice>,
-): TSlice;
+  select: FieldSelector<TValue, TParentValue, TSelected>,
+  equal?: EqualFn<TSelected>,
+): TSelected;
 export function useWatch(
   // Loosely typed on purpose, for the same reason `Watch`'s implementation
   // is: no precise shared type here is actually satisfiable, and this body
@@ -81,20 +83,20 @@ export function useWatch(
   select?: (api: any) => unknown,
   equal: EqualFn<unknown> = shallowEqual,
 ): unknown {
-  const sliceRef = useRef<unknown | undefined>(undefined);
+  const selectedRef = useRef<unknown | undefined>(undefined);
 
   const getSnapshot: () => unknown | number = select
     ? () => {
       const next = select(api);
-      const prev = sliceRef.current;
+      const prev = selectedRef.current;
       if (prev !== undefined && equal(prev, next)) return prev;
 
-      sliceRef.current = next;
+      selectedRef.current = next;
       return next;
     }
     : api.getVersion;
 
-  const slice = useSyncExternalStore(api.subscribe, getSnapshot);
+  const selected = useSyncExternalStore(api.subscribe, getSnapshot);
 
-  return select ? slice : api;
+  return select ? selected : api;
 }

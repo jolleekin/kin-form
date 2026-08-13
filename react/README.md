@@ -113,7 +113,7 @@ function EmailInput({ parent }: { parent: FieldApi<{ email: string }> }) {
 ```
 
 `children` always receives `api` as its first argument; pass `select` to
-additionally narrow the subscription down to a derived slice, passed as the
+additionally narrow the subscription down to a selected value, passed as the
 second argument, instead of re-rendering on every change:
 
 ```tsx

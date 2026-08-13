@@ -205,7 +205,7 @@ Deno.test("Watch", async (t) => {
   );
 
   await t.step(
-    "form select overload: children receive the api and the selected slice",
+    "form select overload: children receive the api and the selected value",
     () => {
       try {
         const form = new FormApi<{ name: string }>({
@@ -244,7 +244,7 @@ Deno.test("Watch", async (t) => {
   );
 
   await t.step(
-    "field select overload: children receive the api and the selected slice",
+    "field select overload: children receive the api and the selected value",
     () => {
       try {
         const field = new FieldApi<string>(null, "", {

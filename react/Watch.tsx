@@ -29,25 +29,25 @@ export type WatchFieldProps<TValue, TParentValue> = {
 
 /**
  * Selector variant of {@linkcode WatchFormProps}: `select` narrows the
- * subscription down to a derived slice (e.g. `f => f.value.length`) instead
+ * subscription down to a selected value (e.g. `f => f.value.length`) instead
  * of re-rendering on every change, and `children`'s second argument receives
- * that slice.
+ * that selected value.
  */
-export type WatchFormSelectProps<TValue, TSlice> = {
+export type WatchFormSelectProps<TValue, TSelected> = {
   api: FormApi<TValue>;
-  select: FormSelector<TValue, TSlice>;
-  equal?: EqualFn<TSlice>;
-  children: (form: FormApi<TValue>, selected: TSlice) => ReactNode;
+  select: FormSelector<TValue, TSelected>;
+  equal?: EqualFn<TSelected>;
+  children: (form: FormApi<TValue>, selected: TSelected) => ReactNode;
 };
 
 /** Selector variant of {@linkcode WatchFieldProps}; see {@linkcode WatchFormSelectProps}. */
-export type WatchFieldSelectProps<TValue, TParentValue, TSlice> = {
+export type WatchFieldSelectProps<TValue, TParentValue, TSelected> = {
   api: FieldApi<TValue, TParentValue>;
-  select: FieldSelector<TValue, TParentValue, TSlice>;
-  equal?: EqualFn<TSlice>;
+  select: FieldSelector<TValue, TParentValue, TSelected>;
+  equal?: EqualFn<TSelected>;
   children: (
     field: FieldApi<TValue, TParentValue>,
-    selected: TSlice,
+    selected: TSelected,
   ) => ReactNode;
 };
 
@@ -73,8 +73,9 @@ export type WatchFieldSelectProps<TValue, TParentValue, TSlice> = {
  * ```
  *
  * With `select` ({@linkcode FieldSelector}/{@linkcode FormSelector}), the
- * subscription narrows to a derived slice instead of re-rendering on every
- * change, and `children` receives that slice as its second argument:
+ * subscription narrows to a selected value instead of re-rendering on every
+ * change, and `children` receives that selected value as its second
+ * argument:
  *
  * ```tsx
  * <Watch api={itemsField} select={(f) => f.value.length}>
@@ -90,11 +91,11 @@ export function Watch<TValue>(props: WatchFormProps<TValue>): ReactNode;
 export function Watch<TValue, TParentValue>(
   props: WatchFieldProps<TValue, TParentValue>,
 ): ReactNode;
-export function Watch<TValue, TSlice>(
-  props: WatchFormSelectProps<TValue, TSlice>,
+export function Watch<TValue, TSelected>(
+  props: WatchFormSelectProps<TValue, TSelected>,
 ): ReactNode;
-export function Watch<TValue, TParentValue, TSlice>(
-  props: WatchFieldSelectProps<TValue, TParentValue, TSlice>,
+export function Watch<TValue, TParentValue, TSelected>(
+  props: WatchFieldSelectProps<TValue, TParentValue, TSelected>,
 ): ReactNode;
 export function Watch(
   // `unknown` rather than one of the four overloads' prop types, for the same

@@ -1,6 +1,6 @@
 {
   "name": "@kin-form/react",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "exports": {
     ".": "./index.ts",
