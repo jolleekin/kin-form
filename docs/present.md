@@ -13,7 +13,7 @@ head:
 <div class="home present">
 
 <section class="hero">
-  <h1>Kin Form</h1>
+  <h1 class="section-header">Kin Form</h1>
   <p class="lede">Build your field components once. Reuse them everywhere.</p>
   <div class="actions">
     <a class="btn-primary" href="/guide/getting-started">Get Started</a>
@@ -322,11 +322,18 @@ function LoginForm() {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   scroll-snap-align: start;
   scroll-snap-stop: always;
   overflow-y: auto;
+  padding: 3rem 1rem 0;
 }
+  .present > section:first-child {
+    justify-content: center;
+  }
+  .present > section:last-child {
+    padding-top: 1rem;
+  }
 
 .present-exit {
   position: fixed;
