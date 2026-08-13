@@ -9,6 +9,7 @@
     "core",
     "docs",
     "examples/*",
+    "lit",
     "react",
     "react-devtools",
     "scripts",

@@ -1,0 +1,24 @@
+{
+  "name": "@kin-form/lit",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": {
+    ".": "./index.ts",
+    "./index.ts": "./index.ts"
+  },
+  "tasks": {
+    "test": "deno test --allow-env ."
+  },
+  "imports": {
+    "@happy-dom/global-registrator": "npm:@happy-dom/global-registrator@^15",
+    "lit": "npm:lit@^3.3.3"
+  },
+  "compilerOptions": {
+    "lib": [
+      "deno.window",
+      "deno.unstable",
+      "node",
+      "dom"
+    ]
+  }
+}

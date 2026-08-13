@@ -1,0 +1,21 @@
+{
+  "tasks": {
+    "dev": "deno run -A --node-modules-dir npm:vite --port=5556",
+    "build": "deno run -A --node-modules-dir npm:vite build",
+    "preview": "deno run -A --node-modules-dir npm:vite preview",
+    "serve": "deno run --allow-net --allow-read jsr:@std/http@1/file-server dist/"
+  },
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM"]
+  },
+  "imports": {
+    "@deno/vite-plugin": "npm:@deno/vite-plugin@^2.0.2",
+    "@tailwindcss/vite": "npm:@tailwindcss/vite@^4.3.2",
+    "@tanstack/lit-virtual": "npm:@tanstack/lit-virtual@^3.13.36",
+    "lit": "npm:lit@^3.3.3",
+    "tailwindcss": "npm:tailwindcss@^4.3.2",
+    "tslib": "npm:tslib@^2.8.1",
+    "vite": "npm:vite@^8.0.3",
+    "zod": "npm:zod@^4"
+  }
+}

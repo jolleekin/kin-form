@@ -86,5 +86,6 @@ methodology notes, and code-by-code comparisons.
 | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | [`@kin-form/core`](./core/)                     | `FieldApi`, `FormApi` — the framework-agnostic form engine                                                                      |
 | [`@kin-form/react`](./react/)                   | `useForm`, `useWatch`, `useMultistep`, `Watch` — React bindings                                                                 |
+| [`@kin-form/lit`](./lit/)                       | `watch`, `WatchController`, `MultistepController` — Lit bindings                                                                |
 | [`@kin-form/validators`](./validators/)         | `required`, `minLength`, `maxLength`, `min`, `max`, `url`, `email`, `pattern`, `maxFileSize`, `password`, `toSchemaValidator()` |
 | [`@kin-form/react-devtools`](./react-devtools/) | `DevtoolsProvider`, `useFormDevtools` — inspector panel for a form's live tree state during development                         |
