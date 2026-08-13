@@ -9,7 +9,31 @@
 ![100% type-safe](https://img.shields.io/badge/100%25%20type--safe-166534?style=flat)
 ![Zero dependencies](https://img.shields.io/badge/Zero%20dependencies-166534?style=flat)
 
-Form state that stays out of your way.
+[Documentation](https://kin-form.pages.dev) ·
+[Get Started](https://kin-form.pages.dev/guide/getting-started)
+
+Build your field components once. Reuse them everywhere.
+
+A framework-agnostic form state library for TypeScript.
+
+## The payoff
+
+```tsx
+<form onSubmit={form.handleSubmit}>
+  <TextField api={form.field("email")} label="Email" />
+  <AddressField api={form.field("shipping")} />
+  <AddressField api={form.field("billing")} />
+  <ItemsField api={form.field("items")} />
+  <SubmitButton api={form}>Place order</SubmitButton>
+</form>;
+```
+
+Each component receives a resolved `FieldApi`, not a path or form context.
+Define the UI and behavior once, then mount it anywhere its value type fits. Kin
+Form keeps that component independently subscribed, so a change only updates the
+part of the form that depends on it. See
+[Form Composition](https://kin-form.pages.dev/guide/form-composition) for the
+full pattern.
 
 ## Feature matrix
 
@@ -46,37 +70,15 @@ Tanstack Form (core + react)                     ██████████�
 
 ## Performance
 
-One shared ~84-field form (20 flat fields, a nested group, a 20-item array)
-driven through the same update plan against React Hook Form, Formik, and
-TanStack Form. Reproduce with `deno task --cwd scripts speed-bench`. Numbers are
-wall-clock medians in Happy DOM (JS-only, no layout/paint) — a proxy for
-state-management overhead, not browser-realistic timing.
+Flat field update, 800x burst, wall-clock median in Happy DOM: **1.39 ms** for
+Kin Form vs 66.55 ms (React Hook Form), 3.30 ms (Formik), 564.24 ms (TanStack
+Form). One scenario from a shared ~84-field benchmark form driven through the
+same update plan against each library. Reproduce with
+`deno task --cwd scripts speed-bench`.
 
-| Scenario (800x burst)        | Kin Form | React Hook Form |   Formik | TanStack Form |
-| ---------------------------- | -------: | --------------: | -------: | ------------: |
-| Flat field update            |  1.39 ms |        66.55 ms |  3.30 ms |     564.24 ms |
-| Nested field update          |  3.68 ms |       166.63 ms |  6.36 ms |     574.47 ms |
-| Array swap                   | 72.29 ms |       221.32 ms | 11.99 ms |    1514.68 ms |
-| Array insert/remove          | 33.40 ms |       434.70 ms |  5.10 ms |    1608.80 ms |
-| Sync-validated field update  |  3.42 ms |       160.25 ms | 67.66 ms |     709.82 ms |
-| Debounced async validation   | 90.56 ms |       221.59 ms | 98.79 ms |     952.59 ms |
-| Whole-form schema validation |  2.07 ms |         4.98 ms |  2.84 ms |      29.95 ms |
-| Initial mount (84 fields)    |  2.87 ms |         5.14 ms |  2.38 ms |       9.50 ms |
-
-Notes:
-
-- React Hook Form is measured via `Controller`/`useController`, not `register()`
-  — real apps using `register()` see fewer re-renders than this implies.
-- Debounce is native for Kin Form/TanStack Form, hand-rolled (`setTimeout`) for
-  React Hook Form/Formik, to compare like for like.
-- Kin Form and React Hook Form hold untouched sibling re-renders at 0 for flat
-  and nested updates; Formik re-renders its whole context (19 siblings);
-  TanStack re-renders the ancestor group.
-
-See [`scripts/speed-bench.ts`](./scripts/speed-bench.ts) for full methodology.
-
-See [`docs/comparison/`](./docs/comparison/) for full code-by-code comparisons,
-including React Hook Form and Formik.
+See the [full comparison](https://kin-form.pages.dev/comparison/) for the
+complete scenario breakdown (nested/array updates, validation, mount cost),
+methodology notes, and code-by-code comparisons.
 
 ## Packages
 
