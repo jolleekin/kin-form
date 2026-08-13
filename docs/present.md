@@ -246,7 +246,7 @@ export function TextField<TParentValue>(
         onChange={(e) => field.handleChange(e.target.value)}
       />
       {field.touched && field.invalid && (
-        {/* Per-node validation and schema validation can co-exist. */}
+        // Per-node validation and schema validation can co-exist.
         <span>{field.error ?? field.schemaError}</span>
       )}
     </label>
