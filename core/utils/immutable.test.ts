@@ -13,6 +13,7 @@ import {
   arraySwap,
   existsIn,
   getIn,
+  getInOr,
   setIn,
   splitFirstSegment,
   splitPath,
@@ -113,6 +114,37 @@ Deno.test("getIn", async (t) => {
     };
     assertEquals(getIn(obj, "data.0.1"), 2);
   });
+});
+
+Deno.test("getInOr", async (t) => {
+  await t.step("should get value from object", () => {
+    const obj = { a: { b: { c: 42 } } };
+    assertEquals(getInOr(obj, "a.b.c", -1), 42);
+  });
+
+  await t.step(
+    "should return the fallback when an intermediate segment is undefined",
+    () => {
+      const obj: { a?: { b?: { c: number } } } = { a: undefined };
+      assertEquals(getInOr(obj, "a.b.c", -1), -1);
+    },
+  );
+
+  await t.step(
+    "should return the fallback when an intermediate segment is null",
+    () => {
+      const obj: { a: { b: number } | null } = { a: null };
+      assertEquals(getInOr(obj, "a.b", -1), -1);
+    },
+  );
+
+  await t.step(
+    "should return the resolved value, not the fallback, for a missing optional leaf",
+    () => {
+      const obj: { a: { b?: number } } = { a: {} };
+      assertEquals(getInOr(obj, "a.b", -1), undefined);
+    },
+  );
 });
 
 Deno.test("existsIn", async (t) => {

@@ -7,7 +7,7 @@
 
 import { FieldApi, type FieldApiOptions } from "./FieldApi.ts";
 import type { DeepKey, DeepValue, PromiseOr } from "./types.ts";
-import { getIn, setIn } from "./utils/immutable.ts";
+import { getInOr, setIn } from "./utils/immutable.ts";
 
 /** Constructor/`updateOptions` options for a {@linkcode FormApi}. */
 export interface FormApiOptions<TValue> extends
@@ -110,20 +110,6 @@ export class FormApi<TValue = unknown> extends FieldApi<TValue> {
   }
 
   /**
-   * Narrows {@linkcode FieldApi.initialValue} back down to `TValue`: a root
-   * (`parent === null`) always has a real baseline, stored directly by
-   * {@linkcode FieldApi}'s constructor, never derived through a `parent`
-   * that might itself lack one.
-   */
-  protected override get initialValue(): TValue {
-    return super.initialValue as TValue;
-  }
-
-  protected override set initialValue(value: TValue) {
-    super.initialValue = value;
-  }
-
-  /**
    * Resets the form to {@linkcode value}.
    *
    * Clears {@linkcode touched} throughout the tree, and sets this form's value
@@ -141,7 +127,7 @@ export class FormApi<TValue = unknown> extends FieldApi<TValue> {
    * form.reset(saved);
    * ```
    */
-  reset(value: TValue = this.initialValue): void {
+  reset(value: TValue = this.initialValue as TValue): void {
     this.batch(() => {
       this.initialValue = value;
       this.touched = false;
@@ -168,14 +154,17 @@ export class FormApi<TValue = unknown> extends FieldApi<TValue> {
    */
   resetField<TName extends DeepKey<TValue>>(
     name: TName,
-    value: DeepValue<TValue, TName> = getIn(
-      this.initialValue,
+    // Explicit type arguments: left to inference here, tsc crashes
+    // (Debug Failure: No error for last overload signature) instead of
+    // type-checking normally.
+    value: DeepValue<TValue, TName> = getInOr<TValue, TName>(
+      this.initialValue as TValue,
       name,
-      undefined,
+      undefined as DeepValue<TValue, TName>,
     ),
   ): void {
     this.batch(() => {
-      this.initialValue = setIn(this.initialValue, name, value);
+      this.initialValue = setIn(this.initialValue as TValue, name, value);
       this.value = setIn(this.value, name, value);
       const field = FormApi.#findRegisteredField(
         this as FieldApi<unknown>,

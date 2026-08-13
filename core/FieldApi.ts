@@ -41,6 +41,7 @@ import {
   arraySwap,
   existsIn,
   getIn,
+  getInOr,
   setIn,
   splitFirstSegment,
   updateIn,
@@ -278,8 +279,9 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * all, e.g. a field registered under an array index pushed after the
    * baseline was last moved: there's no corresponding slot to derive a
    * baseline from, so the field is simply dirty against `undefined` rather
-   * than throwing. `FormApi` overrides this back down to `TValue`, since a
-   * root's baseline (`parent === null`) is always a real value.
+   * than throwing. A root (`parent === null`) always has a real baseline, so
+   * `FormApi` casts this back down to `TValue` at its own read sites instead
+   * of narrowing the accessor itself.
    *
    * Assignable only so `FormApi.reset`/`FormApi.resetField` can move it;
    * not part of the public surface otherwise. Only ever assigned on a field
@@ -288,10 +290,9 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    */
   protected get initialValue(): TValue | undefined {
     if (!this.parent) return this.#initialValue;
-    const parentInitialValue = this.parent.initialValue;
-    return parentInitialValue === undefined
-      ? undefined
-      : getIn(parentInitialValue, this.name, undefined) as TValue | undefined;
+    return getInOr(this.parent.initialValue, this.name, undefined) as
+      | TValue
+      | undefined;
   }
 
   protected set initialValue(value: TValue) {

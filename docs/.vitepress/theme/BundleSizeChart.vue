@@ -7,7 +7,7 @@ withDefaults(defineProps<{ title?: string }>(), {});
 // Sorted ascending. Regenerate via `deno task --cwd scripts bundle-size` and
 // keep in sync with readme.md's "Bundle size" table/breakdown.
 const bars: BarChartEntry[] = [
-  { label: 'Kin Form', full: 'Kin Form (core + react)', value: 4.8, formatted: '4.8 KB', highlight: true },
+  { label: 'Kin Form', full: 'Kin Form (core + react)', value: 5.0, formatted: '5.0 KB', highlight: true },
   { label: 'React Hook Form', value: 13.0, formatted: '13.0 KB' },
   { label: 'Formik', value: 13.9, formatted: '13.9 KB' },
   { label: 'TanStack Form', full: '@tanstack/react-form', value: 18.5, formatted: '18.5 KB' },

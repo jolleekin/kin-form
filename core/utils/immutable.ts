@@ -50,14 +50,13 @@ export function splitFirstSegment(path: string): [first: string, rest: string] {
  * nullable field that hasn't been populated); that's a legitimate result.
  * Throws instead if a segment *before* the last one resolves to
  * `null`/`undefined`, since there's then no object left to read the next
- * segment from, unless {@linkcode fallback} is given (even as `undefined`
- * itself), in which case that's returned instead of throwing, e.g. reading
- * an array index that doesn't exist in a baseline snapshot yet.
+ * segment from. Use {@linkcode getInOr} instead if that's a possibility
+ * (e.g. reading an array index that doesn't exist in a baseline snapshot
+ * yet) and a fallback is needed instead of a throw.
  */
 export function getIn<T, TPath extends DeepKeyOrRoot<T>>(
   obj: T,
   path: TPath,
-  ...fallback: [fallback?: DeepValue<T, TPath>]
 ): DeepValue<T, TPath> {
   if (path === "") return obj as DeepValue<T, TPath>;
 
@@ -67,7 +66,6 @@ export function getIn<T, TPath extends DeepKeyOrRoot<T>>(
   let node: any = obj;
   for (let i = 0; i < n; i++) {
     if (node == null) {
-      if (fallback.length > 0) return fallback[0] as DeepValue<T, TPath>;
       throw new Error(
         `getIn: cannot read "${parts[i]}" (from path "${path}") of ${node}`,
       );
@@ -75,6 +73,22 @@ export function getIn<T, TPath extends DeepKeyOrRoot<T>>(
     node = node[parts[i]];
   }
   return node;
+}
+
+/**
+ * Same as {@linkcode getIn}, but returns {@linkcode fallback} instead of
+ * throwing when a segment before the last one resolves to `null`/`undefined`.
+ */
+export function getInOr<T, TPath extends DeepKeyOrRoot<T>>(
+  obj: T,
+  path: TPath,
+  fallback: DeepValue<T, TPath>,
+): DeepValue<T, TPath> {
+  try {
+    return getIn(obj, path);
+  } catch {
+    return fallback;
+  }
 }
 
 /**
