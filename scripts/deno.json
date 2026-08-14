@@ -10,8 +10,6 @@
     "react-hook-form": "npm:react-hook-form@^7",
     "formik": "npm:formik@^2",
     "@tanstack/react-form": "npm:@tanstack/react-form@^1",
-    "final-form": "npm:final-form@^4",
-    "react-final-form": "npm:react-final-form@^6",
     "@kin-form/core": "../core/index.ts",
     "@kin-form/react": "../react/index.ts",
     "@kin-form/validators": "../validators/index.ts",

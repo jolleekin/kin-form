@@ -23,13 +23,11 @@
     "npm:@types/react@^19.2.14": "19.2.18",
     "npm:@types/react@^19.2.17": "19.2.18",
     "npm:@vitejs/plugin-react@^6.0.1": "6.0.5_vite@8.2.1__@types+node@20.19.43_@types+node@20.19.43",
-    "npm:final-form@4": "4.20.10",
     "npm:formik@2": "2.4.9_react@19.2.8_@types+react@19.2.18",
     "npm:lit@^3.3.3": "3.3.3",
     "npm:next@16": "16.3.0_react@19.2.8_react-dom@19.2.8__react@19.2.8",
     "npm:react-dom@^19.2.4": "19.2.8_react@19.2.8",
     "npm:react-dom@^19.2.7": "19.2.8_react@19.2.8",
-    "npm:react-final-form@6": "6.5.9_final-form@4.20.10_react@19.2.8",
     "npm:react-hook-form@7": "7.85.0_react@19.2.8",
     "npm:react@^19.2.4": "19.2.8",
     "npm:react@^19.2.7": "19.2.8",
@@ -1606,12 +1604,6 @@
         "picomatch"
       ]
     },
-    "final-form@4.20.10": {
-      "integrity": "sha512-TL48Pi1oNHeMOHrKv1bCJUrWZDcD3DIG6AGYVNOnyZPr7Bd/pStN0pL+lfzF5BNoj/FclaoiaLenk4XUIFVYng==",
-      "dependencies": [
-        "@babel/runtime"
-      ]
-    },
     "focus-trap@7.8.0": {
       "integrity": "sha512-/yNdlIkpWbM0ptxno3ONTuf+2g318kh2ez3KSeZN5dZ8YC6AAmgeWz+GasYYiBJPFaYcSAPeu4GfhUaChzIJXA==",
       "dependencies": [
@@ -2297,14 +2289,6 @@
     "react-fast-compare@2.0.4": {
       "integrity": "sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw=="
     },
-    "react-final-form@6.5.9_final-form@4.20.10_react@19.2.8": {
-      "integrity": "sha512-x3XYvozolECp3nIjly+4QqxdjSSWfcnpGEL5K8OBT6xmGrq5kBqbA6+/tOqoom9NwqIPPbxPNsOViFlbKgowbA==",
-      "dependencies": [
-        "@babel/runtime",
-        "final-form",
-        "react"
-      ]
-    },
     "react-hook-form@7.85.0_react@19.2.8": {
       "integrity": "sha512-U2MTriFXnclmV4rOE20p2DcRFv5WEg3FIcBFOKcOLFHDVvGIMPvLTkTWefUsonmlaVy23khVDxDWym6uJVGOzw==",
       "dependencies": [
@@ -2869,10 +2853,8 @@
           "npm:@tanstack/react-form@1",
           "npm:@testing-library/react@^16.3.2",
           "npm:@types/react@^19.2.17",
-          "npm:final-form@4",
           "npm:formik@2",
           "npm:react-dom@^19.2.7",
-          "npm:react-final-form@6",
           "npm:react-hook-form@7",
           "npm:react@^19.2.7",
           "npm:rolldown@1",
