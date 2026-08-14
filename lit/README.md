@@ -29,48 +29,52 @@ deno add jsr:@kin-form/lit
 ## Quick start
 
 ```ts
-import { html, render } from "lit";
+import { html, LitElement } from "lit";
+import { customElement } from "lit/decorators.js";
 import { FormApi, watch } from "@kin-form/lit";
 import { required } from "@kin-form/validators";
 
-function LoginForm() {
-  const form = new FormApi({
+@customElement("login-form")
+class LoginForm extends LitElement {
+  #form = new FormApi({
     initialValue: { email: "", password: "" },
     onSubmit: async (form) => await login(form.value),
     onSubmitError: () => toast.error("Failed to log in"),
   });
 
-  return html`
-    <form @submit=${form.handleSubmit}>
-      ${watch(
-        form.field("email", { validators: required("Email is required") }),
-        (field) =>
-          html`
-            <input
-              .value=${field.value}
-              @blur=${field.handleBlur}
-              @input=${(e: Event) =>
-                field.handleChange((e.target as HTMLInputElement).value)}
-            >
-            ${field.invalid && field.touched
-              ? html`<span>${field.error}</span>`
-              : ""}
-          `,
-      )}
+  override render() {
+    return html`
+      <form @submit=${this.#form.handleSubmit}>
+        ${watch(
+          this.#form.field("email", {
+            validators: required("Email is required"),
+          }),
+          (field) =>
+            html`
+              <input
+                .value=${field.value}
+                @blur=${field.handleBlur}
+                @input=${(e: Event) =>
+                  field.handleChange((e.target as HTMLInputElement).value)}
+              >
+              ${field.invalid && field.touched
+                ? html`<span>${field.error}</span>`
+                : ""}
+            `,
+        )}
 
-      ${watch(
-        form,
-        (f) => f.submitting,
-        (_form, submitting) =>
-          html`
-            <button type="submit" ?disabled=${submitting}>Log in</button>
-          `,
-      )}
-    </form>
-  `;
+        ${watch(
+          this.#form,
+          (f) => f.submitting,
+          (_form, submitting) =>
+            html`
+              <button type="submit" ?disabled=${submitting}>Log in</button>
+            `,
+        )}
+      </form>
+    `;
+  }
 }
-
-render(LoginForm(), document.body);
 ```
 
 ## Resolving a field
