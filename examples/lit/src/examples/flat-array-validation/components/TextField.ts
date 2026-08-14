@@ -25,6 +25,11 @@ export class TextField extends LitElement {
   declare inputClass: string;
 
   readonly #watch = new WatchController(this, () => this.api);
+  // A per-instance counter, not `field.id`: `field.id` is only guaranteed
+  // stable across reorders (what makes it suitable as a list key), not
+  // unique/matched between environments the way a DOM id needs to be.
+  static #nextId = 0;
+  readonly #id = `text-field-${TextField.#nextId++}`;
 
   constructor() {
     super();
@@ -39,7 +44,7 @@ export class TextField extends LitElement {
     const field = this.#watch.value;
     const showError = field.invalid && field.touched;
     const error = field.error ?? field.schemaError;
-    const inputId = `${field.name}-${field.id}`;
+    const inputId = `${field.name}-${this.#id}`;
 
     return html`
       <div>

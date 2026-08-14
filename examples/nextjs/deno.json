@@ -1,8 +1,8 @@
 {
   "tasks": {
-    "dev": "deno run -A --node-modules-dir npm:next dev --port=5556",
+    "dev": "deno run -A --node-modules-dir npm:next dev --port=5555",
     "build": "deno run -A --node-modules-dir npm:next build",
-    "start": "deno run -A --node-modules-dir npm:next start --port=5556"
+    "start": "deno run -A --node-modules-dir npm:next start --port=5555"
   },
   "compilerOptions": {
     "lib": ["ES2023", "DOM"],
