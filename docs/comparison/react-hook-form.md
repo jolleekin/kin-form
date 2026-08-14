@@ -168,142 +168,11 @@ function ProfileForm() {
 | ----------------- | ------------------------------- | --------------------------------------- |
 | Non-native inputs | Same `Watch` as any other field | Needs `Controller` — a second primitive |
 
-## Nested groups & arrays as first-class nodes
-
-<SideBySide>
-
-::: code-group
-
-```tsx [Kin Form]
-import { useForm, Watch } from "@kin-form/react";
-
-function Form() {
-  const form = useForm<{ items: string[] }>({ initialValue: { items: [] } });
-
-  const items = form.field("items", {
-    validators: (g) => (g.value.length > 0 ? null : "Add at least one item"),
-  });
-
-  return (
-    <>
-      {/* Doesn't cause whole form re-render when items's state changes */}
-      <Watch api={items} select={(f) => [f.error, f.value] as const}>
-        {(_f, [error, value]) => (
-          <>
-            {value.map((_, i) => {
-              const field = items.field(`${i}`);
-              return (
-                <Watch key={field.id} api={field}>
-                  {(f) => (
-                    <div>
-                      <TextInput value={f.value} onChange={f.handleChange} />
-                      <button
-                        disabled={i === 0}
-                        onClick={() => items.moveItem("", i, i - 1)}
-                      >
-                        Move up
-                      </button>
-                      <button
-                        disabled={i === value.length - 1}
-                        onClick={() => items.moveItem("", i, i + 1)}
-                      >
-                        Move down
-                      </button>
-                      <button onClick={() => items.removeItem("", i)}>
-                        Remove
-                      </button>
-                    </div>
-                  )}
-                </Watch>
-              );
-            })}
-            {error && <span>{error}</span>}
-          </>
-        )}
-      </Watch>
-
-      <button onClick={() => items.pushItem("", "")}>Add</button>
-    </>
-  );
-}
-```
-
-```tsx [React Hook Form]
-import {
-  Controller,
-  useFieldArray,
-  useForm,
-  useFormState,
-} from "react-hook-form";
-
-function Form() {
-  // Items must be objects, not bare strings — `useFieldArray` only matches
-  // arrays of non-primitive values.
-  const { control } = useForm<{ items: { value: string }[] }>({
-    defaultValues: { items: [] },
-  });
-
-  // Two separate hooks for logic and state. Both are called in `Form`
-  // itself, so their state changes (add/remove/reorder, items errors)
-  // re-render the whole form — narrowing via `name` only limits *which*
-  // changes trigger that, not the blast radius when one does.
-  const { fields, append, move, remove } = useFieldArray({
-    control,
-    name: "items",
-    rules: {
-      validate: (value) => value.length > 0 || "Add at least one item",
-    },
-  });
-  const { errors } = useFormState({ control, name: "items" });
-
-  return (
-    <>
-      {fields.map((f, i) => (
-        <div key={f.id}>
-          <Controller
-            control={control}
-            name={`items.${i}.value`}
-            render={({ field }) => (
-              <TextInput value={field.value} onChange={field.onChange} />
-            )}
-          />
-          <button
-            disabled={i === 0}
-            onClick={() => move(i, i - 1)}
-          >
-            Move up
-          </button>
-          <button
-            disabled={i === fields.length - 1}
-            onClick={() => move(i, i + 1)}
-          >
-            Move down
-          </button>
-          <button onClick={() => remove(i)}>Remove</button>
-        </div>
-      ))}
-      {errors.items?.root?.message && <span>{errors.items.root.message}</span>}
-      <button onClick={() => append({ value: "" })}>Add</button>
-    </>
-  );
-}
-```
-
-:::
-
-</SideBySide>
-
-**What's different:**
-
-|                          | Kin Form                                      | React Hook Form                                     |
-| ------------------------ | --------------------------------------------- | --------------------------------------------------- |
-| What holds the array     | `FieldApi` — the array _is_ a node            | `useFieldArray` for logic, `useFormState` for state |
-| Array-level validation   | The field's own `validators`                  | `useFieldArray`'s own `rules` — a separate API      |
-| Item identity on reorder | Field identity follows the item via re-keying | `fields[i].id` from the hook                        |
-
-Both are shown inlined in `Form` above; see
-[Form composition](#form-composition) below for wrapping either side's array
-into a reusable component instead.
+Nested groups and arrays are `FieldApi` nodes too, not a separate hook or a
+special case — see [Array field](#array-field) and
+[Nested group field](#nested-group-field) under
+[Form composition](#form-composition) below for the full comparison, shown as
+reusable components rather than inlined in one form.
 
 ## Per-node validation: when it runs, and debouncing
 
@@ -943,17 +812,97 @@ every form), but the type-safety story differs:
 | Reusable field prop bag | An already-resolved `api: FieldApi<...>`, passed in directly                                      | `UseControllerProps` — `control`+`name`+rules                            |
 | Type-safety on `name`   | Checked once, where `form.field(name, options)` is called — not re-derived inside every component | `FieldPath<T>` catches a typo'd `name` as a compile error, per call site |
 
-### Group/array field
+### Nested group field
 
-The [nested groups & arrays](#nested-groups-arrays-as-first-class-nodes) example
-above, wrapped into a reusable component instead of inlined in `Form`:
+A reusable component for a nested object (an address, reused for both shipping
+and billing) instead of an array:
 
 <SideBySide>
 
 ::: code-group
 
 ```tsx [Kin Form]
-import { FieldApi, useForm, useWatch, Watch } from "@kin-form/react";
+import { type FieldApi } from "@kin-form/react";
+
+type Address = { line1: string; city: string };
+
+function AddressField<TParentValue>(
+  { api }: { api: FieldApi<Address, TParentValue> },
+) {
+  return (
+    <fieldset>
+      <TextField api={api.field("line1")} label="Line 1" />
+      <TextField api={api.field("city")} label="City" />
+    </fieldset>
+  );
+}
+
+<AddressField api={form.field("shipping")} />
+<AddressField api={form.field("billing")} />
+```
+
+```tsx [React Hook Form]
+import type { Control, FieldValues, Path, PathValue } from "react-hook-form";
+
+type Address = { line1: string; city: string };
+
+function AddressField<
+  T extends FieldValues,
+  TName extends Path<T> = Path<T>,
+>(
+  { control, name }: {
+    control: Control<T>;
+    // Constrained so only a `name` whose value is actually shaped like
+    // `Address` type-checks.
+    name: PathValue<T, TName> extends Address ? TName : never;
+  },
+) {
+  return (
+    <fieldset>
+      <TextField
+        control={control}
+        // Still needs a cast: TS can't prove a concatenated string is a
+        // member of Path<T> for a generic TName.
+        name={`${name}.line1` as Path<T>}
+        label="Line 1"
+      />
+      <TextField
+        control={control}
+        name={`${name}.city` as Path<T>}
+        label="City"
+      />
+    </fieldset>
+  );
+}
+
+<AddressField control={control} name="shipping" />
+<AddressField control={control} name="billing" />
+```
+
+:::
+
+</SideBySide>
+
+**What's different:**
+
+|                              | Kin Form                                                                                    | React Hook Form                                                                                                                                                                   |
+| ---------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Reusable nested-group prop   | An already-resolved `api: FieldApi<Address, TParentValue>` — same shape as any other field  | `control` + `name: TName` — a path prefix, not a resolved field                                                                                                                   |
+| Type-safety at the call site | Automatic — `FieldApi<Address, TParentValue>` only accepts a field whose value is `Address` | Requires hand-written machinery — a second type param (`TName`) plus a `PathValue<T, TName> extends Address` conditional, or `Path<T>` accepts any field, `Address`-shaped or not |
+| Building child paths         | `api.field("line1")` — relative, same call as any top-level field                           | Template-string concatenation (`` `${name}.line1` ``)                                                                                                                             |
+| Type-safety on children      | Checked through `DeepKey<Address>` regardless of how deep `api` is nested                   | Still needs a cast even with `TName` constrained — TS can't prove a concatenated string is a member of `Path<T>`                                                                  |
+
+### Array field
+
+An array (unlike the [group above](#nested-group-field)) also needs stable item
+identity across a reorder, plus its own mutation helpers:
+
+<SideBySide>
+
+::: code-group
+
+```tsx [Kin Form]
+import { FieldApi, useForm, useWatch } from "@kin-form/react";
 
 function ItemsField<TParentValue>(
   { api }: { api: FieldApi<string[], TParentValue> },
@@ -991,17 +940,15 @@ function ItemField(
     onRemove: () => void;
   },
 ) {
+  useWatch(field);
+
   return (
-    <Watch api={field}>
-      {(f) => (
-        <div>
-          <TextInput value={f.value} onChange={f.handleChange} />
-          <button disabled={!onMoveUp} onClick={onMoveUp}>Move up</button>
-          <button disabled={!onMoveDown} onClick={onMoveDown}>Move down</button>
-          <button onClick={onRemove}>Remove</button>
-        </div>
-      )}
-    </Watch>
+    <div>
+      <TextInput value={field.value} onChange={field.handleChange} />
+      <button disabled={!onMoveUp} onClick={onMoveUp}>Move up</button>
+      <button disabled={!onMoveDown} onClick={onMoveDown}>Move down</button>
+      <button onClick={onRemove}>Remove</button>
+    </div>
   );
 }
 
@@ -1018,12 +965,13 @@ function Form() {
 
 ```tsx [React Hook Form]
 import {
-  Controller,
+  useController,
   useFieldArray,
   useForm,
   useFormState,
 } from "react-hook-form";
 import type {
+  Control,
   FieldArrayPath,
   FieldValues,
   Path,
@@ -1046,33 +994,40 @@ function ItemsField<
   return (
     <>
       {fields.map((f, i) => (
-        <div key={f.id}>
-          <Controller
-            control={props.control}
-            // Cast needed, for the same reason as above.
-            name={`${props.name}.${i}.value` as Path<TFieldValues>}
-            render={({ field }) => (
-              <TextInput value={field.value} onChange={field.onChange} />
-            )}
-          />
-          <button
-            disabled={i === 0}
-            onClick={() => move(i, i - 1)}
-          >
-            Move up
-          </button>
-          <button
-            disabled={i === fields.length - 1}
-            onClick={() => move(i, i + 1)}
-          >
-            Move down
-          </button>
-          <button onClick={() => remove(i)}>Remove</button>
-        </div>
+        <ItemField
+          key={f.id}
+          control={props.control}
+          // Cast needed, for the same reason as above.
+          name={`${props.name}.${i}.value` as Path<TFieldValues>}
+          onMoveUp={i > 0 ? () => move(i, i - 1) : undefined}
+          onMoveDown={i < fields.length - 1 ? () => move(i, i + 1) : undefined}
+          onRemove={() => remove(i)}
+        />
       ))}
       {rootError?.message && <span>{rootError.message}</span>}
       <button onClick={() => append({ value: "" } as never)}>Add</button>
     </>
+  );
+}
+
+function ItemField<TFieldValues extends FieldValues>(
+  { control, name, onMoveUp, onMoveDown, onRemove }: {
+    control?: Control<TFieldValues>;
+    name: Path<TFieldValues>;
+    onMoveUp?: () => void;
+    onMoveDown?: () => void;
+    onRemove: () => void;
+  },
+) {
+  const { field } = useController({ control, name });
+
+  return (
+    <div>
+      <TextInput value={field.value} onChange={field.onChange} />
+      <button disabled={!onMoveUp} onClick={onMoveUp}>Move up</button>
+      <button disabled={!onMoveDown} onClick={onMoveDown}>Move down</button>
+      <button onClick={onRemove}>Remove</button>
+    </div>
   );
 }
 
@@ -1097,10 +1052,13 @@ function Form() {
 
 **What's different:**
 
-|                    | Kin Form                                                     | React Hook Form                                        |
-| ------------------ | ------------------------------------------------------------ | ------------------------------------------------------ |
-| Reusable component | Yes — pass a resolved `FieldApi` down                        | Yes — pass `control`+`name` down (or `useFormContext`) |
-| Typesafety         | Fully type-safe — `DeepKey<T>` needs no cast, generic or not | Casts needed — `TFieldValues`/`TName` are generic      |
+|                          | Kin Form                                                     | React Hook Form                                        |
+| ------------------------ | ------------------------------------------------------------ | ------------------------------------------------------ |
+| What holds the array     | `FieldApi` — the array _is_ a node                           | `useFieldArray` for logic, `useFormState` for state    |
+| Array-level validation   | The field's own `validators`                                 | `useFieldArray`'s own `rules` — a separate API         |
+| Item identity on reorder | Field identity follows the item via re-keying                | `fields[i].id` from the hook                           |
+| Reusable component       | Yes — pass a resolved `FieldApi` down                        | Yes — pass `control`+`name` down (or `useFormContext`) |
+| Typesafety               | Fully type-safe — `DeepKey<T>` needs no cast, generic or not | Casts needed — `TFieldValues`/`TName` are generic      |
 
 ## Multistep forms
 

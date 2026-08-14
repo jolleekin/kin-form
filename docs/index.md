@@ -38,7 +38,7 @@ markdownStyles: false
 
 <section class="why">
 <h2 class="section-header">Why it exists</h2>
-<p class="prose">Reusable field components become awkward when a library treats the form as the only stateful object and fields as proxies into it. Nested objects, arrays, and shared validation then need their own special mechanisms.</p>
+<p class="prose">Reusable field components <a href="/comparison/react-hook-form#nested-group-field">become awkward</a> when a library treats the form as the only stateful object and fields as proxies into it. Nested objects, arrays, and shared validation then need their own special mechanisms.</p>
 <p class="prose">Kin Form treats a form as a tree where every node (leaf, group, or the form itself) is the same thing, with its own state, configuration, and subscribers. That is why one component pattern works at every level.</p>
 <p class="prose">Nothing forces one shape on a given value. Same <code>{ email, address: { line1, line2 } }</code>, three valid trees:</p>
 <div class="why-trees">

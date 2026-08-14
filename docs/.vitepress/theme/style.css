@@ -121,6 +121,18 @@ html .vp-code .comment-line span {
   font-style: italic;
 }
 
+/* Tints the same "//" comment lines with a background too, so the "why this
+   differs" annotations already threaded through comparison/guide code stand
+   out at a skim, without a second, separately maintained set of line-number
+   highlights that could drift from the code they're meant to mark. Scoped to
+   .vp-doc (not the homepage, which opts out of it and highlights its own demo
+   snippets by line number instead, for a different purpose). */
+.vp-doc .vp-code .line.comment-line {
+  display: inline-block;
+  width: 100%;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
 :not(pre) > code {
   background: var(--inline-code-bg);
   border: 1px solid var(--border);
