@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 .vite
+.next
 *.local
 
 # VitePress
@@ -30,3 +31,6 @@ TODO.md
 *.njsproj
 *.sln
 *.sw?
+
+# deno test
+coverage

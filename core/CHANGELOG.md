@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.3 - 2026-08-14
+
+- Fix: a field's `initialValue` now returns `undefined` instead of throwing when
+  its baseline slot doesn't exist yet (e.g. a field registered under an array
+  index pushed after the baseline was last moved).
+
 ## 0.1.2 - 2026-07-31
 
 - Fix: `validators`, `asyncValidator`, and `schemaValidator` are documented as

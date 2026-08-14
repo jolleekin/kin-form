@@ -43,6 +43,10 @@ export type EqualFn<TSelected> = (a: TSelected, b: TSelected) => boolean;
  * the selected value changes (compared via `equal`, see
  * {@linkcode EqualFn}) and returns that selected value instead of `api`.
  *
+ * `getSnapshot` doubles as `getServerSnapshot`: both just read `api`
+ * synchronously (no browser-only API involved), so this renders on the
+ * server without React's "Missing getServerSnapshot" warning.
+ *
  * Public so consumers can build their own low-level components subscribed to
  * a `FieldApi`/`FormApi` (e.g. a shared `TextField`, or an `ActionButtons`
  * reading `dirty`/`submitting`); `useForm` deliberately doesn't subscribe by
@@ -96,7 +100,11 @@ export function useWatch(
     }
     : api.getVersion;
 
-  const selected = useSyncExternalStore(api.subscribe, getSnapshot);
+  const selected = useSyncExternalStore(
+    api.subscribe,
+    getSnapshot,
+    getSnapshot,
+  );
 
   return select ? selected : api;
 }

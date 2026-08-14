@@ -9,4 +9,4 @@ export * from "@kin-form/core";
 export * from "./useForm.ts";
 export * from "./useMultistep.ts";
 export * from "./useWatch.ts";
-export * from "./Watch.tsx";
+export * from "./Watch.ts";
