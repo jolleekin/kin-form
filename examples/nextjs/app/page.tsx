@@ -4,8 +4,8 @@ import { LoginForm } from "./LoginForm.tsx";
 // bindings under SSR (a plain client-only page would never hit that path).
 export default function Page() {
   return (
-    <main style={{ maxWidth: 320, margin: "4rem auto" }}>
-      <h1>Sign in</h1>
+    <main className="max-w-sm mx-auto mt-16">
+      <h1 className="text-4xl mb-3">Sign in</h1>
       <LoginForm />
     </main>
   );

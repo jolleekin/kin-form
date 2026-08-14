@@ -2,6 +2,7 @@
 
 import { useForm, Watch } from "@kin-form/react";
 import { email, minLength, required } from "@kin-form/validators";
+import { TextField } from "./TextField.tsx";
 
 type Login = {
   email: string;
@@ -17,58 +18,40 @@ export function LoginForm() {
   });
 
   return (
-    <form onSubmit={form.handleSubmit} noValidate>
-      <Watch
+    <form
+      className="flex flex-col gap-3"
+      onSubmit={form.handleSubmit}
+      noValidate
+    >
+      <TextField
         api={form.field("email", {
           validators: [
             required("Email is required"),
             email("Enter a valid email address"),
           ],
         })}
-      >
-        {(field) => (
-          <div>
-            <label htmlFor="email">Email</label>
-            <br />
-            <input
-              id="email"
-              type="email"
-              value={field.value}
-              onBlur={field.handleBlur}
-              onChange={(event) => field.handleChange(event.target.value)}
-            />
-            {field.invalid && field.touched && <p>{field.error}</p>}
-          </div>
-        )}
-      </Watch>
+        label="Email"
+        type="email"
+      />
 
-      <Watch
+      <TextField
         api={form.field("password", {
           validators: [
             required("Password is required"),
             minLength(8, "Password must be at least 8 characters"),
           ],
         })}
-      >
-        {(field) => (
-          <div>
-            <label htmlFor="password">Password</label>
-            <br />
-            <input
-              id="password"
-              type="password"
-              value={field.value}
-              onBlur={field.handleBlur}
-              onChange={(event) => field.handleChange(event.target.value)}
-            />
-            {field.invalid && field.touched && <p>{field.error}</p>}
-          </div>
-        )}
-      </Watch>
+        label="Password"
+        type="password"
+      />
 
       <Watch api={form} select={(f) => f.submitting}>
         {(_form, submitting) => (
-          <button type="submit" disabled={submitting}>
+          <button
+            className="mt-2 h-10 rounded border bg-neutral-50"
+            type="submit"
+            disabled={submitting}
+          >
             {submitting ? "Signing in..." : "Sign in"}
           </button>
         )}
