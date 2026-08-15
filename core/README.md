@@ -118,11 +118,13 @@ with no manual subscriptions.
 ## Class hierarchy
 
 ```
-BaseApi
-  └─ FieldApi<TValue, TParentValue>   (value/error/touched/validating/validators,
-                                        handleBlur/handleChange, child registry,
-                                        array helpers)
-       └─ FormApi<TValue>                 (root: submitting, dirty, handleSubmit)
+BaseApi                         pub/sub
+   |
+   V
+FieldApi<TValue, TParentValue>  state, configuration, event handlers,
+   |                            child registry, array helpers
+   V                            
+FormApi<TValue>                 root: submission, reset
 ```
 
 Mirrors the DOM's own `EventTarget → Node → Document` shape: one node type with

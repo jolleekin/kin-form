@@ -315,8 +315,7 @@ html .vp-code .comment-line span {
   display: none;
 }
 
-.reuse-cta {
-  margin: 0;
+.cta {
   font-weight: 800;
 }
 
@@ -455,10 +454,6 @@ html .vp-code .comment-line span {
   .numbers-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-}
-
-.numbers-cta {
-  margin: 24px 0 0;
 }
 
 /* Demo */

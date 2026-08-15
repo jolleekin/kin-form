@@ -49,12 +49,12 @@ html`
 :::
 
 <p class="prose">Each component receives a resolved <code>FieldApi</code>, not a path or form context. Define the UI and behavior once, then mount it anywhere its value type fits. Kin Form keeps that component independently subscribed, so a change only updates the part of the form that depends on it.</p>
-<p class="reuse-cta"><a href="/guide/form-composition">Build reusable field components →</a></p>
+<p><a class="cta" href="/guide/form-composition">Build reusable field components →</a></p>
 </section>
 
 <section class="why">
 <h2 class="section-header">Why it exists</h2>
-<p class="prose">Reusable field components <a href="/comparison/react-hook-form#nested-group-field">become awkward</a> when a library treats the form as the only stateful object and fields as proxies into it. Nested objects, arrays, and shared validation then need their own special mechanisms.</p>
+<p class="prose">Reusable field components <a class="cta" href="/comparison/react-hook-form#nested-group-field">become awkward</a> when a library treats the form as the only stateful object and fields as proxies into it. Nested objects, arrays, and shared validation then need their own special mechanisms.</p>
 <p class="prose">Kin Form treats a form as a tree where every node (leaf, group, or the form itself) is the same thing, with its own state, configuration, and subscribers. That is why one component pattern works at every level.</p>
 <p class="prose">Nothing forces one shape on a given value. Same <code>{ email, address: { line1, line2 } }</code>, three valid trees:</p>
 <div class="why-trees">
@@ -182,7 +182,7 @@ html`
       <PerformanceHighlight title="Flat field update burst (800×)" />
     </div>
   </div>
-  <p class="numbers-cta">Full comparison, including where Kin Form isn't the right fit: <a href="/comparison/">see the details →</a></p>
+  <p style="margin-top: 24px">Full comparison, including where Kin Form isn't the right fit: <a class="cta" href="/comparison/">see the details →</a></p>
 </section>
 
 <section class="demo">
