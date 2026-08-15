@@ -27,16 +27,6 @@ value**, for a reusable component that receives a
 
 ::: code-group
 
-```ts [Vanilla]
-function bindArrayField<Item, TParentValue>(
-  api: FieldApi<Item[], TParentValue>,
-  addButton: HTMLButtonElement,
-  newItem: () => Item,
-) {
-  addButton.addEventListener("click", () => api.pushItem("", newItem()));
-}
-```
-
 ```tsx [React]
 function ArrayField<Item, TParentValue>(
   {
@@ -54,6 +44,35 @@ function ArrayField<Item, TParentValue>(
 <ArrayField api={parent.field("items")} newItem={() => makeItem()} />;
 ```
 
+```ts [Lit]
+import { html, LitElement } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import { type FieldApi } from "@kin-form/lit";
+
+@customElement("array-field")
+class ArrayField<Item> extends LitElement {
+  @property({ attribute: false })
+  accessor api!: FieldApi<Item[], unknown>;
+
+  @property({ attribute: false })
+  accessor newItem!: () => Item;
+
+  override render() {
+    return html`
+      <button @click=${() => this.api.pushItem("", this.newItem())}>
+        Add
+      </button>
+    `;
+  }
+}
+
+// Usage.
+html`
+  <array-field .api=${parent.field("items")} .newItem=${() =>
+    makeItem()}></array-field>
+`;
+```
+
 :::
 
 ## Why re-keying matters
@@ -62,7 +81,9 @@ Without re-keying, a field bound to array index 2 would silently read/write
 whatever value now lives at index 2 after a reorder, not the item the user was
 actually editing. `id` (see [Concepts](/guide/concepts#shared-state)) stays
 stable across a reorder even as `name` (the index-based path) changes: it's the
-right key for a React list (`key={field.id}` instead of `key={index}`).
+right list key (`key={field.id}` in React, or `lit-html`'s
+[`repeat`](https://lit.dev/docs/templates/lists/#the-repeat-directive) directive
+keyed on `field.id` in Lit) instead of the index.
 
 ## What's next
 

@@ -1,16 +1,26 @@
 # Multistep Forms
 
-::: info
-
-React only for now: other framework bindings are planned.
-
-:::
+<FrameworkText>
+<template #react>
 
 `useMultistep` orchestrates a wizard's current-step state on top of one step per
 named `FieldApi`. It validates the current step, waits for it to settle, and
 gates the advance, so a hand-rolled multistep form doesn't repeat that per step.
 
-```tsx
+</template>
+<template #lit>
+
+`MultistepController` orchestrates a wizard's current-step state on top of one
+step per named `FieldApi`. It validates the current step, waits for it to
+settle, and gates the advance, so a hand-rolled multistep form doesn't repeat
+that per step.
+
+</template>
+</FrameworkText>
+
+::: code-group
+
+```tsx [React]
 import { useForm, useMultistep, Watch } from "@kin-form/react";
 
 type Checkout = {
@@ -50,12 +60,96 @@ function CheckoutWizard() {
 }
 ```
 
+```ts [Lit]
+import { html, LitElement } from "lit";
+import { customElement } from "lit/decorators.js";
+import { FormApi, MultistepController } from "@kin-form/lit";
+import "./shipping-step.ts";
+import "./payment-step.ts";
+import "./review-step.ts";
+import "./submit-button.ts";
+
+type Checkout = {
+  shipping: { address: string; city: string };
+  payment: { cardNumber: string };
+};
+
+@customElement("checkout-wizard")
+class CheckoutWizard extends LitElement {
+  #form = new FormApi<Checkout>({
+    initialValue: {
+      shipping: { address: "", city: "" },
+      payment: { cardNumber: "" },
+    },
+  });
+
+  #wizard = new MultistepController(
+    this,
+    this.#form,
+    ["shipping", "payment", null],
+  );
+
+  override render() {
+    const {
+      stepName,
+      stepField,
+      isFirstStep,
+      isLastStep,
+      isTransitioning: isBusy,
+      back,
+      next,
+    } = this.#wizard;
+
+    return html`
+      <div>
+        ${stepName === "shipping"
+          ? html`<shipping-step .api=${stepField}></shipping-step>`
+          : ""}
+        ${stepName === "payment"
+          ? html`<payment-step .api=${stepField}></payment-step>`
+          : ""}
+        ${stepName === null
+          ? html`<review-step .form=${this.#form}></review-step>`
+          : ""}
+
+        ${!isFirstStep ? html`<button @click=${back}>Back</button>` : ""}
+        ${!isLastStep
+          ? html`<button @click=${next} ?disabled=${isBusy}>Next</button>`
+          : ""}
+        ${isLastStep
+          ? html`
+            <submit-button .api=${this.#form}>Submit</submit-button>
+          `
+          : ""}
+      </div>
+    `;
+  }
+}
+```
+
+:::
+
 ## Step names
+
+<FrameworkText>
+<template #react>
 
 Each entry in the second argument of `useMultistep` (`stepNames`) is the
 `DeepKey` of that step's own `FieldApi`, or `null` for a step with no `FieldApi`
 (e.g. a final review screen that only reads other steps' values). `next()`
 treats a `null` step as always valid, skipping straight to `onBeforeNext`.
+
+</template>
+<template #lit>
+
+Each entry in `MultistepController`'s third constructor argument (`stepNames`)
+is the `DeepKey` of that step's own `FieldApi`, or `null` for a step with no
+`FieldApi` (e.g. a final review screen that only reads other steps' values).
+`next()` treats a `null` step as always valid, skipping straight to
+`onBeforeNext`.
+
+</template>
+</FrameworkText>
 
 ## `next()`
 
@@ -72,7 +166,9 @@ treats a `null` step as always valid, skipping straight to `onBeforeNext`.
 advances: the hook for persisting progress (e.g. saving a draft) or branching to
 a non-linear next step:
 
-```tsx
+::: code-group
+
+```tsx [React]
 const wizard = useMultistep(form, ["account", "shipping", "billing", null], {
   onBeforeNext: async ({ form, stepName }) => {
     await saveDraft(form.value);
@@ -84,6 +180,26 @@ const wizard = useMultistep(form, ["account", "shipping", "billing", null], {
   },
 });
 ```
+
+```ts [Lit]
+#wizard = new MultistepController(
+  this,
+  this.#form,
+  ["account", "shipping", "billing", null],
+  {
+    onBeforeNext: async ({ form, stepName }) => {
+      await saveDraft(form.value);
+
+      if (stepName === "account" && form.value.shipping.sameAsBilling) {
+        return "billing"; // Skip the shipping step entirely.
+      }
+      // Returning nothing (or `true`) proceeds to the next linear index.
+    },
+  },
+);
+```
+
+:::
 
 Returning `false` (or throwing) cancels the advance, leaving `stepIndex`
 unchanged. Returning a step name (or `null`) redirects there instead.
@@ -104,8 +220,18 @@ wizard.jump("payment"); // By step name.
 Runs after `stepIndex` actually changes, from `next()`, `back()`, or `jump()`
 alike. Purely informational: it can't cancel anything.
 
-```tsx
+::: code-group
+
+```tsx [React]
 useMultistep(form, steps, {
   onStepChanged: ({ stepIndex }) => trackWizardStep(stepIndex),
 });
 ```
+
+```ts [Lit]
+#wizard = new MultistepController(this, this.#form, steps, {
+  onStepChanged: ({ stepIndex }) => trackWizardStep(stepIndex),
+});
+```
+
+:::

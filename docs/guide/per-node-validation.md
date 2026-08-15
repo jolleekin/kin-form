@@ -57,7 +57,7 @@ reference change alone would turn every render into a validation run: notifying
 subscribers, triggering a re-render, reassigning validators again, a
 self-sustaining loop. If a field's validators rarely change and you want
 reassigning the same set to be a cheap no-op, cache the array yourself (a
-module-level constant, or `useMemo` in React).
+module-level constant, a class field in Lit, or `useMemo` in React).
 
 ## Async validator, and debouncing
 

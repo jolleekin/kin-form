@@ -2,20 +2,6 @@
 
 ::: code-group
 
-```ts [Vanilla]
-const form = new FormApi({
-  initialValue: { email: "", password: "" },
-  onSubmit: async (form) => {
-    await login(form.value);
-  },
-  onSubmitError: (form, error) => {
-    toast.error("Failed to log in");
-  },
-});
-
-formEl.addEventListener("submit", form.handleSubmit);
-```
-
 ```tsx [React]
 function LoginForm() {
   const form = useForm({
@@ -29,6 +15,29 @@ function LoginForm() {
   });
 
   return <form onSubmit={form.handleSubmit}>{/* ... */}</form>;
+}
+```
+
+```ts [Lit]
+@customElement("login-form")
+class LoginForm extends LitElement {
+  #form = new FormApi({
+    initialValue: { email: "", password: "" },
+    onSubmit: async (form) => {
+      await login(form.value);
+    },
+    onSubmitError: (form, error) => {
+      toast.error("Failed to log in");
+    },
+  });
+
+  override render() {
+    return html`
+      <form @submit=${this.#form.handleSubmit}>
+        <!-- ... -->
+      </form>
+    `;
+  }
 }
 ```
 
@@ -54,12 +63,6 @@ state, so gate the button like any other field property:
 
 ::: code-group
 
-```ts [Vanilla]
-form.subscribe(() => {
-  submitButton.disabled = form.submitting || !form.dirty;
-});
-```
-
 ```tsx [React]
 <Watch api={form} select={(f) => [f.submitting, f.dirty] as const}>
   {(form, [submitting, dirty]) => (
@@ -68,6 +71,17 @@ form.subscribe(() => {
     </button>
   )}
 </Watch>;
+```
+
+```ts [Lit]
+watch(
+  form,
+  (f) => [f.submitting, f.dirty] as const,
+  (_form, [submitting, dirty]) =>
+    html`
+      <button type="submit" ?disabled=${submitting || !dirty}>Save</button>
+    `,
+);
 ```
 
 :::

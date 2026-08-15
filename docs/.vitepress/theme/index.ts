@@ -1,6 +1,6 @@
 import DefaultTheme from "vitepress/theme";
 import Layout from "./Layout.vue";
-import FrameworkSnippet from "./FrameworkSnippet.vue";
+import FrameworkText from "./FrameworkText.vue";
 import SideBySide from "./SideBySide.vue";
 import FeatureMatrix from "./FeatureMatrix.vue";
 import BundleSizeChart from "./BundleSizeChart.vue";
@@ -13,7 +13,7 @@ export default {
   Layout,
   // deno-lint-ignore no-explicit-any
   enhanceApp({ app }: any) {
-    app.component("FrameworkSnippet", FrameworkSnippet);
+    app.component("FrameworkText", FrameworkText);
     app.component("SideBySide", SideBySide);
     app.component("FeatureMatrix", FeatureMatrix);
     app.component("BundleSizeChart", BundleSizeChart);

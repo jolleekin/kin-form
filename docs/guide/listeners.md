@@ -25,8 +25,8 @@ handler onto each individual field:
 
 ::: code-group
 
-```ts [Vanilla]
-const form = new FormApi({
+```ts [React]
+const form = useForm({
   initialValue: draft,
   onValueChanged: (form) => {
     localStorage.setItem("draft", JSON.stringify(form.value));
@@ -34,8 +34,8 @@ const form = new FormApi({
 });
 ```
 
-```ts [React]
-const form = useForm({
+```ts [Lit]
+#form = new FormApi({
   initialValue: draft,
   onValueChanged: (form) => {
     localStorage.setItem("draft", JSON.stringify(form.value));
@@ -57,27 +57,6 @@ everyone.
 
 ::: code-group
 
-```ts [Vanilla]
-function debounce<Args extends unknown[]>(
-  fn: (...args: Args) => void,
-  ms: number,
-): (...args: Args) => void {
-  let timer: ReturnType<typeof setTimeout>;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => fn(...args), ms);
-  };
-}
-
-const form = new FormApi({
-  initialValue: draft,
-  onValueChanged: debounce(
-    (form) => localStorage.setItem("draft", JSON.stringify(form.value)),
-    500,
-  ),
-});
-```
-
 ```tsx [React]
 // Memoize the debounced function so it survives useForm's every-render
 // updateOptions refresh instead of resetting its timer on every keystroke.
@@ -88,6 +67,18 @@ const persist = useMemo(
 const form = useForm({
   initialValue: draft,
   onValueChanged: persist,
+});
+```
+
+```ts [Lit]
+// A stable class field, unlike a React hook's fresh closure every render, so
+// no memoization is needed to keep the debounce timer alive.
+#form = new FormApi({
+  initialValue: draft,
+  onValueChanged: debounce(
+    (form) => localStorage.setItem("draft", JSON.stringify(form.value)),
+    500,
+  ),
 });
 ```
 
@@ -102,18 +93,28 @@ persistence). To react to a different property, subscribe directly; see
 
 ::: code-group
 
-```ts [Vanilla]
-field.subscribe(() => {
-  if (field.touched) reportFieldTouched(field.name);
-});
-```
-
 ```tsx [React]
 const touched = useWatch(field, (f) => f.touched);
 
 useEffect(() => {
   if (touched) reportFieldTouched(field.name);
 }, [touched]);
+```
+
+```ts [Lit]
+#unsubscribe?: VoidFunction;
+
+override connectedCallback() {
+  super.connectedCallback();
+  this.#unsubscribe = field.subscribe(() => {
+    if (field.touched) reportFieldTouched(field.name);
+  });
+}
+
+override disconnectedCallback() {
+  super.disconnectedCallback();
+  this.#unsubscribe?.();
+}
 ```
 
 :::

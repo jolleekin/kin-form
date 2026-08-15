@@ -74,6 +74,28 @@ export function AddressField<TParentValue>(
 }
 ```
 
+```ts [Lit]
+import { html, LitElement } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import type { FieldApi } from "@kin-form/lit";
+import "./text-field.ts";
+
+@customElement("address-field")
+class AddressField extends LitElement {
+  @property({ attribute: false })
+  accessor api!: FieldApi<Address, unknown>;
+
+  override render() {
+    return html`
+      <fieldset>
+        <text-field .api=${this.api.field("line1")} label="Line 1"></text-field>
+        <text-field .api=${this.api.field("city")} label="City"></text-field>
+      </fieldset>
+    `;
+  }
+}
+```
+
 :::
 
 ## Aggregated state

@@ -175,11 +175,6 @@ head:
 <section class="demo">
   <h2 class="section-header">See it for yourself</h2>
 
-<FrameworkSnippet>
-<template #react>
-
-<!-- <h3 class="demo-framework">React</h3> -->
-
 ::: code-group
 
 ```tsx{12-13,28-29} [1. Form with Watch]
@@ -299,9 +294,6 @@ function LoginForm() {
 ```
 
 :::
-
-</template>
-</FrameworkSnippet>
 
 </section>
 

@@ -32,13 +32,23 @@ no per-field wiring needed, even through
 [intermediate fields](/guide/nested-objects), since the lookup walks up `parent`
 until it finds a map with an answer:
 
-```tsx
+::: code-group
+
+```tsx [React]
 {
   field.invalid && field.touched && (
     <span>{field.error ?? field.schemaError}</span>
   );
 }
 ```
+
+```ts [Lit]
+field.invalid && field.touched
+  ? html`<span>${field.error ?? field.schemaError}</span>`
+  : "";
+```
+
+:::
 
 An issue with no `path` (e.g. a schema-level `.refine()`) maps to the group's
 own `""` key — read via `form.schemaErrorMap?.[""]`, or `form.schemaError`,
@@ -57,7 +67,9 @@ One schema covers the whole subtree, so nested fields don't need
 `form` validates `contact.name` or `guests.0.email` whether or not anything
 called `field("contact")` first:
 
-```tsx
+::: code-group
+
+```tsx [React]
 const form = useForm({
   initialValue: { contact: { name: "", email: "" }, guests: [] },
   schemaValidator: toSchemaValidator(registrationSchema),
@@ -70,6 +82,22 @@ const form = useForm({
 const contact = form.field("contact");
 <TextField api={contact.field("name")} label="Name" />;
 ```
+
+```ts [Lit]
+const form = new FormApi({
+  initialValue: { contact: { name: "", email: "" }, guests: [] },
+  schemaValidator: toSchemaValidator(registrationSchema),
+});
+
+// Flat — reads form's own schemaErrorMap directly.
+html`<text-field .api=${form.field("contact.name")} label="Name"></text-field>`;
+
+// Nested — same schemaError, found by walking up through `contact`.
+const contact = form.field("contact");
+html`<text-field .api=${contact.field("name")} label="Name"></text-field>`;
+```
+
+:::
 
 Exception: if `contact` has its own `schemaValidator`, it takes precedence over
 `form`'s for everything under it. The nearer validator always wins, so

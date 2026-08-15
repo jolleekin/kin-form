@@ -108,6 +108,78 @@ function CheckoutForm() {
 }
 ```
 
+```ts [Lit]
+import { html, LitElement } from "lit";
+import { customElement } from "lit/decorators.js";
+import { repeat } from "lit/directives/repeat.js";
+import { FormApi, watch } from "@kin-form/lit";
+import "./text-field.ts";
+import "./number-field.ts";
+
+@customElement("checkout-form")
+class CheckoutForm extends LitElement {
+  #form = new FormApi<Checkout>({ initialValue });
+  #shippingGroup = this.#form.field("shipping");
+
+  override render() {
+    return html`
+      <form @submit=${this.#form.handleSubmit}>
+        <fieldset>
+          <legend>Shipping address</legend>
+          <text-field
+            .api=${this.#shippingGroup.field("line1")}
+            label="Line 1"
+          ></text-field>
+          <text-field
+            .api=${this.#shippingGroup.field("city")}
+            label="City"
+          ></text-field>
+        </fieldset>
+
+        ${watch(
+          this.#form.field("items"),
+          (items) =>
+            html`
+              ${repeat(
+                items.value,
+                (_item, i) => items.field(`${i}`).id,
+                (_item, i) => {
+                  const item = items.field(`${i}`);
+                  return html`
+                    <div>
+                      <text-field
+                        .api=${item.field("code")}
+                        label="Code"
+                      ></text-field>
+                      <number-field
+                        .api=${item.field("quantity")}
+                        label="Quantity"
+                      ></number-field>
+                      <button
+                        type="button"
+                        @click=${() => items.removeItem("", i)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  `;
+                },
+              )}
+
+              <button
+                type="button"
+                @click=${() => items.pushItem("", { code: "", quantity: 1 })}
+              >
+                Add item
+              </button>
+            `,
+        )}
+      </form>
+    `;
+  }
+}
+```
+
 :::
 
 Each level is its own node: `shippingGroup.invalid`/`shippingGroup.touched`
@@ -178,13 +250,81 @@ function CheckoutForm() {
 }
 ```
 
+```ts [Lit]
+import { html, LitElement } from "lit";
+import { customElement } from "lit/decorators.js";
+import { repeat } from "lit/directives/repeat.js";
+import { FormApi, watch } from "@kin-form/lit";
+import "./text-field.ts";
+import "./number-field.ts";
+
+@customElement("checkout-form")
+class CheckoutForm extends LitElement {
+  #form = new FormApi<Checkout>({ initialValue });
+
+  readonly #addItem = () => {
+    this.#form.pushItem("items", { code: "", quantity: 1 });
+  };
+
+  override render() {
+    return html`
+      <form @submit=${this.#form.handleSubmit}>
+        <fieldset>
+          <legend>Shipping address</legend>
+          <text-field
+            .api=${this.#form.field("shipping.line1")}
+            label="Line 1"
+          ></text-field>
+          <text-field
+            .api=${this.#form.field("shipping.city")}
+            label="City"
+          ></text-field>
+        </fieldset>
+
+        ${watch(
+          this.#form,
+          (f) => f.value.items,
+          (form, items) =>
+            html`
+              ${repeat(
+                items,
+                (_item, i) => i,
+                (_item, i) =>
+                  html`
+                    <div>
+                      <text-field
+                        .api=${form.field(`items.${i}.code`)}
+                        label="Code"
+                      ></text-field>
+                      <number-field
+                        .api=${form.field(`items.${i}.quantity`)}
+                        label="Quantity"
+                      ></number-field>
+                      <button
+                        type="button"
+                        @click=${() => form.removeItem("items", i)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  `,
+              )}
+              <button type="button" @click=${this.#addItem}>Add item</button>
+            `,
+        )}
+      </form>
+    `;
+  }
+}
+```
+
 :::
 
 There's no `shipping`-level or `items`-level aggregate state: every field
 reports directly to `form`. See
 [Resolve the intermediate field first](/guide/nested-objects#resolve-the-intermediate-field-first).
 
-::: tip
+:::: tip
 
 The [array mutation helpers](/guide/dynamic-arrays) still work without resolving
 `items` as its own field: they only need the array's name, not a resolved node,
@@ -195,7 +335,9 @@ If reordering is needed, stamp one on yourself. A `Symbol`-keyed property stays
 out of `Object.keys`/`JSON.stringify` (so it won't leak into submission or trip
 up a schema's `.strict()`), unlike a regular field:
 
-```ts
+::: code-group
+
+```tsx [React]
 let itemKey = 0;
 const ITEM_KEY = Symbol();
 
@@ -216,7 +358,31 @@ const addItem = useCallback(() => {
 <div key={item[ITEM_KEY]}>
 ```
 
+```ts [Lit]
+let itemKey = 0;
+const ITEM_KEY = Symbol();
+
+type Item = {
+  code: string;
+  quantity: number;
+  [ITEM_KEY]: number;
+};
+
+// A stable class-field reference needs no dependency array, unlike useCallback.
+readonly #addItem = () => {
+  this.#form.pushItem("items", {
+    code: "",
+    quantity: 1,
+    [ITEM_KEY]: ++itemKey,
+  });
+};
+
+// repeat(items, (item) => item[ITEM_KEY], ...)
+```
+
 :::
+
+::::
 
 ## `schemaValidator` works either way
 

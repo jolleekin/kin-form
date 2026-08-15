@@ -12,18 +12,6 @@ value and the dirty baseline to the real data via `reset()` once it arrives.
 
 ::: code-group
 
-```ts [Vanilla]
-const form = new FormApi({
-  initialValue: { firstName: "", lastName: "" },
-  onSubmit: async (form) => {
-    await saveProfile(form.value);
-  },
-});
-
-const data = await fetchProfile();
-form.reset(data);
-```
-
 ```tsx [React]
 function ProfileForm() {
   const { data, isLoading } = useQuery({
@@ -53,6 +41,46 @@ function ProfileForm() {
 }
 ```
 
+```ts [Lit]
+@customElement("profile-form")
+class ProfileForm extends LitElement {
+  #form = new FormApi({
+    initialValue: { firstName: "", lastName: "" },
+    onSubmit: async (form) => {
+      await saveProfile(form.value);
+    },
+  });
+
+  @state()
+  accessor #loading = true;
+
+  override connectedCallback() {
+    super.connectedCallback();
+    fetchProfile().then((data) => {
+      this.#form.reset(data);
+      this.#loading = false;
+    });
+  }
+
+  override render() {
+    if (this.#loading) return html`<p>Loading...</p>`;
+
+    return html`
+      <form @submit=${this.#form.handleSubmit}>
+        <text-field
+          .api=${this.#form.field("firstName")}
+          label="First name"
+        ></text-field>
+        <text-field
+          .api=${this.#form.field("lastName")}
+          label="Last name"
+        ></text-field>
+      </form>
+    `;
+  }
+}
+```
+
 :::
 
 `reset(data)` both populates the fields and moves the dirty baseline to `data`,
@@ -67,17 +95,6 @@ real value passed straight in as `initialValue`. No placeholder, no `reset()`
 call.
 
 ::: code-group
-
-```ts [Vanilla]
-const data = await fetchProfile();
-
-const form = new FormApi({
-  initialValue: data,
-  onSubmit: async (form) => {
-    await saveProfile(form.value);
-  },
-});
-```
 
 ```tsx [React]
 function ProfilePage() {
@@ -102,6 +119,46 @@ function ProfileForm({ initialValue }: { initialValue: Profile }) {
       <TextField api={form.field("lastName")} label="Last name" />
     </form>
   );
+}
+```
+
+```ts [Lit]
+// One element, not two: a Lit property isn't readable until after the
+// constructor runs, so a resolved value can't be handed in as a `.prop` and
+// constructed from in the same pass the way a React prop can. Delaying the
+// `FormApi` itself, inside the element that fetches it, sidesteps that.
+@customElement("profile-form")
+class ProfileForm extends LitElement {
+  @state()
+  accessor #form: FormApi<Profile> | undefined;
+
+  override connectedCallback() {
+    super.connectedCallback();
+    fetchProfile().then((data) => {
+      this.#form = new FormApi({
+        initialValue: data,
+        onSubmit: (form) => saveProfile(form.value),
+      });
+    });
+  }
+
+  override render() {
+    if (!this.#form) return html`<p>Loading...</p>`;
+    const form = this.#form;
+
+    return html`
+      <form @submit=${form.handleSubmit}>
+        <text-field
+          .api=${form.field("firstName")}
+          label="First name"
+        ></text-field>
+        <text-field
+          .api=${form.field("lastName")}
+          label="Last name"
+        ></text-field>
+      </form>
+    `;
+  }
 }
 ```
 

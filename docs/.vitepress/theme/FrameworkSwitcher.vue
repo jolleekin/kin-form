@@ -1,53 +1,6 @@
 <script setup lang="ts">
-import { watch, onMounted } from 'vue';
 import { selectedFramework } from './store.ts';
-
-const frameworks = [
-  { id: 'vanilla', label: 'Vanilla' },
-  { id: 'react', label: 'React' },
-];
-
-const syncCodeGroups = (fwId: string) => {
-  if (typeof document === 'undefined') return;
-  const fw = frameworks.find(f => f.id === fwId);
-  if (!fw) return;
-  
-  const labels = document.querySelectorAll('.vp-code-group .tabs label');
-  labels.forEach(label => {
-    if (label.textContent?.trim() === fw.label) {
-      const inputId = label.getAttribute('for');
-      if (inputId) {
-        const input = document.getElementById(inputId) as HTMLInputElement;
-        if (input && !input.checked) {
-          input.click();
-        }
-      } else {
-        ;(label as HTMLElement).click();
-      }
-    }
-  });
-};
-
-onMounted(() => {
-  // Wait a tick for code groups to mount
-  setTimeout(() => syncCodeGroups(selectedFramework.value), 10);
-  
-  document.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement;
-    const label = target.closest('.vp-code-group .tabs label');
-    if (label) {
-      const text = label.textContent?.trim();
-      const fw = frameworks.find(f => f.label === text);
-      if (fw && fw.id !== selectedFramework.value) {
-        selectedFramework.value = fw.id;
-      }
-    }
-  });
-});
-
-watch(selectedFramework, (newVal) => {
-  syncCodeGroups(newVal);
-});
+import { frameworks } from './codeGroupSync.ts';
 </script>
 
 <template>

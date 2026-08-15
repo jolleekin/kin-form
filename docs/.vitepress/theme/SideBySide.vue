@@ -96,8 +96,7 @@ function toggle(): void {
   padding: 2px 24px;
   font-size: 24px;
   font-weight: 700;
-  letter-spacing: 0.07em;
-  color: var(--vp-c-text-2);
+  color: var(--vp-c-text-1);
   cursor: default;
   background: transparent;
   border-bottom: none;
@@ -110,7 +109,7 @@ function toggle(): void {
 
 .side-by-side:fullscreen :deep(.vp-code-group .tabs label:hover),
 .side-by-side:fullscreen :deep(.vp-code-group .tabs input:checked + label) {
-  color: var(--vp-c-text-2) !important;
+  color: var(--vp-c-text-1) !important;
   background: transparent;
   border-bottom: none !important;
 }

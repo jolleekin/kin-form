@@ -40,9 +40,9 @@ That means the same mental model applies everywhere:
 - `touched`/`invalid`/`validating` aggregate from children automatically: a node
   is `invalid` if it or any registered child is.
 - Every node can be subscribed to independently. A node's own change never
-  notifies unrelated siblings, and `react/`'s `useWatch`/`Watch` add
-  selector-based diffing on top, so a component re-renders only when what it
-  computes changes.
+  notifies unrelated siblings, and `react/`'s `useWatch`/`Watch` (or `lit/`'s
+  `watch`/`WatchController`) add selector-based diffing on top, so a subscriber
+  updates only when what it computes changes.
 
 Nothing here is a separate array-field abstraction or a separate
 whole-form-state abstraction. It's the same properties, all the way down.
@@ -118,16 +118,17 @@ no manual wiring and no re-render-everything.
 value and re-key the field registry together, so a field's identity follows its
 item through a reorder, not whatever value now sits at its old index. Every
 field also carries a stable `id`, independent of `name`, that survives the same
-reorders. It's the right React `key` for a list of array items
-(`key={field.id}`, not `key={index}`).
+reorders. It's the right list key (`key={field.id}` in React, or `lit-html`'s
+`repeat` directive keyed on `field.id` in Lit) instead of the index.
 
 ### Opt-in complexity
 
 `@kin-form/core` has no UI framework dependency: it's just the state machine.
-`@kin-form/react` adds hooks and render-prop components on top.
-`@kin-form/validators` is a separate package on purpose: validator wording and
-edge cases churn far more than the engine does, so the two version
-independently. You pick up exactly the layers you use.
+`@kin-form/react` adds hooks and render-prop components on top; `@kin-form/lit`
+adds a `watch` directive and `ReactiveController`s. `@kin-form/validators` is a
+separate package on purpose: validator wording and edge cases churn far more
+than the engine does, so the two version independently. You pick up exactly the
+layers you use.
 
 ## How other form libraries handle this
 
@@ -171,8 +172,8 @@ See [vs React Hook Form](/comparison/react-hook-form) for the full comparison.
 
 - [Getting Started](/guide/getting-started) — install and build your first form
 - [Concepts](/guide/concepts) — the tree model, shared state, and typed paths
-- [Basic](/guide/basic) — building `TextField` from `Watch`, the pattern the
-  rest of these guides lean on
+- [Basic](/guide/basic) — building `TextField` from a one-off subscription, the
+  pattern the rest of these guides lean on
 - [Per-node Validation](/guide/per-node-validation) and
   [Schema Validation](/guide/schema-validation)
 - [Nested Objects](/guide/nested-objects) and

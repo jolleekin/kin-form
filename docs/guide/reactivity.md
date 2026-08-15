@@ -51,23 +51,40 @@ twice, once per `value` set.
 
 ## Subscribing from your UI layer
 
-<FrameworkSnippet>
+<FrameworkText>
 <template #react>
 
 `useWatch` (or `Watch`, its render-prop form) subscribes the calling component
 via `useSyncExternalStore`, re-rendering on every notify by default:
 
-```tsx
+</template>
+<template #lit>
+
+`watch` (a directive, for one-off use inline in a template) or `WatchController`
+(a `ReactiveController`, for a whole component's `render()`) subscribes to
+`api`, requesting an update on every notify by default:
+
+</template>
+</FrameworkText>
+
+::: code-group
+
+```tsx [React]
 const field = useWatch(parent.field("email"));
 ```
 
-</template>
-</FrameworkSnippet>
+```ts [Lit]
+#watch = new WatchController(this, () => parent.field("email"));
+
+override render() {
+  const field = this.#watch.value;
+  // ...
+}
+```
+
+:::
 
 ### Narrowing what runs
-
-<FrameworkSnippet>
-<template #react>
 
 Pass `select` to re-render only when the properties you actually read change:
 
@@ -80,18 +97,25 @@ const [value, invalid, touched] = useWatch(
 );
 ```
 
+```ts [Lit]
+#watch = new WatchController(
+  this,
+  () => parent.field("email"),
+  (f) => [f.value, f.invalid, f.touched] as const,
+);
+
+// this.#watch.value is [value, invalid, touched]
+```
+
 :::
 
 `select`'s result is compared shallowly by default (own keys for a record,
 index-by-index for an array/tuple), so returning a fresh literal like the tuple
 above doesn't force a re-render on every notify.
 
-</template>
-</FrameworkSnippet>
-
 ### Selecting a derived value
 
-<FrameworkSnippet>
+<FrameworkText>
 <template #react>
 
 `Watch` is a general-purpose subscription component for any already-resolved
@@ -100,7 +124,21 @@ above doesn't force a re-render on every notify.
 to narrow the subscription to a selected value, passed as `children`'s second
 argument.
 
-```tsx
+</template>
+<template #lit>
+
+`watch` is a general-purpose subscription directive for any already-resolved
+`FieldApi`/`FormApi`, for one-off use inline in a template without writing a
+custom component. `render` always receives the field/form as its first argument;
+pass `select` between `api` and `render` to narrow the subscription to a
+selected value, passed as `render`'s second argument.
+
+</template>
+</FrameworkText>
+
+::: code-group
+
+```tsx [React]
 // Re-render only when `submitting || !dirty` changes.
 <Watch api={form} select={(f) => f.submitting || !f.dirty}>
   {(form, disabled) => (
@@ -116,11 +154,42 @@ argument.
 </Watch>
 ```
 
+```ts [Lit]
+// Re-render only when `submitting || !dirty` changes.
+watch(
+  form,
+  (f) => f.submitting || !f.dirty,
+  (_form, disabled) =>
+    html`
+      <button type="submit" ?disabled=${disabled}>Save</button>
+    `,
+);
+
+// Re-render only when the selected value changes.
+watch(
+  itemsGroup,
+  (g) => g.value.length,
+  (_group, count) => html`<span>${count} items</span>`,
+);
+```
+
+:::
+
+<FrameworkText>
+<template #react>
+
 `useWatch` is the hook `Watch` is built on — use it directly to build reusable
 components such as `TextField`, `AddressField`, `SubmitButton`, and so on.
 
 </template>
-</FrameworkSnippet>
+<template #lit>
+
+`WatchController` is the reusable-component equivalent of `watch` — use it
+directly to build reusable components such as `TextField`, `AddressField`,
+`SubmitButton`, and so on.
+
+</template>
+</FrameworkText>
 
 ## What's next
 

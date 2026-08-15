@@ -4,6 +4,9 @@
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM"]
+  },
   "imports": {
     "vitepress": "npm:vitepress@^1.6.4",
     "vitepress-plugin-llms": "npm:vitepress-plugin-llms@^1.13.4",

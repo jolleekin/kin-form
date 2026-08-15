@@ -22,7 +22,9 @@ markdownStyles: false
 <h2 class="section-header">The payoff</h2>
 <p class="lede">Forms read like composition, not wiring.</p>
 
-```tsx
+::: code-group
+
+```tsx [React]
 <form onSubmit={form.handleSubmit}>
   <TextField api={form.field("email")} label="Email" />
   <AddressField api={form.field("shipping")} />
@@ -31,6 +33,20 @@ markdownStyles: false
   <SubmitButton api={form}>Place order</SubmitButton>
 </form>;
 ```
+
+```ts [Lit]
+html`
+  <form @submit=${form.handleSubmit}>
+    <text-field .api=${form.field("email")} label="Email"></text-field>
+    <address-field .api=${form.field("shipping")}></address-field>
+    <address-field .api=${form.field("billing")}></address-field>
+    <items-field .api=${form.field("items")}></items-field>
+    <submit-button .api=${form}>Place order</submit-button>
+  </form>
+`;
+```
+
+:::
 
 <p class="prose">Each component receives a resolved <code>FieldApi</code>, not a path or form context. Define the UI and behavior once, then mount it anywhere its value type fits. Kin Form keeps that component independently subscribed, so a change only updates the part of the form that depends on it.</p>
 <p class="reuse-cta"><a href="/guide/form-composition">Build reusable field components →</a></p>
@@ -172,14 +188,11 @@ markdownStyles: false
 <section class="demo">
   <h2 class="section-header">See it for yourself</h2>
 
-<FrameworkSnippet>
-<template #react>
-
-<h3 class="demo-framework">React</h3>
+<h3 class="demo-step">1. A login form</h3>
 
 ::: code-group
 
-```tsx{12-13,28-29} [1. Form with Watch]
+```tsx{12-13,28-29} [React]
 import { useForm, Watch } from "@kin-form/react";
 import { required } from "@kin-form/validators";
 
@@ -219,7 +232,65 @@ function LoginForm() {
 }
 ```
 
-```tsx{13} [2. Reusable TextField]
+```ts{14-15,31-32} [Lit]
+import { html, LitElement } from "lit";
+import { customElement } from "lit/decorators.js";
+import { FormApi, watch } from "@kin-form/lit";
+import { required } from "@kin-form/validators";
+
+@customElement("login-form")
+class LoginForm extends LitElement {
+  #form = new FormApi({
+    initialValue: { email: "" },
+    onSubmit: (form) => login(form.value),
+  });
+
+  override render() {
+    return html`
+      <form @submit=${this.#form.handleSubmit}>
+
+        <!-- watch is great for one-off UI or prototyping. -->
+        <!-- Only re-render this part when the email field changes. -->
+        ${watch(
+          this.#form.field("email", { validators: required("Required") }),
+          (field) => html`
+            <label>
+              Email
+              <input
+                .value=${field.value}
+                @blur=${field.handleBlur}
+                @input=${(e: Event) =>
+                  field.handleChange((e.target as HTMLInputElement).value)}
+              >
+            </label>
+            ${field.touched && field.error
+              ? html`<span>${field.error}</span>`
+              : ""}
+          `,
+        )}
+
+        <!-- Only re-render this part when form.submitting flips. -->
+        ${watch(
+          this.#form,
+          (f) => f.submitting,
+          (_form, submitting) =>
+            html`
+              <button type="submit" ?disabled=${submitting}>Log in</button>
+            `,
+        )}
+      </form>
+    `;
+  }
+}
+```
+
+:::
+
+<h3 class="demo-step">2. Reusable TextField</h3>
+
+::: code-group
+
+```tsx{13} [React]
 import type { ReactNode } from "react";
 import { type FieldApi, useWatch } from "@kin-form/react";
 
@@ -253,7 +324,50 @@ export function TextField<TParentValue>(
 }
 ```
 
-```tsx{12} [3. Reusable SubmitButton]
+```ts{15} [Lit]
+import { html, LitElement } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import { type FieldApi, WatchController } from "@kin-form/lit";
+
+@customElement("text-field")
+export class TextField extends LitElement {
+  @property({ attribute: false })
+  accessor api!: FieldApi<string, unknown>;
+
+  @property()
+  accessor label = "";
+
+  // Re-renders when the api's state changes.
+  #watch = new WatchController(this, () => this.api);
+
+  override render() {
+    const field = this.#watch.value;
+    return html`
+      <label>
+        ${this.label}
+        <input
+          .value=${field.value}
+          @blur=${field.handleBlur}
+          @input=${(e: Event) =>
+            field.handleChange((e.target as HTMLInputElement).value)}
+        >
+      </label>
+      ${field.touched && field.invalid
+        // Per-node validation and schema validation can co-exist.
+        ? html`<span>${field.error ?? field.schemaError}</span>`
+        : ""}
+    `;
+  }
+}
+```
+
+:::
+
+<h3 class="demo-step">3. Reusable SubmitButton</h3>
+
+::: code-group
+
+```tsx{12} [React]
 import type { ReactNode } from "react";
 import { type FormApi, useWatch } from "@kin-form/react";
 
@@ -276,8 +390,41 @@ export function SubmitButton<TValue>(
 }
 ```
 
-```tsx{11-15} [4. Form with reusable components]
+```ts{14} [Lit]
+import { html, LitElement } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import { type FormApi, WatchController } from "@kin-form/lit";
+
+@customElement("submit-button")
+export class SubmitButton extends LitElement {
+  @property({ attribute: false })
+  accessor api!: FormApi<unknown>; // Subclass of FieldApi.
+
+  // Re-render only when submitting flips.
+  #watch = new WatchController(this, () => this.api, (f) => f.submitting);
+
+  override render() {
+    const submitting = this.#watch.value;
+    return html`
+      <button type="submit" ?disabled=${submitting}>
+        <slot></slot>
+      </button>
+    `;
+  }
+}
+```
+
+:::
+
+<h3 class="demo-step">4. Form with reusable components</h3>
+
+::: code-group
+
+```tsx{14-18} [React]
+import { useForm } from "@kin-form/react";
 import { required } from "@kin-form/validators";
+import { TextField } from "./TextField.tsx";
+import { SubmitButton } from "./SubmitButton.tsx";
 
 function LoginForm() {
   const form = useForm({
@@ -297,10 +444,38 @@ function LoginForm() {
 }
 ```
 
-:::
+```ts{13-16} [Lit]
+import { html, LitElement } from "lit";
+import { customElement } from "lit/decorators.js";
+import { FormApi } from "@kin-form/lit";
+import { required } from "@kin-form/validators";
+import "./text-field.ts";
+import "./submit-button.ts";
 
-</template>
-</FrameworkSnippet>
+@customElement("login-form")
+class LoginForm extends LitElement {
+  #form = new FormApi({
+    initialValue: { email: "" },
+    onSubmit: (form) => login(form.value),
+  });
+
+  override render() {
+    return html`
+      <form @submit=${this.#form.handleSubmit}>
+        <text-field
+          .api=${this.#form.field("email", {
+            validators: required("Required"),
+          })}
+          label="Email"
+        ></text-field>
+        <submit-button .api=${this.#form}>Log in</submit-button>
+      </form>
+    `;
+  }
+}
+```
+
+:::
 
 </section>
 
