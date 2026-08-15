@@ -6,6 +6,7 @@ on:
       - "core@*"
       - "react@*"
       - "react-devtools@*"
+      - "lit@*"
       - "validators@*"
 
 jobs:
@@ -21,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: denoland/setup-deno@v2
-      - run: deno test -A core react react-devtools validators
+      - run: deno test -A core react react-devtools lit validators
 
   publish-core:
     needs: [lint, test]
@@ -61,6 +62,19 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: react-devtools
+
+  publish-lit:
+    needs: [lint, test]
+    if: startsWith(github.ref, 'refs/tags/lit@')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: denoland/setup-deno@v2
+      - run: deno publish
+        working-directory: lit
 
   publish-validators:
     needs: [lint, test]
