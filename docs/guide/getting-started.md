@@ -20,7 +20,7 @@ deno add jsr:@kin-form/lit
 
 :::
 
-`@kin-form/react`/`@kin-form/lit` each include `@kin-form/core`.
+`@kin-form/react` and `@kin-form/lit` re-export `@kin-form/core`.
 
 To add common validators or the schema validation adapter:
 

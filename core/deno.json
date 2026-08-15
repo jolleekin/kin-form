@@ -1,6 +1,7 @@
 {
   "name": "@kin-form/core",
-  "version": "0.1.3",
+  "version": "0.1.4",
+  "description": "The framework-agnostic core of Kin Form",
   "license": "MIT",
   "exports": {
     ".": "./index.ts",

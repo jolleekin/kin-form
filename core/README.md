@@ -6,9 +6,7 @@
 ![100% type-safe](https://img.shields.io/badge/100%25%20type--safe-166534?style=flat)
 ![Zero dependencies](https://img.shields.io/badge/Zero%20dependencies-166534?style=flat)
 
-Form state that stays out of your way. `FieldApi` and `FormApi`: the
-framework-agnostic engine behind `@kin-form/react`. No UI framework dependency;
-just the state machine.
+The framework-agnostic core of Kin Form.
 
 ## Design principles
 
@@ -38,8 +36,9 @@ error, not a silent `undefined` at runtime.
 value and re-key the field registry together, so a field's identity follows its
 item through a reorder, not whatever value now happens to sit at its old index.
 Every field also carries a stable `id`, independent of `name`, that survives the
-same reorders: the right React `key` for a list of array items
-(`key={field.id}`, not `key={index}`).
+same reorders: the right list key for a list of array items (`key={field.id}` in
+React, or `lit-html`'s `repeat` directive keyed on `field.id` in Lit) instead of
+the index.
 
 ---
 
@@ -137,5 +136,6 @@ optional children, not a separate class per leaf/container distinction.
   [`FormApi`](https://jsr.io/@kin-form/core/doc/index.ts/~/FormApi) — full
   reference on JSR
 - [`@kin-form/react`](../react/README.md) — React bindings
+- [`@kin-form/lit`](../lit/README.md) — Lit bindings
 - [`@kin-form/validators`](../validators/README.md) — `required`, `email`, a
   `toSchemaValidator()` adapter for zod/valibot, and more
