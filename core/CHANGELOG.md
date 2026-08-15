@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4 - 2026-08-15
+
+- Add a JSR `description` for the package listing.
+- Update the README to credit `@kin-form/lit` alongside `@kin-form/react`.
+
 ## 0.1.3 - 2026-08-14
 
 - Fix: a field's `initialValue` now returns `undefined` instead of throwing when

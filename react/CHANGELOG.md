@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5 - 2026-08-15
+
+- Add a JSR `description` for the package listing.
+
 ## 0.1.4 - 2026-08-14
 
 - Fixed `useWatch` (and by extension `Watch`/`useForm`) missing a
