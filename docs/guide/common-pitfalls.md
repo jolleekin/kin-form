@@ -68,7 +68,7 @@ misattributes uncontrolled DOM state (focus, cursor position, scroll) to the
 wrong row after a reorder: the item that _renders_ at index 2 changes, but the
 component/element instance React/Lit reuses for index 2 doesn't.
 
-Use `field.id` (or `group.id`) as the key instead. See
+Use `FieldApi.id` as the key instead. See
 [Dynamic Arrays](/guide/dynamic-arrays).
 
 ## `handleSubmit` doesn't move the dirty baseline
@@ -77,9 +77,8 @@ A successful `onSubmit` doesn't reset anything on its own: `dirty` (and the
 reset baseline it's computed from) stay exactly where they were before you
 submitted, so a form that just saved successfully still reports `dirty: true`.
 
-Call `form.reset(form.value)` (or `form.reset(saved)`, if the server echoes back
-a normalized value) at the end of a successful `onSubmit` if the baseline should
-follow it. See [Dirty Tracking & Reset](/guide/dirty-tracking-and-reset).
+Call `form.reset()` or `form.reset(saved)` to reset the baseline. See
+[Dirty Tracking & Reset](/guide/dirty-tracking-and-reset).
 
 ## `field.id` in server-rendered markup
 
