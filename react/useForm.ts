@@ -16,6 +16,11 @@ import { FormApi, type FormApiOptions } from "@kin-form/core";
  * Doesn't itself subscribe the calling component to the form; pass the
  * returned instance to `Watch` for that.
  *
+ * Don't call `useWatch` in the same component as `useForm`: that re-renders
+ * the whole form on every notify, the exact thing `useForm` not subscribing
+ * is meant to avoid. Extract the `useWatch` call and the UI it drives into
+ * their own component instead.
+ *
  * @example
  * ```tsx
  * function LoginForm() {

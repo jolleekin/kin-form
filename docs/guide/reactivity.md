@@ -84,6 +84,32 @@ override render() {
 
 :::
 
+### Don't subscribe in the component that owns the form
+
+<FrameworkText>
+<template #react>
+
+`useForm` deliberately doesn't subscribe the calling component (see
+[Basic](/guide/basic)) so that typing into one field doesn't re-render the whole
+form. Calling `useWatch` in that same component undoes that: the component now
+re-renders on every notify anyway, just like it would if `useForm` subscribed by
+itself. If you catch yourself reaching for `useWatch` right next to a `useForm`
+call, extract that `useWatch` call and the UI it drives into their own component
+(`TextField`, `SubmitButton`, ...), and pass the already-resolved
+`FieldApi`/`FormApi` down as a prop instead.
+
+</template>
+<template #lit>
+
+Don't create a `FormApi` and a `WatchController` in the same component: the
+`WatchController` requests an update on every notify, so the whole form
+re-renders on every change. Extract that `WatchController` and the UI it drives
+into their own custom element (`text-field`, `submit-button`, ...), and pass the
+already-resolved `FieldApi`/`FormApi` down as a property instead.
+
+</template>
+</FrameworkText>
+
 ### Narrowing what runs
 
 Pass `select` to re-render only when the properties you actually read change:
