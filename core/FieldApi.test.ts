@@ -1196,6 +1196,21 @@ Deno.test("FieldApi", async (t) => {
     assertEquals(field.invalid, true);
   });
 
+  await t.step(
+    "should notify subscribers when disabled changes, even if invalid/validating don't",
+    () => {
+      const field = new FieldApi<string>(null, "", { initialValue: "ok" });
+      const callback = spy();
+      field.subscribe(callback);
+
+      field.disabled = true;
+      assertSpyCalls(callback, 1);
+
+      field.disabled = false;
+      assertSpyCalls(callback, 2);
+    },
+  );
+
   await t.step("should not run validators while disabled", () => {
     const validator = spy(() => "Error");
     const field = new FieldApi<string>(null, "", {

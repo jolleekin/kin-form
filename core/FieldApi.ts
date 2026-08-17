@@ -385,6 +385,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
         this.#scheduleSchemaValidation();
         if (this.invalid !== oldInvalid) this.invalidChanged();
         if (this.validating !== oldValidating) this.validatingChanged();
+        this.notify();
       });
     }
     for (const f of this.#children.values()) {
