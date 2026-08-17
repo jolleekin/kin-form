@@ -93,3 +93,5 @@ survives array reorders, but not seeded the same way on the server and the
 client. Rendering it into an actual DOM attribute (an `<input id={field.id}>` /
 `<label htmlFor={field.id}>` pair, say) mismatches during hydration. Use
 `useId()` for a DOM id instead, and keep `field.id` scoped to `key`.
+
+See [Server-Side Rendering (SSR)](/guide/ssr) for the full guide.

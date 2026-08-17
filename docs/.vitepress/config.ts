@@ -149,6 +149,7 @@ export default defineConfig({
             { text: "Form Composition", link: "/guide/form-composition" },
             { text: "Multistep Forms", link: "/guide/multistep" },
             { text: "Devtools", link: "/guide/devtools" },
+            { text: "Server-Side Rendering (SSR)", link: "/guide/ssr" },
             { text: "Common Pitfalls", link: "/guide/common-pitfalls" },
           ],
         },
