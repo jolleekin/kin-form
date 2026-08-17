@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.5 - 2026-08-17
+
+- Fix: setting `disabled` on a field that was already valid and not validating
+  silently skipped notifying subscribers, since only `invalid`/`validating`
+  changes triggered a notify. `useWatch`/`Watch` (and any other subscriber) now
+  always sees a `disabled` change.
+
 ## 0.1.4 - 2026-08-15
 
 - Add a JSR `description` for the package listing.

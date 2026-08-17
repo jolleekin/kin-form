@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.6 - 2026-08-17
+
+- Bump `@kin-form/core` to 0.1.5, which fixes `disabled` not always notifying
+  subscribers.
+
 ## 0.1.5 - 2026-08-15
 
 - Add a JSR `description` for the package listing.
