@@ -173,12 +173,14 @@ export type TextFieldProps<TParentValue> = {
   api: FieldApi<string, TParentValue>;
   label: string;
   type?: string;
+  disabled?: boolean;
 };
 
 export function TextField<TParentValue>(
-  { api, label, type = "text" }: TextFieldProps<TParentValue>,
+  { api, label, type = "text", disabled }: TextFieldProps<TParentValue>,
 ): ReactNode {
   const field = useWatch(api);
+  const isDisabled = disabled || field.disabled;
 
   return (
     <label>
@@ -186,6 +188,7 @@ export function TextField<TParentValue>(
       <input
         type={type}
         value={field.value}
+        disabled={isDisabled}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
       />
@@ -213,16 +216,21 @@ export class TextField extends LitElement {
   @property()
   accessor type = "text";
 
+  @property({ type: Boolean })
+  accessor disabled = false;
+
   #watch = new WatchController(this, () => this.api);
 
   override render() {
     const field = this.#watch.value;
+    const isDisabled = this.disabled || field.disabled;
     return html`
       <label>
         ${this.label}
         <input
           type=${this.type}
           .value=${field.value}
+          ?disabled=${isDisabled}
           @blur=${field.handleBlur}
           @input=${(e: Event) =>
             field.handleChange((e.target as HTMLInputElement).value)}
@@ -252,6 +260,13 @@ way it already does for `Watch` above. `TextField` only needs to know it's
 rendering _some_ `FieldApi<string, TParentValue>`, not where in the tree it
 lives or how it was configured.
 
+`disabled` is `disabled || field.disabled`, not just one or the other: the prop
+lets a caller disable this one field on its own (e.g. a field that's read-only
+until some other condition is met), while `field.disabled` picks up a value
+cascaded down from an ancestor (e.g. the whole form disabled while submitting,
+see [Submission Handling](/guide/submission-handling)) without the caller doing
+anything at all.
+
 </template>
 <template #lit>
 
@@ -265,6 +280,13 @@ template; once it's a named, reused component, subscribe its own `render()` via
 call site, the same way it already does for `watch` above. `TextField` only
 needs to know it's rendering _some_ `FieldApi<string, unknown>`, not where in
 the tree it lives or how it was configured.
+
+`disabled` is `this.disabled || field.disabled`, not just one or the other: the
+property lets a caller disable this one field on its own (e.g. a field that's
+read-only until some other condition is met), while `field.disabled` picks up a
+value cascaded down from an ancestor (e.g. the whole form disabled while
+submitting, see [Submission Handling](/guide/submission-handling)) without the
+caller doing anything at all.
 
 </template>
 </FrameworkText>

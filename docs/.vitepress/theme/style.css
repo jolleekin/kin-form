@@ -130,11 +130,11 @@ html .vp-code .comment-line span {
    highlights that could drift from the code they're meant to mark. Scoped to
    .vp-doc (not the homepage, which opts out of it and highlights its own demo
    snippets by line number instead, for a different purpose). */
-.vp-doc .vp-code .line.comment-line {
+/* .vp-doc .vp-code .line.comment-line {
   display: inline-block;
   width: 100%;
   background: color-mix(in srgb, var(--accent) 10%, transparent);
-}
+} */
 
 /* Stacks every `::: code-group` tab panel into the same grid cell instead of
    VitePress's default (only the `.active` panel is `display: block`, the

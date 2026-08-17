@@ -123,6 +123,9 @@ function toggle(): void {
 
 .side-by-side:fullscreen :deep(.vp-code-group .blocks > div) {
   display: block !important;
+  visibility: visible !important;
+  grid-area: auto !important;
+  pointer-events: auto !important;
   margin: 0 !important;
   border-radius: 8px;
   overflow: hidden;

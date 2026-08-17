@@ -13,7 +13,7 @@ the same topics the [guide](/guide/) covers, one at a time, against
 
 ::: code-group
 
-```tsx [Kin Form]
+```tsx{15} [Kin Form]
 import { useForm, Watch } from "@kin-form/react";
 import { required } from "@kin-form/validators";
 
@@ -27,6 +27,7 @@ function LoginForm() {
 
   return (
     <form onSubmit={form.handleSubmit}>
+      {/* Only re-renders when the email field changes. */}
       <Watch api={form.field("email", { validators: required("Required") })}>
         {(field) => (
           <>
@@ -45,7 +46,7 @@ function LoginForm() {
 }
 ```
 
-```tsx [React Hook Form]
+```tsx{15} [React Hook Form]
 import { useForm } from "react-hook-form";
 
 type LoginValues = { email: string };
@@ -59,7 +60,7 @@ function LoginForm() {
   } = useForm<LoginValues>({ defaultValues: { email: "" } });
 
   return (
-    <form onSubmit={handleSubmit((values) => login(values))}>
+    <form onSubmit={handleSubmit(login)}>
       <input {...register("email", { required: "Required" })} />
       {errors.email && <span>{errors.email.message}</span>}
 
@@ -99,7 +100,7 @@ else, both sides bind to a controlled `<TextInput>` component, so
 
 ::: code-group
 
-```tsx [Kin Form]
+```tsx{14} [Kin Form]
 import { useForm, Watch } from "@kin-form/react";
 import { required } from "@kin-form/validators";
 
@@ -128,7 +129,7 @@ function ProfileForm() {
 }
 ```
 
-```tsx [React Hook Form]
+```tsx{13-15} [React Hook Form]
 import { Controller, useForm } from "react-hook-form";
 
 type ProfileValues = { country: string };
@@ -139,7 +140,7 @@ function ProfileForm() {
   });
 
   return (
-    <form onSubmit={handleSubmit((values) => save(values))}>
+    <form onSubmit={handleSubmit(save)}>
       <Controller
         control={control}
         name="country"
@@ -180,7 +181,7 @@ reusable components rather than inlined in one form.
 
 ::: code-group
 
-```tsx [Kin Form]
+```tsx{13} [Kin Form]
 import { useForm, Watch } from "@kin-form/react";
 
 function SignupForm() {
@@ -204,7 +205,7 @@ function SignupForm() {
 }
 ```
 
-```tsx [React Hook Form]
+```tsx{10-17} [React Hook Form]
 import { Controller, useForm } from "react-hook-form";
 import { useMemo } from "react";
 import debounce from "lodash/debounce";
@@ -261,7 +262,7 @@ Both adapters can be used with any Standard Schema library: zod, valibot, ...
 
 ::: code-group
 
-```tsx [Kin Form]
+```tsx{20-21} [Kin Form]
 import { useForm, Watch } from "@kin-form/react";
 import { required, toSchemaValidator } from "@kin-form/validators";
 import { z } from "zod";
@@ -295,7 +296,7 @@ function SignupForm() {
 }
 ```
 
-```tsx [React Hook Form]
+```tsx{21-22} [React Hook Form]
 import { Controller, useForm } from "react-hook-form";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { z } from "zod";
@@ -350,7 +351,7 @@ amounts of wiring.
 
 ::: code-group
 
-```tsx [Kin Form]
+```tsx{8,20-22} [Kin Form]
 function SignupForm() {
   const form = useForm<Signup>({
     initialValue: { email: "", password: "", confirmPassword: "" },
@@ -370,12 +371,9 @@ function SignupForm() {
 
       <Watch
         api={form.field("confirmPassword", {
-          validators: [
-            (field) =>
-              field.value !== form.value.password
-                ? "Passwords must match"
-                : null,
-          ],
+          validators: (field) => field.value !== form.value.password
+            ? "Passwords must match"
+            : null,
         })}
       >
         {(field) => (
@@ -394,7 +392,7 @@ function SignupForm() {
 }
 ```
 
-```tsx [React Hook Form]
+```tsx{17-18,28-29} [React Hook Form]
 function SignupForm() {
   const { control, trigger, getValues } = useForm<Signup>({
     defaultValues: { email: "", password: "", confirmPassword: "" },
@@ -461,7 +459,7 @@ Both track dirtiness at both levels (whole form and per field), but differently.
 
 ::: code-group
 
-```tsx [Kin Form]
+```tsx{14,20} [Kin Form]
 function ProfileForm() {
   const form = useForm({
     initialValue: { firstName: "", lastName: "" },
@@ -493,7 +491,7 @@ function ProfileForm() {
 }
 ```
 
-```tsx [React Hook Form]
+```tsx{6,23,25} [React Hook Form]
 function ProfileForm() {
   const {
     control,
@@ -513,6 +511,9 @@ function ProfileForm() {
           <TextInput value={field.value} onChange={field.onChange} />
         )}
       />
+      {/* Looks scoped to firstName, but the subscription (established when
+          dirtyFields was pulled off formState above) is to the whole object:
+          this re-renders when ANY field becomes dirty, not just firstName. */}
       {dirtyFields.firstName && <span>Edited</span>}
 
       <button disabled={!isDirty} onClick={reset}>
@@ -529,12 +530,12 @@ function ProfileForm() {
 
 **What's different:**
 
-|                  | Kin Form                                        | React Hook Form                              |
-| ---------------- | ----------------------------------------------- | -------------------------------------------- |
-| Whole-form dirty | `form.dirty`                                    | `formState.isDirty`                          |
-| Per-field dirty  | `field.dirty` — a plain property on every field | `formState.dirtyFields` — nested boolean map |
-| Reset            | `form.reset(value?)` — moves the baseline too   | `reset(values?, keepStateOptions)`           |
-| Reset one field  | `form.resetField(name, value?)` — same idea     | `resetField(name, options?)`                 |
+|                  | Kin Form                                                                                                                                | React Hook Form                                                                                                                            |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Whole-form dirty | `form.dirty`                                                                                                                            | `formState.isDirty`                                                                                                                        |
+| Per-field dirty  | `field.dirty` inside a `Watch`/`useWatch` scoped to that field — the subscription unit is the field itself, not which property you read | `formState.dirtyFields` — reading `.firstName` still subscribes to the whole object, so any field becoming dirty re-renders this component |
+| Reset            | `form.reset(value?)` — moves the baseline too                                                                                           | `reset(values?, keepStateOptions)`                                                                                                         |
+| Reset one field  | `form.resetField(name, value?)` — same idea                                                                                             | `resetField(name, options?)`                                                                                                               |
 
 ## Submission handling
 
@@ -545,7 +546,7 @@ but only one also separates "submission itself failed."
 
 ::: code-group
 
-```tsx [Kin Form]
+```tsx{6-11} [Kin Form]
 const form = useForm<Signup>({
   initialValue: { email: "", password: "" },
   onSubmit: async (form) => {
@@ -563,7 +564,7 @@ const form = useForm<Signup>({
 <form onSubmit={form.handleSubmit}>
 ```
 
-```tsx [React Hook Form]
+```tsx{9-12} [React Hook Form]
 const { handleSubmit } = useForm<Signup>({
   defaultValues: { email: "", password: "" },
 });
@@ -604,7 +605,7 @@ This is a place React Hook Form is genuinely nicer.
 
 ::: code-group
 
-```tsx [Kin Form]
+```tsx{7-8} [Kin Form]
 function ProfilePage() {
   const { data, isLoading } = useQuery({
     queryKey: ["profile"],
@@ -629,7 +630,7 @@ function ProfileForm({ initialValue }: { initialValue: Profile }) {
 }
 ```
 
-```tsx [React Hook Form]
+```tsx{3} [React Hook Form]
 function ProfilePage() {
   const { register, handleSubmit, formState: { isLoading } } = useForm({
     defaultValues: fetchProfile, // resolved automatically
@@ -659,25 +660,23 @@ function ProfilePage() {
 
 ## Reactivity & selective re-rendering
 
-React Hook Form's `watch()` subscribing the _calling component_ is a common
-footgun: it's easy to reach for it inside a large form component and
-re-introduce a re-render on every keystroke across the whole thing, which is why
-the docs recommend `useWatch()` instead for anything beyond reading a value once
-at submit time. React Hook Form also splits _value_ from _field state_ (errors,
-touched, dirty, ...) into two separate hooks: `useWatch` only watches values, so
-reading a field's error or touched status means also subscribing to
-`useFormState`. `FieldApi` carries both on the same object, so Kin Form's single
-`useWatch`, via `select`, subscribes to either, or both together, in one call.
+**Kin Form**: `FieldApi` carries its own state (`value`, `error`, `touched`,
+`dirty`, ...) all on the same object, so `useWatch`, via `select`, subscribes to
+any of it, or several pieces together, in one call.
+
+**React Hook Form** splits _value_ from the rest of a field's state into
+separate hooks instead: `useWatch` only watches values, so reading a field's
+error or touched status means also subscribing to `useFormState`.
 
 <SideBySide>
 
 ::: code-group
 
-```tsx [Kin Form]
+```tsx{5-8} [Kin Form]
 import { type FieldApi, useWatch } from "@kin-form/react";
 
 function Field<TParentValue>({ api }: { api: FieldApi<string, TParentValue> }) {
-  // One hook covers both value and field state.
+  // One hook covers all field state (including value).
   const [value, error] = useWatch(
     api,
     (f) => [f.value, f.touched ? f.error : null] as const,
@@ -694,14 +693,14 @@ function Field<TParentValue>({ api }: { api: FieldApi<string, TParentValue> }) {
 <Field api={form.field("email")} />;
 ```
 
-```tsx [React Hook Form]
+```tsx{8-9,12-14} [React Hook Form]
 import { useFormState, useWatch } from "react-hook-form";
 import type { FieldValues, UseControllerProps } from "react-hook-form";
 
 function Field<T extends FieldValues>(
   { control, name }: UseControllerProps<T>,
 ) {
-  // Value and field state are two separate subscriptions.
+  // Value and other field state are two separate subscriptions.
   const value = useWatch({ control, name });
   const { errors, touchedFields } = useFormState({ control, name });
 
@@ -727,17 +726,29 @@ function Field<T extends FieldValues>(
 
 **What's different:**
 
-|                         | Kin Form                                   | React Hook Form                                                                                             |
-| ----------------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
-| Default subscription    | `useWatch(api)` — isolated per field/form  | `watch()` — re-renders the whole calling component                                                          |
-| Narrowing               | `select: (f) => ...` on the same hook      | `useWatch({ control, name })` — separate hook                                                               |
-| Value vs field state    | One `useWatch(api, select)` returning both | `useWatch` + `useFormState` — two hooks, combined by hand                                                   |
-| Arbitrary derived value | `useWatch(api, select, equal?)`            | Not supported — `useWatch({ control, name })` only subscribes to a whole path; combine/derive by hand after |
+|                      | Kin Form                                                       | React Hook Form                                                                   |
+| -------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Default subscription | `useWatch(api)` — isolated per field/form                      | `useWatch({ control, name })` — isolated per value                                |
+| Deriving a value     | `select: (f) => ...`, deduped via `equal` (shallow by default) | `compute: (value) => ...`, deep-equal deduped — transforms the watched value only |
+| Value vs field state | One `useWatch(api, select)` covers both                        | `useWatch` + `useFormState` — two separate hooks, combined by hand                |
 
 ## Form composition
 
 Both let you build a reusable field component (leaf or group/array alike)
-instead of repeating markup at every call site.
+instead of repeating markup at every call site. The type parameter shape is
+where the two diverge:
+
+- **Kin Form**: `FieldApi<TValue, TParentValue = never>` decouples a field's own
+  value type from its parent form's shape, so a component only ever needs to
+  know `TValue` — `TParentValue` stays an opaque pass-through it never inspects.
+- **React Hook Form**: `Control<TFieldValues>` parameterizes the field by the
+  _whole_ form instead, so a shared component built against it either
+  re-parameterizes itself over whatever form it's dropped into (generics leaking
+  through every reusable component's signature) or drops to loosely-typed props.
+
+The examples below reuse `TextField`/`AddressField` within one form; the same
+signatures generalize across completely unrelated forms too, with zero per-form
+coupling.
 
 ### Leaf field
 
@@ -745,7 +756,7 @@ instead of repeating markup at every call site.
 
 ::: code-group
 
-```tsx [Kin Form]
+```tsx{4} [Kin Form]
 import { type FieldApi, useWatch } from "@kin-form/react";
 
 function TextField<TParent>(
@@ -756,10 +767,10 @@ function TextField<TParent>(
   return (
     <label>
       {label}
-      <input
+      <TextInput
         value={field.value}
         onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
+        onChange={field.handleChange}
       />
       {field.invalid && field.touched && <span>{field.error}</span>}
     </label>
@@ -772,19 +783,30 @@ function TextField<TParent>(
 />;
 ```
 
-```tsx [React Hook Form]
+```tsx{11} [React Hook Form]
 import { useController } from "react-hook-form";
-import type { FieldValues, UseControllerProps } from "react-hook-form";
+import type {
+  FieldPathByValue,
+  FieldValues,
+  UseControllerProps,
+} from "react-hook-form";
 
 function TextField<T extends FieldValues>(
-  { label, ...controllerProps }: UseControllerProps<T> & { label: string },
+  { label, ...controllerProps }:
+    // FieldPathByValue<T, string> — every path whose value is a string.
+    & UseControllerProps<T, FieldPathByValue<T, string>>
+    & { label: string },
 ) {
   const { field, fieldState } = useController(controllerProps);
 
   return (
     <label>
       {label}
-      <input {...field} />
+      <TextInput
+        value={field.value}
+        onBlur={field.onBlur}
+        onChange={field.onChange}
+      />
       {fieldState.invalid && <span>{fieldState.error?.message}</span>}
     </label>
   );
@@ -807,10 +829,12 @@ every form), but the type-safety story differs:
 
 **What's different:**
 
-|                         | Kin Form                                                                                          | React Hook Form                                                          |
-| ----------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| Reusable field prop bag | An already-resolved `api: FieldApi<...>`, passed in directly                                      | `UseControllerProps` — `control`+`name`+rules                            |
-| Type-safety on `name`   | Checked once, where `form.field(name, options)` is called — not re-derived inside every component | `FieldPath<T>` catches a typo'd `name` as a compile error, per call site |
+|                         | Kin Form                                                                                          | React Hook Form                                                                                                               |
+| ----------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Reusable field prop bag | An already-resolved `api: FieldApi<...>`, passed in directly                                      | `UseControllerProps` — `control`+`name`+rules                                                                                 |
+| Type-safety on `name`   | Checked once, where `form.field(name, options)` is called — not re-derived inside every component | `FieldPath<T>` catches a typo'd `name` as a compile error, per call site                                                      |
+| Type-safety on value    | `FieldApi<string, TParent>` — only a `string`-valued field type-checks, nothing extra needed      | Needs `FieldPathByValue<T, string>` in place of `FieldPath<T>` — plain `FieldPath<T>` alone accepts a field of any value type |
+| Cross-form reuse        | Same component, unmodified, across unrelated forms — `TParentValue` is never inspected            | Needs re-parameterizing per form's `TFieldValues`, or `Control<any>`                                                          |
 
 ### Nested group field
 
@@ -821,7 +845,7 @@ and billing) instead of an array:
 
 ::: code-group
 
-```tsx [Kin Form]
+```tsx{6} [Kin Form]
 import { type FieldApi } from "@kin-form/react";
 
 type Address = { line1: string; city: string };
@@ -841,34 +865,30 @@ function AddressField<TParentValue>(
 <AddressField api={form.field("billing")} />
 ```
 
-```tsx [React Hook Form]
-import type { Control, FieldValues, Path, PathValue } from "react-hook-form";
+```tsx{10,18,23} [React Hook Form]
+import type {
+  FieldPathByValue,
+  FieldValues,
+  UseControllerProps,
+} from "react-hook-form";
 
 type Address = { line1: string; city: string };
 
-function AddressField<
-  T extends FieldValues,
-  TName extends Path<T> = Path<T>,
->(
-  { control, name }: {
-    control: Control<T>;
-    // Constrained so only a `name` whose value is actually shaped like
-    // `Address` type-checks.
-    name: PathValue<T, TName> extends Address ? TName : never;
-  },
+function AddressField<T extends FieldValues>(
+  { control, name }: UseControllerProps<T, FieldPathByValue<T, Address>>,
 ) {
   return (
     <fieldset>
       <TextField
         control={control}
-        // Still needs a cast: TS can't prove a concatenated string is a
-        // member of Path<T> for a generic TName.
-        name={`${name}.line1` as Path<T>}
+        // Cast needed: TypeScript can't prove a concatenated string is
+        // a member of FieldPathByValue<T, string>.
+        name={`${name}.line1` as FieldPathByValue<T, string>}
         label="Line 1"
       />
       <TextField
         control={control}
-        name={`${name}.city` as Path<T>}
+        name={`${name}.city` as FieldPathByValue<T, string>}
         label="City"
       />
     </fieldset>
@@ -885,12 +905,12 @@ function AddressField<
 
 **What's different:**
 
-|                              | Kin Form                                                                                    | React Hook Form                                                                                                                                                                   |
-| ---------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Reusable nested-group prop   | An already-resolved `api: FieldApi<Address, TParentValue>` — same shape as any other field  | `control` + `name: TName` — a path prefix, not a resolved field                                                                                                                   |
-| Type-safety at the call site | Automatic — `FieldApi<Address, TParentValue>` only accepts a field whose value is `Address` | Requires hand-written machinery — a second type param (`TName`) plus a `PathValue<T, TName> extends Address` conditional, or `Path<T>` accepts any field, `Address`-shaped or not |
-| Building child paths         | `api.field("line1")` — relative, same call as any top-level field                           | Template-string concatenation (`` `${name}.line1` ``)                                                                                                                             |
-| Type-safety on children      | Checked through `DeepKey<Address>` regardless of how deep `api` is nested                   | Still needs a cast even with `TName` constrained — TS can't prove a concatenated string is a member of `Path<T>`                                                                  |
+|                              | Kin Form                                                                                    | React Hook Form                                                                                                    |
+| ---------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Reusable nested-group prop   | An already-resolved `api: FieldApi<Address, TParentValue>` — same shape as any other field  | `control` + `name` — a path prefix, not a resolved field                                                           |
+| Type-safety at the call site | Automatic — `FieldApi<Address, TParentValue>` only accepts a field whose value is `Address` | `FieldPathByValue<T, Address>` gets there, but it's a library-specific escape hatch most RHF users never reach for |
+| Building child paths         | `api.field("line1")` — relative, same call as any top-level field                           | Template-string concatenation (`` `${name}.line1` ``)                                                              |
+| Type-safety on children      | Checked through `DeepKey<Address>` regardless of how deep `api` is nested                   | Still needs a cast: TS can't prove a concatenated string is a member of `FieldPathByValue<T, string>`              |
 
 ### Array field
 
@@ -901,7 +921,7 @@ identity across a reorder, plus its own mutation helpers:
 
 ::: code-group
 
-```tsx [Kin Form]
+```tsx{4,15,33} [Kin Form]
 import { FieldApi, useForm, useWatch } from "@kin-form/react";
 
 function ItemsField<TParentValue>(
@@ -944,7 +964,11 @@ function ItemField(
 
   return (
     <div>
-      <TextInput value={field.value} onChange={field.handleChange} />
+      <TextInput
+         value={field.value}
+         onBlur={field.handleBlur}
+         onChange={field.handleChange}
+      />
       <button disabled={!onMoveUp} onClick={onMoveUp}>Move up</button>
       <button disabled={!onMoveDown} onClick={onMoveDown}>Move down</button>
       <button onClick={onRemove}>Remove</button>
@@ -963,7 +987,7 @@ function Form() {
 }
 ```
 
-```tsx [React Hook Form]
+```tsx{21-22,25-27,33,53} [React Hook Form]
 import {
   useController,
   useFieldArray,
@@ -971,10 +995,11 @@ import {
   useFormState,
 } from "react-hook-form";
 import type {
-  Control,
   FieldArrayPath,
+  FieldPathByValue,
   FieldValues,
   Path,
+  UseControllerProps,
   UseFieldArrayProps,
 } from "react-hook-form";
 
@@ -997,8 +1022,11 @@ function ItemsField<
         <ItemField
           key={f.id}
           control={props.control}
-          // Cast needed, for the same reason as above.
-          name={`${props.name}.${i}.value` as Path<TFieldValues>}
+          // Cast needed, for the same reason as AddressField's children.
+          name={`${props.name}.${i}.value` as FieldPathByValue<
+            TFieldValues,
+            string
+          >}
           onMoveUp={i > 0 ? () => move(i, i - 1) : undefined}
           onMoveDown={i < fields.length - 1 ? () => move(i, i + 1) : undefined}
           onRemove={() => remove(i)}
@@ -1011,19 +1039,23 @@ function ItemsField<
 }
 
 function ItemField<TFieldValues extends FieldValues>(
-  { control, name, onMoveUp, onMoveDown, onRemove }: {
-    control?: Control<TFieldValues>;
-    name: Path<TFieldValues>;
-    onMoveUp?: () => void;
-    onMoveDown?: () => void;
-    onRemove: () => void;
-  },
+  { control, name, onMoveUp, onMoveDown, onRemove }:
+    & UseControllerProps<TFieldValues, FieldPathByValue<TFieldValues, string>>
+    & {
+      onMoveUp?: () => void;
+      onMoveDown?: () => void;
+      onRemove: () => void;
+    },
 ) {
   const { field } = useController({ control, name });
 
   return (
     <div>
-      <TextInput value={field.value} onChange={field.onChange} />
+      <TextInput
+        value={field.value}
+        onBlur={field.onBlur}
+        onChange={field.onChange}
+      />
       <button disabled={!onMoveUp} onClick={onMoveUp}>Move up</button>
       <button disabled={!onMoveDown} onClick={onMoveDown}>Move down</button>
       <button onClick={onRemove}>Remove</button>
@@ -1070,8 +1102,8 @@ docs demonstrate the hand-rolled version.
 
 ::: code-group
 
-```tsx [Kin Form]
-import { useForm, useMultistep, Watch } from "@kin-form/react";
+```tsx{16-20,28-29,35-37} [Kin Form]
+import { useForm, useMultistep } from "@kin-form/react";
 
 type Signup = {
   credentials: { email: string; password: string };
@@ -1086,8 +1118,9 @@ function SignupWizard() {
 
   // `stepField` is the FieldApi for the current step.
   // `next` checks if the current step is valid before advancing.
-  const { stepName, stepField, next } = useMultistep(
+  const { stepName, stepField, isLastStep, next } = useMultistep(
     form,
+     // Step names, matching form's value shape.
     ["credentials", "address"] as const,
   );
 
@@ -1095,34 +1128,26 @@ function SignupWizard() {
     <form onSubmit={form.handleSubmit}>
       {stepName === "credentials" && (
         <>
-          <Watch api={stepField.field("email")}>
-            {(f) => <TextInput value={f.value} onChange={f.handleChange} />}
-          </Watch>
-          <Watch api={stepField.field("password")}>
-            {(f) => (
-              <TextInput
-                type="password"
-                value={f.value}
-                onChange={f.handleChange}
-              />
-            )}
-          </Watch>
+          {/* Field names are relative to the current step,
+           so it's easy to extract a step's UI into a reusable component. */}
+          <TextField api={stepField.field("email")} label="Email" />
+          <TextField api={stepField.field("password")} label="Password" />
         </>
       )}
       {stepName === "address" && (
-        <Watch api={stepField.field("line1")}>
-          {(f) => <TextInput value={f.value} onChange={f.handleChange} />}
-        </Watch>
+        <TextField api={stepField.field("line1")} label="Line 1" />
       )}
-      <button type="button" onClick={next}>Next</button>
+      {isLastStep
+        ? <button type="submit">Sign up</button>
+        : <button type="button" onClick={next}>Next</button>}
     </form>
   );
 }
 ```
 
-```tsx [React Hook Form]
+```tsx{10-13,23,27,38,43,51-53} [React Hook Form]
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 type Signup = {
   credentials: { email: string; password: string };
@@ -1143,6 +1168,7 @@ function SignupWizard() {
     },
   });
   const [step, setStep] = useState(0);
+  const isLastStep = step === stepFields.length - 1;
 
   const next = async () => {
     // Manually validate this step's fields.
@@ -1154,36 +1180,25 @@ function SignupWizard() {
     <form onSubmit={handleSubmit(signUp)}>
       {step === 0 && (
         <>
-          <Controller
+          <TextField
             control={control}
+            {/* Field names are absolute. */}
             name="credentials.email"
-            render={({ field }) => (
-              <TextInput value={field.value} onChange={field.onChange} />
-            )}
+            label="Email"
           />
-          <Controller
+          <TextField
             control={control}
             name="credentials.password"
-            render={({ field }) => (
-              <TextInput
-                type="password"
-                value={field.value}
-                onChange={field.onChange}
-              />
-            )}
+            label="Password"
           />
         </>
       )}
       {step === 1 && (
-        <Controller
-          control={control}
-          name="address.line1"
-          render={({ field }) => (
-            <TextInput value={field.value} onChange={field.onChange} />
-          )}
-        />
+        <TextField control={control} name="address.line1" label="Line 1" />
       )}
-      <button type="button" onClick={next}>Next</button>
+      {isLastStep
+        ? <button type="submit">Sign up</button>
+        : <button type="button" onClick={next}>Next</button>}
     </form>
   );
 }

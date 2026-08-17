@@ -12,6 +12,28 @@ Because a leaf, a nested group, an array item, and the form root share the same
 state model, the component pattern never changes as a form grows. See
 [Form Composition](/guide/form-composition) for the complete pattern.
 
+That reuse crosses form boundaries, not just within one form's own subtree.
+`FieldApi<TValue, TParentValue = never>` decouples a field's own value type from
+its parent form's shape:
+
+```ts
+function TextField<TParentValue>(
+  { api }: { api: FieldApi<string, TParentValue> },
+) {
+  // Only ever needs TValue to be `string`.
+}
+```
+
+`TParentValue` is an opaque type parameter `TextField` never inspects, not the
+whole form's value type, so the exact same `TextField` works unmodified across a
+login form, a checkout form, and a settings form with completely unrelated
+shapes — no `any`, no per-form variant. Contrast that with a field type
+parameterized by the whole form (`Control<TFieldValues>` in React Hook Form,
+`FieldApi<TParentData, TName, ...>` in TanStack Form): a shared component built
+against either has to re-parameterize itself over whatever form it's dropped
+into, generics leaking through every reusable component's signature, or drop to
+loosely-typed props and give up the safety.
+
 Kin Form starts from one premise: **a form is a tree, and every node in that
 tree (leaf field, nested group, or the form itself) is the same kind of thing.**
 Most form libraries make the form object the sole owner of state: register a

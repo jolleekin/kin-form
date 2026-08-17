@@ -86,6 +86,94 @@ watch(
 
 :::
 
+## Disabling the whole form while submitting
+
+Set `form.disabled = true` around `onSubmit`'s work.
+[`disabled`](https://jsr.io/@kin-form/core/doc/index.ts/~/FieldApi.disabled)
+cascades from a field down through every already-registered descendant, so
+`form.disabled = true` reaches every field in the tree without watching
+`submitting` anywhere:
+
+::: code-group
+
+```tsx [React]
+const form = useForm({
+  initialValue: { email: "", password: "" },
+  onSubmit: async (form) => {
+    form.disabled = true;
+    try {
+      await login(form.value);
+    } finally {
+      form.disabled = false;
+    }
+  },
+});
+```
+
+```ts [Lit]
+#form = new FormApi({
+  initialValue: { email: "", password: "" },
+  onSubmit: async (form) => {
+    form.disabled = true;
+    try {
+      await login(form.value);
+    } finally {
+      form.disabled = false;
+    }
+  },
+});
+```
+
+:::
+
+<FrameworkText>
+<template #react>
+
+`disabled` on its own only skips validation; it doesn't reach the DOM by itself.
+For it to actually disable an input, the component rendering that input has to
+read its own field's `disabled` and fold it into whatever `disabled` prop the
+caller passed in, the same way `TextField` does (see [Basic](/guide/basic)):
+
+</template>
+<template #lit>
+
+`disabled` on its own only skips validation; it doesn't reach the DOM by itself.
+For it to actually disable an input, the component rendering that input has to
+read its own field's `disabled` and fold it into whatever `disabled` property
+the caller set, the same way `text-field` does (see [Basic](/guide/basic)):
+
+</template>
+</FrameworkText>
+
+::: code-group
+
+```tsx [React]
+const isDisabled = disabled || field.disabled;
+```
+
+```ts [Lit]
+const isDisabled = this.disabled || field.disabled;
+```
+
+:::
+
+<FrameworkText>
+<template #react>
+
+Each `TextField` is already subscribed to just its own field via `useWatch`, so
+disabling a 50-field form during submit re-renders only the fields whose
+`disabled` actually flipped, not `LoginForm` itself.
+
+</template>
+<template #lit>
+
+Each `text-field` is already subscribed to just its own field via
+`WatchController`, so disabling a 50-field form during submit updates only the
+fields whose `disabled` actually flipped, not `login-form` itself.
+
+</template>
+</FrameworkText>
+
 ## What's next
 
 - [`FormApi`](https://jsr.io/@kin-form/core/doc/index.ts/~/FormApi) — full
