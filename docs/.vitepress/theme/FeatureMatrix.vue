@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import Tooltip from './Tooltip.vue';
 
 const props = withDefaults(defineProps<{ full?: boolean }>(), { full: false });
 
@@ -19,40 +20,42 @@ const rows: Array<{
     kin: '✅', rhf: '✅', formik: '❌', tanstack: '⚠️',
     trimmed: true,
     notes: {
-      formik: 'Depends on lodash, deepmerge, hoist-non-react-statics, and more.',
-      tanstack: 'form-core depends on @tanstack/store for its reactivity model.',
+      formik: 'Depends on <code>lodash</code>, <code>deepmerge</code>, <code>hoist-non-react-statics</code>, and more.',
+      tanstack: '<code>form-core</code> depends on <code>@tanstack/store</code> for its reactivity model.',
     },
   },
   { label: 'Framework-agnostic core', kin: '✅', rhf: '❌', formik: '❌', tanstack: '✅' },
   {
     label: 'Type-safe nested field paths',
-    kin: '✅', rhf: '✅', formik: '❌', tanstack: '✅',
+    kin: '✅', rhf: '⚠️', formik: '❌', tanstack: '✅',
     trimmed: true,
     notes: {
-      formik: '`name` is a plain string — no compile-time path checking.',
+      rhf: '<code>Path&lt;T&gt;</code> checks literal names at the call site, but composing reusable components across generic parents needs <code>FieldPathByValue</code> casts.',
+      formik: '<code>name</code> is a plain string — no compile-time path checking.',
     },
   },
   {
     label: 'Standard Schema support',
     kin: '⚠️', rhf: '⚠️', formik: '❌', tanstack: '✅',
     notes: {
-      kin: 'Via toSchemaValidator() from @kin-form/validators package.',
-      rhf: 'Via standardSchemaResolver() from @hookform/resolvers package.',
+      kin: 'Via <code>toSchemaValidator()</code> from <code>@kin-form/validators</code> package.',
+      rhf: 'Via <code>standardSchemaResolver()</code> from <code>@hookform/resolvers</code> package.',
     },
   },
   {
     label: 'Nested groups/arrays as first-class nodes',
-    kin: '✅', rhf: '⚠️', formik: '⚠️', tanstack: '✅',
+    kin: '✅', rhf: '⚠️', formik: '⚠️', tanstack: '⚠️',
     notes: {
-      rhf: 'useFieldArray manages array items with no distinct group node.',
-      formik: 'FieldArray manages array items with no distinct group node.',
+      rhf: '<code>useFieldArray</code> manages array items with no distinct group node.',
+      formik: '<code>FieldArray</code> manages array items with no distinct group node.',
+      tanstack: '<code>FieldApi</code>/<code>FieldGroupApi</code> are proxies over a single shared store, not independently-stateful nodes.',
     },
   },
   {
     label: 'Selective re-rendering',
     kin: '✅', rhf: '⚠️', formik: '⚠️', tanstack: '✅',
     notes: {
-      rhf: 'useWatch(name) subscribes to a whole field path only',
+      rhf: '<code>useWatch(name)</code> subscribes to a whole field path only',
       formik: 'Field-level optimization exists, but the default context re-renders more broadly.',
     },
   },
@@ -65,7 +68,7 @@ const rows: Array<{
     label: 'Declarative cross-field revalidation',
     kin: '✅', rhf: '⚠️', formik: '❌', tanstack: '✅',
     notes: {
-      rhf: 'Possible via watch() + trigger(), but wired up by hand, not declared.',
+      rhf: 'Possible via <code>watch()</code> + <code>trigger()</code>, but wired up by hand, not declared.',
     },
   },
 ];
@@ -90,10 +93,18 @@ const visibleRows = computed(() =>
       <tbody>
         <tr v-for="row in visibleRows" :key="row.label">
           <td>{{ row.label }}</td>
-          <td class="kin" :class="{ noted: !!row.notes?.kin }" :title="row.notes?.kin">{{ row.kin }}</td>
-          <td :class="{ na: row.rhf === '—', noted: !!row.notes?.rhf }" :title="row.notes?.rhf">{{ row.rhf }}</td>
-          <td :class="{ na: row.formik === '—', noted: !!row.notes?.formik }" :title="row.notes?.formik">{{ row.formik }}</td>
-          <td :class="{ na: row.tanstack === '—', noted: !!row.notes?.tanstack }" :title="row.notes?.tanstack">{{ row.tanstack }}</td>
+          <td class="kin">
+            <Tooltip :html="row.notes?.kin">{{ row.kin }}</Tooltip>
+          </td>
+          <td :class="{ na: row.rhf === '—' }">
+            <Tooltip :html="row.notes?.rhf">{{ row.rhf }}</Tooltip>
+          </td>
+          <td :class="{ na: row.formik === '—' }">
+            <Tooltip :html="row.notes?.formik">{{ row.formik }}</Tooltip>
+          </td>
+          <td :class="{ na: row.tanstack === '—' }">
+            <Tooltip :html="row.notes?.tanstack">{{ row.tanstack }}</Tooltip>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -151,10 +162,6 @@ const visibleRows = computed(() =>
 
 .na {
   color: var(--vp-c-text-3);
-}
-
-.noted {
-  cursor: help;
 }
 
 .row-link {
