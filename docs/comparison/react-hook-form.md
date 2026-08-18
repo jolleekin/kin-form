@@ -750,6 +750,13 @@ The examples below reuse `TextField`/`AddressField` within one form; the same
 signatures generalize across completely unrelated forms too, with zero per-form
 coupling.
 
+React Hook Form also has an official addon for this gap,
+[`@hookform/lenses`](https://github.com/react-hook-form/lenses). A
+`Lens<TValue>` prop looks like `FieldApi<TValue, TParentValue>` on the surface,
+but it's another abstraction layer wrapping the same `register`/`useController`/
+`useFieldArray` underneath, not a change to them. The comparison below is
+against core React Hook Form, without this addon.
+
 ### Leaf field
 
 <SideBySide>
