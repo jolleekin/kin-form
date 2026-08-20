@@ -1,6 +1,6 @@
 {
   "name": "@kintools/form-devtools-react",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "An inspector panel for a @kintools/form-react form's live tree state during development.",
   "license": "MIT",
   "exports": {

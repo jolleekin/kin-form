@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.6 - 2026-08-20
+
+- Renamed from `@kin-form/core` to `@kintools/form-core`. Now also published to
+  npm.
+
 ## 0.1.5 - 2026-08-17
 
 - Fix: setting `disabled` on a field that was already valid and not validating

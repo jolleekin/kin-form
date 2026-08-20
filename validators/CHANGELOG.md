@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.5 - 2026-08-20
+
+- Renamed from `@kin-form/validators` to `@kintools/form-validators`. Now also
+  published to npm.
+
 ## 0.1.4 - 2026-08-17
 
 - Bump `@kin-form/core` to 0.1.5, which fixes `disabled` not always notifying

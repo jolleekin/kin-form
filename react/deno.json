@@ -1,6 +1,6 @@
 {
   "name": "@kintools/form-react",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "React bindings for Kin Form: useForm, useWatch, useMultistep, and Watch.",
   "license": "MIT",
   "exports": {

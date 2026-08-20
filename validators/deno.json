@@ -1,6 +1,6 @@
 {
   "name": "@kintools/form-validators",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Common validator factories for Kin Form, plus a Standard Schema adapter.",
   "license": "MIT",
   "exports": {

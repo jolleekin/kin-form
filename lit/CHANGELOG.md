@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.3 - 2026-08-20
+
+- Renamed from `@kin-form/lit` to `@kintools/form-lit`. Now also published to
+  npm.
+
 ## 0.1.2 - 2026-08-17
 
 - Bump `@kin-form/core` to 0.1.5, which fixes `disabled` not always notifying
