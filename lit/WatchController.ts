@@ -7,8 +7,8 @@
  */
 
 import type { ReactiveController, ReactiveControllerHost } from "lit";
-import { shallowEqual } from "@kin-form/core";
-import type { FieldApi, FormApi } from "@kin-form/core";
+import { shallowEqual } from "@kintools/form-core";
+import type { FieldApi, FormApi } from "@kintools/form-core";
 import { SelectSubscription } from "./_select-subscription.ts";
 
 /**

@@ -1,7 +1,7 @@
 import "./_test-setup.ts";
 import { assertEquals, assertStrictEquals } from "@std/assert";
 import { act, cleanup, renderHook } from "@testing-library/react";
-import { FieldApi } from "@kin-form/core";
+import { FieldApi } from "@kintools/form-core";
 import { useWatch } from "./useWatch.ts";
 
 Deno.test("useWatch", async (t) => {

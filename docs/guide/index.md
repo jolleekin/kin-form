@@ -145,12 +145,12 @@ reorders. It's the right list key (`key={field.id}` in React, or `lit-html`'s
 
 ### Opt-in complexity
 
-`@kin-form/core` has no UI framework dependency: it's just the state machine.
-`@kin-form/react` adds hooks and render-prop components on top; `@kin-form/lit`
-adds a `watch` directive and `ReactiveController`s. `@kin-form/validators` is a
-separate package on purpose: validator wording and edge cases churn far more
-than the engine does, so the two version independently. You pick up exactly the
-layers you use.
+`@kintools/form-core` has no UI framework dependency: it's just the state
+machine. `@kintools/form-react` adds hooks and render-prop components on top;
+`@kintools/form-lit` adds a `watch` directive and `ReactiveController`s.
+`@kintools/form-validators` is a separate package on purpose: validator wording
+and edge cases churn far more than the engine does, so the two version
+independently. You pick up exactly the layers you use.
 
 ## How other form libraries handle this
 

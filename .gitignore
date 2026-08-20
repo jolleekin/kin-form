@@ -34,3 +34,10 @@ TODO.md
 
 # deno test
 coverage
+
+# npm build output (dnt)
+core/npm
+react/npm
+devtools-react/npm
+lit/npm
+validators/npm

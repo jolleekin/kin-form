@@ -56,7 +56,7 @@ the same way a leaf `api` is, following the same shape as `TextField` in
 
 ```tsx [React]
 import type { ReactNode } from "react";
-import type { FieldApi } from "@kin-form/react";
+import type { FieldApi } from "@kintools/form-react";
 
 export type AddressFieldProps<TParentValue> = {
   api: FieldApi<Address, TParentValue>;
@@ -77,7 +77,7 @@ export function AddressField<TParentValue>(
 ```ts [Lit]
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import type { FieldApi } from "@kin-form/lit";
+import type { FieldApi } from "@kintools/form-lit";
 import "./text-field.ts";
 
 @customElement("address-field")
@@ -145,5 +145,5 @@ own children first.
   registry
 - [Flat vs. Nested Structure](/guide/flat-vs-nested) — choosing nested fields
   vs. flat dotted paths, level by level
-- [`FieldApi`](https://jsr.io/@kin-form/core/doc/index.ts/~/FieldApi) — full
-  reference on JSR
+- [`FieldApi`](https://jsr.io/@kintools/form-core/doc/index.ts/~/FieldApi) —
+  full reference on JSR

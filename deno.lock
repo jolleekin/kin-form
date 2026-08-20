@@ -2840,7 +2840,7 @@
           "npm:react@^19.2.7"
         ]
       },
-      "react-devtools": {
+      "devtools-react": {
         "dependencies": [
           "npm:@happy-dom/global-registrator@15",
           "npm:@testing-library/react@^16.3.2",
@@ -2850,6 +2850,7 @@
       },
       "scripts": {
         "dependencies": [
+          "jsr:@deno/dnt@~0.43.2",
           "npm:@happy-dom/global-registrator@15",
           "npm:@tanstack/react-form@1",
           "npm:@testing-library/react@^16.3.2",

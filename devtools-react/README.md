@@ -1,24 +1,25 @@
-# @kin-form/react-devtools
+# @kintools/form-devtools-react
 
-[![JSR @kin-form/react-devtools](https://jsr.io/badges/@kin-form/react-devtools)](https://jsr.io/@kin-form/react-devtools)
+[![JSR @kintools/form-devtools-react](https://jsr.io/badges/@kintools/form-devtools-react)](https://jsr.io/@kintools/form-devtools-react)
 ![License: MIT](https://img.shields.io/badge/License-MIT-166534?style=flat)
 
-An inspector panel for visualizing a [`@kin-form/react`](../react/README.md)
-form's live tree state during development: every registered field/group's
-`value`, `error`, `touched`, and `validating`, as they change.
+An inspector panel for visualizing a
+[`@kintools/form-react`](../react/README.md) form's live tree state during
+development: every registered field/group's `value`, `error`, `touched`, and
+`validating`, as they change.
 
 ## Install
 
 ```sh [npm]
-npx jsr add @kin-form/react-devtools
+npm add @kintools/form-devtools-react
 ```
 
 ```sh [pnpm]
-pnpm add jsr:@kin-form/react-devtools
+pnpm add @kintools/form-devtools-react
 ```
 
 ```sh [deno]
-deno add jsr:@kin-form/react-devtools
+deno add jsr:@kintools/form-devtools-react
 ```
 
 ## Setup
@@ -27,7 +28,7 @@ Mount `DevtoolsProvider` once, near the root of your app, typically only in
 development:
 
 ```tsx
-import { DevtoolsProvider } from "@kin-form/react-devtools";
+import { DevtoolsProvider } from "@kintools/form-devtools-react";
 
 function App() {
   return (
@@ -41,8 +42,8 @@ function App() {
 Then opt each form in with `useFormDevtools`, right next to `useForm`:
 
 ```tsx
-import { useForm } from "@kin-form/react";
-import { useFormDevtools } from "@kin-form/react-devtools";
+import { useForm } from "@kintools/form-react";
+import { useFormDevtools } from "@kintools/form-devtools-react";
 
 function CheckoutForm() {
   const form = useForm({ initialValue: { email: "", items: [] } });
@@ -85,4 +86,4 @@ panel itself (the choice persists across reloads):
 ## Learn more
 
 - [Devtools guide](../docs/devtools/index.md)
-- [`@kin-form/react`](../react/README.md) — the hooks this panel inspects
+- [`@kintools/form-react`](../react/README.md) — the hooks this panel inspects

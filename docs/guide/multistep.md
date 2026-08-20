@@ -21,7 +21,7 @@ that per step.
 ::: code-group
 
 ```tsx [React]
-import { useForm, useMultistep, Watch } from "@kin-form/react";
+import { useForm, useMultistep, Watch } from "@kintools/form-react";
 
 type Checkout = {
   shipping: { address: string; city: string };
@@ -63,7 +63,7 @@ function CheckoutWizard() {
 ```ts [Lit]
 import { html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
-import { FormApi, MultistepController } from "@kin-form/lit";
+import { FormApi, MultistepController } from "@kintools/form-lit";
 import "./shipping-step.ts";
 import "./payment-step.ts";
 import "./review-step.ts";

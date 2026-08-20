@@ -1,7 +1,7 @@
 import "./_test-setup.ts";
 import { assertEquals, assertStrictEquals } from "@std/assert";
 import type { ReactiveController, ReactiveControllerHost } from "lit";
-import { FieldApi, FormApi } from "@kin-form/core";
+import { FieldApi, FormApi } from "@kintools/form-core";
 import { WatchController } from "./WatchController.ts";
 
 class TestHost implements ReactiveControllerHost {

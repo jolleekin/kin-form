@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: denoland/setup-deno@v2
-      - run: deno test -A --coverage=coverage core react react-devtools validators
+      - run: deno test -A --coverage=coverage core react devtools-react validators
       - run: deno coverage coverage --lcov --output=coverage.lcov
       - uses: codecov/codecov-action@v4
         with:

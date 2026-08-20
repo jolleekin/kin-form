@@ -1,6 +1,6 @@
-import { useForm } from "@kin-form/react";
-import { useFormDevtools } from "@kin-form/react-devtools";
-import { email, required, toSchemaValidator } from "@kin-form/validators";
+import { useForm } from "@kintools/form-react";
+import { useFormDevtools } from "@kintools/form-devtools-react";
+import { email, required, toSchemaValidator } from "@kintools/form-validators";
 import { z } from "zod";
 import { SubmitButton } from "./components/SubmitButton.tsx";
 import { TextField } from "./components/TextField.tsx";

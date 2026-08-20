@@ -99,7 +99,7 @@ export type AsyncValidator<TValue, TParentValue = never> = (
  * Must not throw/reject; return/resolve `null`/`undefined` for "no errors".
  * A thrown/rejected error is treated as "no errors" and logged, not a
  * supported error signal. See
- * `@kin-form/validators`'s `toSchemaValidator()` for a ready-made adapter from
+ * `@kintools/form-validators`'s `toSchemaValidator()` for a ready-made adapter from
  * any Standard Schema-compliant library.
  */
 export type SchemaValidator<TValue, TParentValue = never> = (
@@ -521,7 +521,7 @@ export class FieldApi<TValue, TParentValue = never> extends BaseApi {
    * distributed to children.
    *
    * - `schemaErrorMap` is a flat map, typically from one whole-field
-   * Standard Schema (see `@kin-form/validators`'s `toSchemaValidator()`), keyed
+   * Standard Schema (see `@kintools/form-validators`'s `toSchemaValidator()`), keyed
    * by the path of the field each issue belongs to. It is *not* automatically
    * copied onto the individual child fields' own `.error`; a child field that
    * wants to surface its slice of this map reads it via its own

@@ -1,6 +1,6 @@
-import { useForm, type Validator } from "@kin-form/react";
-import { useFormDevtools } from "@kin-form/react-devtools";
-import { email, minLength, required } from "@kin-form/validators";
+import { useForm, type Validator } from "@kintools/form-react";
+import { useFormDevtools } from "@kintools/form-devtools-react";
+import { email, minLength, required } from "@kintools/form-validators";
 import { SubmitButton } from "./components/SubmitButton.tsx";
 import { TextField } from "./components/TextField.tsx";
 

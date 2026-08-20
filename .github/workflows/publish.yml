@@ -1,11 +1,11 @@
-name: Publish to JSR
+name: Publish
 
 on:
   push:
     tags:
       - "core@*"
       - "react@*"
-      - "react-devtools@*"
+      - "devtools-react@*"
       - "lit@*"
       - "validators@*"
 
@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: denoland/setup-deno@v2
-      - run: deno test -A core react react-devtools lit validators
+      - run: deno test -A core react devtools-react lit validators
 
   publish-core:
     needs: [lint, test]
@@ -36,6 +36,14 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: core
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install -g npm@latest
+      - run: deno task --cwd scripts build-npm core
+      - run: npm publish --provenance --access public
+        working-directory: core/npm
 
   publish-react:
     needs: [lint, test]
@@ -49,10 +57,18 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: react
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install -g npm@latest
+      - run: deno task --cwd scripts build-npm react
+      - run: npm publish --provenance --access public
+        working-directory: react/npm
 
-  publish-react-devtools:
+  publish-devtools-react:
     needs: [lint, test]
-    if: startsWith(github.ref, 'refs/tags/react-devtools@')
+    if: startsWith(github.ref, 'refs/tags/devtools-react@')
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -61,7 +77,15 @@ jobs:
       - uses: actions/checkout@v7
       - uses: denoland/setup-deno@v2
       - run: deno publish
-        working-directory: react-devtools
+        working-directory: devtools-react
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install -g npm@latest
+      - run: deno task --cwd scripts build-npm devtools-react
+      - run: npm publish --provenance --access public
+        working-directory: devtools-react/npm
 
   publish-lit:
     needs: [lint, test]
@@ -75,6 +99,14 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: lit
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install -g npm@latest
+      - run: deno task --cwd scripts build-npm lit
+      - run: npm publish --provenance --access public
+        working-directory: lit/npm
 
   publish-validators:
     needs: [lint, test]
@@ -88,3 +120,11 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: validators
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install -g npm@latest
+      - run: deno task --cwd scripts build-npm validators
+      - run: npm publish --provenance --access public
+        working-directory: validators/npm

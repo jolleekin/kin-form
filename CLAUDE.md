@@ -8,17 +8,17 @@ code in this repository.
 `kin-form` is a framework-agnostic form-state library, published as JSR
 packages, structured as a Deno workspace with four members:
 
-- `core/` (`@kin-form/core`) — the actual form engine (`FieldApi`, `FormApi`).
-  No UI framework dependency. Kept deliberately small and stable — it's just the
-  state machine.
-- `react/` (`@kin-form/react`) — React bindings (`useForm`, `useWatch`,
+- `core/` (`@kintools/form-core`) — the actual form engine (`FieldApi`,
+  `FormApi`). No UI framework dependency. Kept deliberately small and stable —
+  it's just the state machine.
+- `react/` (`@kintools/form-react`) — React bindings (`useForm`, `useWatch`,
   `useMultistep`, `Watch`) on top of `core`.
-- `react-devtools/` (`@kin-form/react-devtools`) — a development-only inspector
-  panel (`DevtoolsProvider`, `useFormDevtools`) for visualizing a `react/`
-  form's live tree state: every registered field/group's `value`, `error`,
-  `touched`, and `validating`, as they change. Built on `react/`, not `core/`
-  directly.
-- `validators/` (`@kin-form/validators`) — common validator factories
+- `devtools-react/` (`@kintools/form-devtools-react`) — a development-only
+  inspector panel (`DevtoolsProvider`, `useFormDevtools`) for visualizing a
+  `react/` form's live tree state: every registered field/group's `value`,
+  `error`, `touched`, and `validating`, as they change. Built on `react/`, not
+  `core/` directly.
+- `validators/` (`@kintools/form-validators`) — common validator factories
   (`required`, `minLength`, `maxLength`, `min`, `max`, `url`, `email`,
   `pattern`, `maxFileSize`) plus `toSchemaValidator()`, a whole-group/whole-form
   adapter for any [Standard Schema](https://standardschema.dev)-compliant
@@ -29,15 +29,16 @@ packages, structured as a Deno workspace with four members:
 There is no bundler/build step for development — this is Deno-native TypeScript,
 run and type-checked directly.
 
-`react/`'s files each import `core` via the package specifier `@kin-form/core`,
-resolved through the Deno workspace (no explicit `imports` entry needed in
-`react/deno.json` for that). `deno check react/index.ts` currently passes.
+`react/`'s files each import `core` via the package specifier
+`@kintools/form-core`, resolved through the Deno workspace (no explicit
+`imports` entry needed in `react/deno.json` for that).
+`deno check react/index.ts` currently passes.
 
 ## Commands
 
 Run everything from the repo root (`d:\kin\kin-form`), which is the Deno
 workspace root (`deno.json` lists
-`workspace: ["core", "docs", "examples/*", "react", "react-devtools", "validators"]`).
+`workspace: ["core", "docs", "examples/*", "react", "devtools-react", "validators"]`).
 
 ```sh
 # Run all tests in a package

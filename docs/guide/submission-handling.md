@@ -89,7 +89,7 @@ watch(
 ## Disabling the whole form while submitting
 
 Set `form.disabled = true` around `onSubmit`'s work.
-[`disabled`](https://jsr.io/@kin-form/core/doc/index.ts/~/FieldApi.disabled)
+[`disabled`](https://jsr.io/@kintools/form-core/doc/index.ts/~/FieldApi.disabled)
 cascades from a field down through every already-registered descendant, so
 `form.disabled = true` reaches every field in the tree without watching
 `submitting` anywhere:
@@ -176,5 +176,5 @@ fields whose `disabled` actually flipped, not `login-form` itself.
 
 ## What's next
 
-- [`FormApi`](https://jsr.io/@kin-form/core/doc/index.ts/~/FormApi) — full
+- [`FormApi`](https://jsr.io/@kintools/form-core/doc/index.ts/~/FormApi) — full
   reference on JSR

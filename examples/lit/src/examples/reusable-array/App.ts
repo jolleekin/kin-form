@@ -1,6 +1,6 @@
 import { html } from "lit";
-import { type FieldApi, FormApi } from "@kin-form/lit";
-import { email, required } from "@kin-form/validators";
+import { type FieldApi, FormApi } from "@kintools/form-lit";
+import { email, required } from "@kintools/form-validators";
 import "./components/ArrayField.ts";
 import "./components/SubmitButton.ts";
 import "./components/TextField.ts";

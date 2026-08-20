@@ -7,7 +7,7 @@ import {
   render,
   screen,
 } from "@testing-library/react";
-import { FormApi } from "@kin-form/core";
+import { FormApi } from "@kintools/form-core";
 import { DevtoolsPanel } from "./DevtoolsPanel.tsx";
 import { DevtoolsRegistry } from "./DevtoolsRegistry.ts";
 

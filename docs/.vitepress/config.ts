@@ -174,7 +174,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: "github", link: "https://github.com/jolleekin/kin-form" },
+      { icon: "github", link: "https://github.com/kintools-dev/form" },
     ],
 
     search: {
@@ -187,7 +187,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: "https://github.com/jolleekin/kin-form/edit/main/docs/:path",
+      pattern: "https://github.com/kintools-dev/form/edit/main/docs/:path",
       text: "Edit this page on GitHub",
     },
   },

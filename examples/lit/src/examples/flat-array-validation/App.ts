@@ -1,7 +1,7 @@
 import { html, nothing } from "lit";
 import { repeat } from "lit/directives/repeat.js";
-import { FormApi, watch } from "@kin-form/lit";
-import { toSchemaValidator } from "@kin-form/validators";
+import { FormApi, watch } from "@kintools/form-lit";
+import { toSchemaValidator } from "@kintools/form-validators";
 import { z } from "zod";
 import "./components/SubmitButton.ts";
 import "./components/TextField.ts";

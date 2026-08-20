@@ -1,7 +1,7 @@
 import "./_test-setup.ts";
 import { assertEquals, assertThrows } from "@std/assert";
 import type { ReactiveController, ReactiveControllerHost } from "lit";
-import { FormApi } from "@kin-form/core";
+import { FormApi } from "@kintools/form-core";
 import { MultistepController } from "./MultistepController.ts";
 
 class TestHost implements ReactiveControllerHost {

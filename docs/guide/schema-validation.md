@@ -3,7 +3,7 @@
 The second validation mechanism. See
 [Per-node Validation](/guide/per-node-validation#two-kinds-of-validation) for
 how it relates to `validators`. `toSchemaValidator()` (from
-`@kin-form/validators`) adapts any
+`@kintools/form-validators`) adapts any
 [Standard Schema](https://standardschema.dev)-compliant library (zod v4+,
 valibot v1+, arktype, ...) into a `SchemaValidator` that validates a whole
 group's or form's value in one pass.

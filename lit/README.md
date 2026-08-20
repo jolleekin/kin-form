@@ -1,29 +1,29 @@
-# @kin-form/lit
+# @kintools/form-lit
 
-[![JSR @kin-form/lit](https://jsr.io/badges/@kin-form/lit)](https://jsr.io/@kin-form/lit)
+[![JSR @kintools/form-lit](https://jsr.io/badges/@kintools/form-lit)](https://jsr.io/@kintools/form-lit)
 ![License: MIT](https://img.shields.io/badge/License-MIT-166534?style=flat)
 ![100% type-safe](https://img.shields.io/badge/100%25%20type--safe-166534?style=flat)
 
-Lit bindings for [`@kin-form/core`](../core/README.md): the `watch` directive to
-subscribe just one part of a template to an already-resolved
+Lit bindings for [`@kintools/form-core`](../core/README.md): the `watch`
+directive to subscribe just one part of a template to an already-resolved
 `FieldApi`/`FormApi`, `WatchController` to subscribe a whole component's
 `render()`, and `MultistepController` for wizard-style forms. Resolve a field
 via `parent.field(name, options)` directly, no separate helper for that.
-`@kin-form/lit` depends on and re-exports everything from `@kin-form/core`, so
-no need to install it separately.
+`@kintools/form-lit` depends on and re-exports everything from
+`@kintools/form-core`, so no need to install it separately.
 
 ## Install
 
 ```sh [npm]
-npx jsr add @kin-form/lit
+npm add @kintools/form-lit
 ```
 
 ```sh [pnpm]
-pnpm add jsr:@kin-form/lit
+pnpm add @kintools/form-lit
 ```
 
 ```sh [deno]
-deno add jsr:@kin-form/lit
+deno add jsr:@kintools/form-lit
 ```
 
 ## Quick start
@@ -31,8 +31,8 @@ deno add jsr:@kin-form/lit
 ```ts
 import { html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
-import { FormApi, watch } from "@kin-form/lit";
-import { required } from "@kin-form/validators";
+import { FormApi, watch } from "@kintools/form-lit";
+import { required } from "@kintools/form-validators";
 
 @customElement("login-form")
 class LoginForm extends LitElement {
@@ -79,12 +79,12 @@ class LoginForm extends LitElement {
 
 ## Resolving a field
 
-`parent.field(name, options)` (see [`@kin-form/core`](../core/README.md)) gets
-(creating on first call) the `FieldApi` registered under `name` on `parent`, for
-a leaf value, a nested object/array, or an array item alike, the same accessor
-either way. It's safe to call inline in a template on every render: on an
-already-registered field, `options` is applied via `updateOptions` the same way
-every time, so re-calling it doesn't re-create anything.
+`parent.field(name, options)` (see [`@kintools/form-core`](../core/README.md))
+gets (creating on first call) the `FieldApi` registered under `name` on
+`parent`, for a leaf value, a nested object/array, or an array item alike, the
+same accessor either way. It's safe to call inline in a template on every
+render: on an already-registered field, `options` is applied via `updateOptions`
+the same way every time, so re-calling it doesn't re-create anything.
 
 ## `watch`
 
@@ -187,10 +187,10 @@ class MyWizard extends LitElement {
 - [`examples/lit`](../examples/lit/) - twelve runnable patterns, from a basic
   login form through async validation, nested arrays, schema validation, and a
   virtualized list
-- [`watch`](https://jsr.io/@kin-form/lit/doc/index.ts/~/watch),
-  [`WatchController`](https://jsr.io/@kin-form/lit/doc/index.ts/~/WatchController),
+- [`watch`](https://jsr.io/@kintools/form-lit/doc/index.ts/~/watch),
+  [`WatchController`](https://jsr.io/@kintools/form-lit/doc/index.ts/~/WatchController),
   and
-  [`MultistepController`](https://jsr.io/@kin-form/lit/doc/index.ts/~/MultistepController) -
+  [`MultistepController`](https://jsr.io/@kintools/form-lit/doc/index.ts/~/MultistepController) -
   full reference on JSR
-- [`@kin-form/validators`](../validators/README.md) - `required`, `email`,
+- [`@kintools/form-validators`](../validators/README.md) - `required`, `email`,
   `minLength`, and a `toSchemaValidator()` adapter for zod/valibot

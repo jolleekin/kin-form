@@ -5,8 +5,8 @@ import {
   type FieldApi,
   type FieldApiOptions,
   WatchController,
-} from "@kin-form/lit";
-import { email, required } from "@kin-form/validators";
+} from "@kintools/form-lit";
+import { email, required } from "@kintools/form-validators";
 import "./TextField.ts";
 
 export type Contact = {

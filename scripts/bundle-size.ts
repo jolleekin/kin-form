@@ -24,7 +24,7 @@ const REACT_ENTRY = new URL("../react/index.ts", import.meta.url).pathname
 const VALIDATORS_ENTRY = new URL("../validators/index.ts", import.meta.url)
   .pathname.slice(1);
 
-const CORE_SPECIFIER = "@kin-form/core";
+const CORE_SPECIFIER = "@kintools/form-core";
 
 /** Serves an in-memory entry so subjects can be described as strings instead of temp files. */
 function virtualEntryPlugin(id: string, code: string): Plugin {
@@ -66,9 +66,9 @@ function virtualSubject(
 }
 
 const subjects: Subject[] = [
-  { name: "@kin-form/core", group: "kin-form", input: CORE_ENTRY },
+  { name: "@kintools/form-core", group: "kin-form", input: CORE_ENTRY },
   {
-    name: "@kin-form/react (bindings only, on top of core)",
+    name: "@kintools/form-react (bindings only, on top of core)",
     group: "kin-form",
     input: REACT_ENTRY,
     // Core is measured on its own above; externalize it here so this row
@@ -76,7 +76,7 @@ const subjects: Subject[] = [
     external: [CORE_SPECIFIER, "react"],
   },
   {
-    name: "@kin-form/validators",
+    name: "@kintools/form-validators",
     group: "kin-form",
     input: VALIDATORS_ENTRY,
   },
@@ -87,7 +87,7 @@ const subjects: Subject[] = [
       `export * from "${CORE_ENTRY}";\nexport * from "${REACT_ENTRY}";`,
       ["react"],
     ),
-    // Dedupe the bindings' internal "@kin-form/core" import with
+    // Dedupe the bindings' internal "@kintools/form-core" import with
     // the same file already pulled in directly above, instead of leaving it
     // as a second, unresolved external import.
     alias: { [CORE_SPECIFIER]: CORE_ENTRY },

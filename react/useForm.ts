@@ -5,7 +5,7 @@
  */
 
 import { useState } from "react";
-import { FormApi, type FormApiOptions } from "@kin-form/core";
+import { FormApi, type FormApiOptions } from "@kintools/form-core";
 
 /**
  * Creates a {@linkcode FormApi} once and calls `updateOptions` on it every

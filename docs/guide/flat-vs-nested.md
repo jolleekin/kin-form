@@ -112,7 +112,7 @@ function CheckoutForm() {
 import { html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
-import { FormApi, watch } from "@kin-form/lit";
+import { FormApi, watch } from "@kintools/form-lit";
 import "./text-field.ts";
 import "./number-field.ts";
 
@@ -254,7 +254,7 @@ function CheckoutForm() {
 import { html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
-import { FormApi, watch } from "@kin-form/lit";
+import { FormApi, watch } from "@kintools/form-lit";
 import "./text-field.ts";
 import "./number-field.ts";
 

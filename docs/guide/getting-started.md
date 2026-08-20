@@ -5,41 +5,41 @@
 ::: code-group
 
 ```sh [React]
-npx  jsr add @kin-form/react
-pnpm add jsr:@kin-form/react
-yarn add jsr:@kin-form/react
-deno add jsr:@kin-form/react
+npm  add @kintools/form-react
+pnpm add @kintools/form-react
+yarn add @kintools/form-react
+deno add jsr:@kintools/form-react
 ```
 
 ```sh [Lit]
-npx  jsr add @kin-form/lit
-pnpm add jsr:@kin-form/lit
-yarn add jsr:@kin-form/lit
-deno add jsr:@kin-form/lit
+npm  add @kintools/form-lit
+pnpm add @kintools/form-lit
+yarn add @kintools/form-lit
+deno add jsr:@kintools/form-lit
 ```
 
 :::
 
-`@kin-form/react` and `@kin-form/lit` re-export `@kin-form/core`.
+`@kintools/form-react` and `@kintools/form-lit` re-export `@kintools/form-core`.
 
 To add common validators or the schema validation adapter:
 
 ::: code-group
 
 ```sh [npm]
-npx jsr add @kin-form/validators
+npm add @kintools/form-validators
 ```
 
 ```sh [pnpm]
-pnpm add jsr:@kin-form/validators
+pnpm add @kintools/form-validators
 ```
 
 ```sh [yarn]
-yarn add jsr:@kin-form/validators
+yarn add @kintools/form-validators
 ```
 
 ```sh [deno]
-deno add jsr:@kin-form/validators
+deno add jsr:@kintools/form-validators
 ```
 
 :::

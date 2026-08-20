@@ -1,7 +1,7 @@
 # Kin Form
 
 > Form state that stays out of your way. A framework-agnostic form-state
-> engine (`@kin-form/core`) with React bindings (`@kin-form/react`), typed
+> engine (`@kintools/form-core`) with React bindings (`@kintools/form-react`), typed
 > nested field paths, and per-node or whole-tree validation.
 
 Kin Form models a form as a tree: every node, from a single input to a nested
@@ -34,14 +34,14 @@ follow from that one idea.
 
 ## Packages
 
-- [@kin-form/core](https://jsr.io/@kin-form/core): the framework-agnostic
+- [@kintools/form-core](https://jsr.io/@kintools/form-core): the framework-agnostic
   engine, `FieldApi`/`FormApi`, zero runtime dependencies
-- [@kin-form/react](https://jsr.io/@kin-form/react): React bindings,
+- [@kintools/form-react](https://jsr.io/@kintools/form-react): React bindings,
   `useForm`/`useWatch`/`Watch`/`useMultistep`
-- [@kin-form/validators](https://jsr.io/@kin-form/validators): validator
+- [@kintools/form-validators](https://jsr.io/@kintools/form-validators): validator
   factories plus `toSchemaValidator()` for zod/valibot and other Standard
   Schema libraries
-- [@kin-form/react-devtools](https://jsr.io/@kin-form/react-devtools): a
+- [@kintools/form-devtools-react](https://jsr.io/@kintools/form-devtools-react): a
   dev-only inspector panel for a form's live tree state
 
 ## Comparison
@@ -51,6 +51,6 @@ follow from that one idea.
 
 ## Optional
 
-- [Source](https://github.com/jolleekin/kin-form)
-- [Roadmap](https://github.com/jolleekin/kin-form/blob/main/ROADMAP.md)
-- [Contributing](https://github.com/jolleekin/kin-form/blob/main/CONTRIBUTING.md)
+- [Source](https://github.com/kintools-dev/form)
+- [Roadmap](https://github.com/kintools-dev/form/blob/main/ROADMAP.md)
+- [Contributing](https://github.com/kintools-dev/form/blob/main/CONTRIBUTING.md)

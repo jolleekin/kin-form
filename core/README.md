@@ -1,6 +1,6 @@
-# @kin-form/core
+# @kintools/form-core
 
-[![JSR @kin-form/core](https://jsr.io/badges/@kin-form/core)](https://jsr.io/@kin-form/core)
+[![JSR @kintools/form-core](https://jsr.io/badges/@kintools/form-core)](https://jsr.io/@kintools/form-core)
 ![License: MIT](https://img.shields.io/badge/License-MIT-166534?style=flat)
 ![Framework-agnostic](https://img.shields.io/badge/Framework--agnostic-166534?style=flat)
 ![100% type-safe](https://img.shields.io/badge/100%25%20type--safe-166534?style=flat)
@@ -45,21 +45,21 @@ the index.
 ## Install
 
 ```sh [npm]
-npx jsr add @kin-form/core
+npm add @kintools/form-core
 ```
 
 ```sh [pnpm]
-pnpm add jsr:@kin-form/core
+pnpm add @kintools/form-core
 ```
 
 ```sh [deno]
-deno add jsr:@kin-form/core
+deno add jsr:@kintools/form-core
 ```
 
 ## Quick start
 
 ```ts
-import { FormApi } from "@kin-form/core";
+import { FormApi } from "@kintools/form-core";
 
 const form = new FormApi({
   initialValue: { email: "", address: { line1: "" }, items: [{ code: "" }] },
@@ -134,10 +134,10 @@ optional children, not a separate class per leaf/container distinction.
 
 - [Why Kin Form?](../docs/guide/index.md) — the design rationale in full
 - [Getting Started](../docs/guide/getting-started.md)
-- [`FieldApi`](https://jsr.io/@kin-form/core/doc/index.ts/~/FieldApi) and
-  [`FormApi`](https://jsr.io/@kin-form/core/doc/index.ts/~/FormApi) — full
+- [`FieldApi`](https://jsr.io/@kintools/form-core/doc/index.ts/~/FieldApi) and
+  [`FormApi`](https://jsr.io/@kintools/form-core/doc/index.ts/~/FormApi) — full
   reference on JSR
-- [`@kin-form/react`](../react/README.md) — React bindings
-- [`@kin-form/lit`](../lit/README.md) — Lit bindings
-- [`@kin-form/validators`](../validators/README.md) — `required`, `email`, a
-  `toSchemaValidator()` adapter for zod/valibot, and more
+- [`@kintools/form-react`](../react/README.md) — React bindings
+- [`@kintools/form-lit`](../lit/README.md) — Lit bindings
+- [`@kintools/form-validators`](../validators/README.md) — `required`, `email`,
+  a `toSchemaValidator()` adapter for zod/valibot, and more

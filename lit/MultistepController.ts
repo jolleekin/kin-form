@@ -7,14 +7,14 @@
  */
 
 import type { ReactiveController, ReactiveControllerHost } from "lit";
-import { shallowEqual } from "@kin-form/core";
+import { shallowEqual } from "@kintools/form-core";
 import type {
   DeepKey,
   DeepValue,
   FieldApi,
   FormApi,
   PromiseOr,
-} from "@kin-form/core";
+} from "@kintools/form-core";
 import { SelectSubscription } from "./_select-subscription.ts";
 
 /** Options for {@linkcode MultistepController}. */

@@ -4,8 +4,8 @@ import {
   FormApi,
   MultistepController,
   type Validator,
-} from "@kin-form/lit";
-import { email, minLength, required } from "@kin-form/validators";
+} from "@kintools/form-lit";
+import { email, minLength, required } from "@kintools/form-validators";
 import "./components/SubmitButton.ts";
 import "./components/TextField.ts";
 

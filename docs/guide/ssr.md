@@ -7,7 +7,7 @@ story (`@lit-labs/ssr`) is a separate concern this guide doesn't cover.
 
 :::
 
-`@kin-form/react`'s bindings render on the server without any extra setup.
+`@kintools/form-react`'s bindings render on the server without any extra setup.
 `useWatch`/`Watch` are backed by `useSyncExternalStore` with a proper
 `getServerSnapshot`, so a form built the normal way, following the
 [Basic](/guide/basic) guide, just works.
@@ -82,7 +82,7 @@ the waiting instead of a client-side loading state.
 
 ## Full example
 
-[`examples/nextjs`](https://github.com/jolleekin/kin-form/tree/main/examples/nextjs)
+[`examples/nextjs`](https://github.com/kintools-dev/form/tree/main/examples/nextjs)
 in the repo is a minimal Next.js App Router app (a Server Component page
 rendering a client-component `LoginForm`) that exists specifically to exercise
 these bindings under a real SSR framework, not just a client-only dev server.

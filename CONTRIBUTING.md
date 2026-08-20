@@ -10,10 +10,11 @@ git config core.hooksPath .git-hooks   # enables the pre-commit fmt/lint/test ho
 
 ## Project layout
 
-- `core/` (`@kin-form/core`), the framework-agnostic form engine
-- `react/` (`@kin-form/react`), React bindings
-- `react-devtools/` (`@kin-form/react-devtools`), a dev-only inspector panel
-- `validators/` (`@kin-form/validators`), common validator factories
+- `core/` (`@kintools/form-core`), the framework-agnostic form engine
+- `react/` (`@kintools/form-react`), React bindings
+- `devtools-react/` (`@kintools/form-devtools-react`), a dev-only inspector
+  panel
+- `validators/` (`@kintools/form-validators`), common validator factories
 - `docs/`, the VitePress documentation site
 - `examples/react/`, a runnable example app
 
@@ -46,10 +47,10 @@ deno fmt --check
 ```
 
 `deno fmt --check`, `deno lint`, and
-`deno test -A core react react-devtools
+`deno test -A core react devtools-react
 validators` are what CI runs on every
 push and pull request; the pre-commit hook runs the same checks (skipping the
-test run unless the commit touches `core/`, `react/`, `react-devtools/`, or
+test run unless the commit touches `core/`, `react/`, `devtools-react/`, or
 `validators/`) and will block a commit that fails them.
 
 ## Making a change

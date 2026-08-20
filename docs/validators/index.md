@@ -1,23 +1,24 @@
 # Validators
 
-Common validator factories for `@kin-form`, published as `@kin-form/validators`.
-Split out from `@kin-form/core` on purpose: validator wording and edge cases
-churn far more than the engine does, so it's versioned separately.
+Common validator factories for `@kin-form`, published as
+`@kintools/form-validators`. Split out from `@kintools/form-core` on purpose:
+validator wording and edge cases churn far more than the engine does, so it's
+versioned separately.
 
 ## Install
 
 ::: code-group
 
 ```sh [npm]
-npx jsr add @kin-form/validators
+npm add @kintools/form-validators
 ```
 
 ```sh [pnpm]
-pnpm add jsr:@kin-form/validators
+pnpm add @kintools/form-validators
 ```
 
 ```sh [deno]
-deno add jsr:@kin-form/validators
+deno add jsr:@kintools/form-validators
 ```
 
 :::
@@ -101,7 +102,7 @@ result's issues:
 
 ```ts
 import { z } from "zod";
-import { toSchemaValidator } from "@kin-form/validators";
+import { toSchemaValidator } from "@kintools/form-validators";
 
 const form = useForm({
   initialValue: { email: "", password: "" },

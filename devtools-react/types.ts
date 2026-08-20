@@ -5,7 +5,7 @@
  * @module
  */
 
-import type { FieldApi, FormApi } from "@kin-form/core";
+import type { FieldApi, FormApi } from "@kintools/form-core";
 
 // `any` type arguments here (not `unknown`) because a concrete
 // `FieldApi<TValue, TParentValue>` isn't structurally assignable to any

@@ -4,7 +4,7 @@ import { createRef, ref } from "lit/directives/ref.js";
 import { repeat } from "lit/directives/repeat.js";
 import { __decorate } from "tslib";
 import { VirtualizerController } from "@tanstack/lit-virtual";
-import type { FieldApi } from "@kin-form/lit";
+import type { FieldApi } from "@kintools/form-lit";
 import { type Contact } from "./ContactRow.ts";
 import "./ContactRow.ts";
 

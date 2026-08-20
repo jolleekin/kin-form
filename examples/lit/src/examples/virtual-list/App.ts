@@ -1,5 +1,5 @@
 import { html } from "lit";
-import { FormApi } from "@kin-form/lit";
+import { FormApi } from "@kintools/form-lit";
 import type { Contact } from "./components/ContactRow.ts";
 import "./components/ContactList.ts";
 import "./components/SubmitButton.ts";

@@ -4,9 +4,9 @@ import {
   useForm,
   useWatch,
   type Validator,
-} from "@kin-form/react";
-import { useFormDevtools } from "@kin-form/react-devtools";
-import { required } from "@kin-form/validators";
+} from "@kintools/form-react";
+import { useFormDevtools } from "@kintools/form-devtools-react";
+import { required } from "@kintools/form-validators";
 import { ArrayField } from "./components/ArrayField.tsx";
 import { SubmitButton } from "./components/SubmitButton.tsx";
 import { TextField } from "./components/TextField.tsx";

@@ -97,7 +97,7 @@ function AddressField<TParentValue>(
 ```ts [Lit]
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { type FieldApi } from "@kin-form/lit";
+import { type FieldApi } from "@kintools/form-lit";
 import "./text-field.ts";
 
 @customElement("address-field")
@@ -165,7 +165,7 @@ function AddressField<TParentValue>(
 ```ts [Lit]
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { type FieldApi, WatchController } from "@kin-form/lit";
+import { type FieldApi, WatchController } from "@kintools/form-lit";
 import "./text-field.ts";
 
 @customElement("address-field")
@@ -265,7 +265,7 @@ function ItemField(
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
-import { type FieldApi, WatchController } from "@kin-form/lit";
+import { type FieldApi, WatchController } from "@kintools/form-lit";
 import "./text-field.ts";
 
 @customElement("items-field")
@@ -382,7 +382,7 @@ function SubmitButton<TValue>(
 ```ts [Lit]
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { type FormApi, WatchController } from "@kin-form/lit";
+import { type FormApi, WatchController } from "@kintools/form-lit";
 
 @customElement("submit-button")
 class SubmitButton extends LitElement {
@@ -442,8 +442,8 @@ function CheckoutForm() {
 ```ts [Lit]
 import { html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
-import { FormApi } from "@kin-form/lit";
-import { email, required } from "@kin-form/validators";
+import { FormApi } from "@kintools/form-lit";
+import { email, required } from "@kintools/form-validators";
 import "./text-field.ts";
 import "./address-field.ts";
 import "./items-field.ts";

@@ -1,8 +1,8 @@
 # Kin Form
 
-[![JSR @kin-form/core](https://jsr.io/badges/@kin-form/core)](https://jsr.io/@kin-form/core)
-[![CI](https://github.com/jolleekin/kin-form/actions/workflows/ci.yml/badge.svg)](https://github.com/jolleekin/kin-form/actions/workflows/ci.yml)
-[![Coverage](https://codecov.io/gh/jolleekin/kin-form/branch/main/graph/badge.svg)](https://codecov.io/gh/jolleekin/kin-form)
+[![JSR @kintools/form-core](https://jsr.io/badges/@kintools/form-core)](https://jsr.io/@kintools/form-core)
+[![CI](https://github.com/kintools-dev/form/actions/workflows/ci.yml/badge.svg)](https://github.com/kintools-dev/form/actions/workflows/ci.yml)
+[![Coverage](https://codecov.io/gh/kintools-dev/form/branch/main/graph/badge.svg)](https://codecov.io/gh/kintools-dev/form)
 ![License: MIT](https://img.shields.io/badge/License-MIT-166534?style=flat)
 ![Framework-agnostic](https://img.shields.io/badge/Framework--agnostic-166534?style=flat)
 ![Tiny footprint](https://img.shields.io/badge/Tiny%20footprint-166534?style=flat)
@@ -58,9 +58,9 @@ then gzipped. Reproduce with `deno task --cwd scripts bundle-size`. Not directly
 comparable to Bundlephobia, which uses a different minifier (terser).
 
 ```text
-@kin-form/core                                   ██████░░░░░░░░░░░░░░░░░░    4.4 KB
-@kin-form/react (bindings only)                  █░░░░░░░░░░░░░░░░░░░░░░░    0.8 KB
-@kin-form/validators                             █░░░░░░░░░░░░░░░░░░░░░░░    0.7 KB
+@kintools/form-core                                   ██████░░░░░░░░░░░░░░░░░░    4.4 KB
+@kintools/form-react (bindings only)                  █░░░░░░░░░░░░░░░░░░░░░░░    0.8 KB
+@kintools/form-validators                             █░░░░░░░░░░░░░░░░░░░░░░░    0.7 KB
 
 Kin Form (core + react)                          ███████░░░░░░░░░░░░░░░░░    5.0 KB
 React Hook Form                                  █████████████████░░░░░░░   13.0 KB
@@ -82,10 +82,10 @@ methodology notes, and code-by-code comparisons.
 
 ## Packages
 
-| Package                                         | Description                                                                                                                     |
-| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| [`@kin-form/core`](./core/)                     | `FieldApi`, `FormApi` — the framework-agnostic form engine                                                                      |
-| [`@kin-form/react`](./react/)                   | `useForm`, `useWatch`, `useMultistep`, `Watch` — React bindings                                                                 |
-| [`@kin-form/lit`](./lit/)                       | `watch`, `WatchController`, `MultistepController` — Lit bindings                                                                |
-| [`@kin-form/validators`](./validators/)         | `required`, `minLength`, `maxLength`, `min`, `max`, `url`, `email`, `pattern`, `maxFileSize`, `password`, `toSchemaValidator()` |
-| [`@kin-form/react-devtools`](./react-devtools/) | `DevtoolsProvider`, `useFormDevtools` — inspector panel for a form's live tree state during development                         |
+| Package                                              | Description                                                                                                                     |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| [`@kintools/form-core`](./core/)                     | `FieldApi`, `FormApi` — the framework-agnostic form engine                                                                      |
+| [`@kintools/form-react`](./react/)                   | `useForm`, `useWatch`, `useMultistep`, `Watch` — React bindings                                                                 |
+| [`@kintools/form-lit`](./lit/)                       | `watch`, `WatchController`, `MultistepController` — Lit bindings                                                                |
+| [`@kintools/form-validators`](./validators/)         | `required`, `minLength`, `maxLength`, `min`, `max`, `url`, `email`, `pattern`, `maxFileSize`, `password`, `toSchemaValidator()` |
+| [`@kintools/form-devtools-react`](./devtools-react/) | `DevtoolsProvider`, `useFormDevtools` — inspector panel for a form's live tree state during development                         |

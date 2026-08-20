@@ -122,8 +122,8 @@ export const examples: ExampleEntry[] = [
       <>
         A sign-up form mixing hand-written field validators for{" "}
         <code>email</code>/<code>password</code> with a whole-form Zod{" "}
-        <code>refine()</code> check — via <code>@kin-form/validators</code>'s
-        {" "}
+        <code>refine()</code> check — via{" "}
+        <code>@kintools/form-validators</code>'s{" "}
         <code>toSchemaValidator()</code>{" "}
         adapter — for the password-confirmation invariant no single field can
         express.

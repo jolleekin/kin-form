@@ -6,7 +6,7 @@
  */
 
 import { useContext, useEffect } from "react";
-import type { FormApi } from "@kin-form/core";
+import type { FormApi } from "@kintools/form-core";
 import { DevtoolsContext } from "./DevtoolsProvider.tsx";
 
 /**

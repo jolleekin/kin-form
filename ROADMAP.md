@@ -31,8 +31,8 @@ Guiding principle: everything shipped either teaches a concept or builds trust.
   [TODO.md](./TODO.md) for why this is deliberately sequenced later)
 - Additional framework bindings (Vue/Solid) on top of the already
   framework-agnostic `core`, once there's a real reason to, not to look active
-- Expanding `@kin-form/validators` based on real issues filed, not speculative
-  gaps
+- Expanding `@kintools/form-validators` based on real issues filed, not
+  speculative gaps
 
 ## Explicitly not a priority
 

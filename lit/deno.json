@@ -1,5 +1,5 @@
 {
-  "name": "@kin-form/lit",
+  "name": "@kintools/form-lit",
   "version": "0.1.2",
   "description": "Lit bindings for Kin Form: the watch directive, WatchController, and MultistepController.",
   "license": "MIT",

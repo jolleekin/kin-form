@@ -1,7 +1,7 @@
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { __decorate } from "tslib";
-import { type FieldApi, WatchController } from "@kin-form/lit";
+import { type FieldApi, WatchController } from "@kintools/form-lit";
 
 const inputClasses = (invalid: boolean) =>
   `block w-full rounded-md border px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:outline-none focus:ring-2 ${

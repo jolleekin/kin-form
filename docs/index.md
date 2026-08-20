@@ -14,7 +14,7 @@ markdownStyles: false
   <p class="prose">A framework-agnostic form state library for TypeScript.</p>
   <div class="actions">
     <a class="btn-primary" href="/guide/getting-started">Get Started</a>
-    <a class="btn-secondary" href="https://github.com/jolleekin/kin-form">View on GitHub</a>
+    <a class="btn-secondary" href="https://github.com/kintools-dev/form">View on GitHub</a>
   </div>
 </section>
 
@@ -193,8 +193,8 @@ html`
 ::: code-group
 
 ```tsx{12-13,28-29} [React]
-import { useForm, Watch } from "@kin-form/react";
-import { required } from "@kin-form/validators";
+import { useForm, Watch } from "@kintools/form-react";
+import { required } from "@kintools/form-validators";
 
 function LoginForm() {
   const form = useForm({
@@ -235,8 +235,8 @@ function LoginForm() {
 ```ts{14-15,31-32} [Lit]
 import { html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
-import { FormApi, watch } from "@kin-form/lit";
-import { required } from "@kin-form/validators";
+import { FormApi, watch } from "@kintools/form-lit";
+import { required } from "@kintools/form-validators";
 
 @customElement("login-form")
 class LoginForm extends LitElement {
@@ -292,7 +292,7 @@ class LoginForm extends LitElement {
 
 ```tsx{13} [React]
 import type { ReactNode } from "react";
-import { type FieldApi, useWatch } from "@kin-form/react";
+import { type FieldApi, useWatch } from "@kintools/form-react";
 
 export type TextFieldProps<TParentValue> = {
   api: FieldApi<string, TParentValue>;
@@ -327,7 +327,7 @@ export function TextField<TParentValue>(
 ```ts{15} [Lit]
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { type FieldApi, WatchController } from "@kin-form/lit";
+import { type FieldApi, WatchController } from "@kintools/form-lit";
 
 @customElement("text-field")
 export class TextField extends LitElement {
@@ -369,7 +369,7 @@ export class TextField extends LitElement {
 
 ```tsx{12} [React]
 import type { ReactNode } from "react";
-import { type FormApi, useWatch } from "@kin-form/react";
+import { type FormApi, useWatch } from "@kintools/form-react";
 
 export type SubmitButtonProps<TValue> = {
   api: FormApi<TValue>; // Subclass of FieldApi.
@@ -393,7 +393,7 @@ export function SubmitButton<TValue>(
 ```ts{14} [Lit]
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { type FormApi, WatchController } from "@kin-form/lit";
+import { type FormApi, WatchController } from "@kintools/form-lit";
 
 @customElement("submit-button")
 export class SubmitButton extends LitElement {
@@ -421,8 +421,8 @@ export class SubmitButton extends LitElement {
 ::: code-group
 
 ```tsx{14-18} [React]
-import { useForm } from "@kin-form/react";
-import { required } from "@kin-form/validators";
+import { useForm } from "@kintools/form-react";
+import { required } from "@kintools/form-validators";
 import { TextField } from "./TextField.tsx";
 import { SubmitButton } from "./SubmitButton.tsx";
 
@@ -447,8 +447,8 @@ function LoginForm() {
 ```ts{13-16} [Lit]
 import { html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
-import { FormApi } from "@kin-form/lit";
-import { required } from "@kin-form/validators";
+import { FormApi } from "@kintools/form-lit";
+import { required } from "@kintools/form-validators";
 import "./text-field.ts";
 import "./submit-button.ts";
 

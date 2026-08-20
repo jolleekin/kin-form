@@ -1,6 +1,6 @@
 import { html } from "lit";
-import { type FieldApi, FormApi, watch } from "@kin-form/lit";
-import { required } from "@kin-form/validators";
+import { type FieldApi, FormApi, watch } from "@kintools/form-lit";
+import { required } from "@kintools/form-validators";
 
 type Address = { line1: string; city: string; zip: string };
 type Contact = { address: Address; tags: string[] };

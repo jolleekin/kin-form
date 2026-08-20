@@ -2,7 +2,7 @@
 // `WatchControllerImpl` (WatchController.ts) and `WatchDirective` (Watch.ts),
 // via `SelectSubscription`. Not exported from index.ts.
 
-import { shallowEqual } from "@kin-form/core";
+import { shallowEqual } from "@kintools/form-core";
 import type { EqualFn } from "./WatchController.ts";
 
 /**

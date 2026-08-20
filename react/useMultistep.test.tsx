@@ -1,7 +1,7 @@
 import "./_test-setup.ts";
 import { assertEquals, assertThrows } from "@std/assert";
 import { act, cleanup, renderHook } from "@testing-library/react";
-import { FormApi } from "@kin-form/core";
+import { FormApi } from "@kintools/form-core";
 import { useMultistep } from "./useMultistep.ts";
 
 type Wizard = {

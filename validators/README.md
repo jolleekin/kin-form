@@ -1,24 +1,24 @@
-# @kin-form/validators
+# @kintools/form-validators
 
-[![JSR @kin-form/validators](https://jsr.io/badges/@kin-form/validators)](https://jsr.io/@kin-form/validators)
+[![JSR @kintools/form-validators](https://jsr.io/badges/@kintools/form-validators)](https://jsr.io/@kintools/form-validators)
 ![License: MIT](https://img.shields.io/badge/License-MIT-166534?style=flat)
 
 Common validator factories for [`@kin-form`](../core/README.md). Split out from
-`@kin-form/core` on purpose: validator wording and edge cases churn far more
-than the engine does, so it's versioned separately.
+`@kintools/form-core` on purpose: validator wording and edge cases churn far
+more than the engine does, so it's versioned separately.
 
 ## Install
 
 ```sh [npm]
-npx jsr add @kin-form/validators
+npm add @kintools/form-validators
 ```
 
 ```sh [pnpm]
-pnpm add jsr:@kin-form/validators
+pnpm add @kintools/form-validators
 ```
 
 ```sh [deno]
-deno add jsr:@kin-form/validators
+deno add jsr:@kintools/form-validators
 ```
 
 ## Available validators
@@ -100,7 +100,7 @@ result's issues:
 
 ```ts
 import { z } from "zod";
-import { toSchemaValidator } from "@kin-form/validators";
+import { toSchemaValidator } from "@kintools/form-validators";
 
 const form = useForm({
   initialValue: { email: "", password: "" },
@@ -118,5 +118,5 @@ own. Mixing the two invites them to disagree.
 ## Learn more
 
 - [Validators guide](../docs/validators/index.md)
-- [`@kin-form/core`](../core/README.md) — the form engine these validators plug
-  into
+- [`@kintools/form-core`](../core/README.md) — the form engine these validators
+  plug into

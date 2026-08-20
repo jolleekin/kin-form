@@ -10,7 +10,7 @@ a component like it exists.
 ::: code-group
 
 ```tsx [React]
-import { useForm, Watch } from "@kin-form/react";
+import { useForm, Watch } from "@kintools/form-react";
 
 function LoginForm() {
   const form = useForm({
@@ -58,7 +58,7 @@ function LoginForm() {
 ```ts [Lit]
 import { html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
-import { FormApi, watch } from "@kin-form/lit";
+import { FormApi, watch } from "@kintools/form-lit";
 
 @customElement("login-form")
 class LoginForm extends LitElement {
@@ -167,7 +167,7 @@ and `type` differ. That repetition is the signal to extract a component:
 
 ```tsx [React]
 import type { ReactNode } from "react";
-import { type FieldApi, useWatch } from "@kin-form/react";
+import { type FieldApi, useWatch } from "@kintools/form-react";
 
 export type TextFieldProps<TParentValue> = {
   api: FieldApi<string, TParentValue>;
@@ -203,7 +203,7 @@ export function TextField<TParentValue>(
 ```ts [Lit]
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { type FieldApi, WatchController } from "@kin-form/lit";
+import { type FieldApi, WatchController } from "@kintools/form-lit";
 
 @customElement("text-field")
 export class TextField extends LitElement {
@@ -314,7 +314,7 @@ in the app agrees on when submission is disabled:
 
 ```tsx [React]
 import type { ReactNode } from "react";
-import { type FormApi, useWatch } from "@kin-form/react";
+import { type FormApi, useWatch } from "@kintools/form-react";
 
 export type SubmitButtonProps<TValue> = {
   api: FormApi<TValue>;
@@ -337,7 +337,7 @@ export function SubmitButton<TValue>(
 ```ts [Lit]
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { type FormApi, WatchController } from "@kin-form/lit";
+import { type FormApi, WatchController } from "@kintools/form-lit";
 
 @customElement("submit-button")
 export class SubmitButton extends LitElement {
@@ -391,7 +391,7 @@ function LoginForm() {
 ```ts [Lit]
 import { html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
-import { FormApi } from "@kin-form/lit";
+import { FormApi } from "@kintools/form-lit";
 import "./text-field.ts";
 import "./submit-button.ts";
 

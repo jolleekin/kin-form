@@ -75,6 +75,6 @@ compile error, not a silent `undefined` at runtime.
   [Dynamic Arrays](/guide/dynamic-arrays) — everything the child registry adds
 - [Linked Fields](/guide/linked-fields) and [Listeners](/guide/listeners) —
   reacting to a value changing
-- [`FieldApi`](https://jsr.io/@kin-form/core/doc/index.ts/~/FieldApi) and
-  [`FormApi`](https://jsr.io/@kin-form/core/doc/index.ts/~/FormApi) — full
+- [`FieldApi`](https://jsr.io/@kintools/form-core/doc/index.ts/~/FieldApi) and
+  [`FormApi`](https://jsr.io/@kintools/form-core/doc/index.ts/~/FormApi) — full
   reference on JSR

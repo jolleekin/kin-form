@@ -1,18 +1,20 @@
 {
   "tasks": {
     "bundle-size": "deno run -A --node-modules-dir bundle-size.ts",
-    "speed-bench": "deno run -A --node-modules-dir speed-bench.ts"
+    "speed-bench": "deno run -A --node-modules-dir speed-bench.ts",
+    "build-npm": "deno run -A build-npm.ts"
   },
   "imports": {
+    "@deno/dnt": "jsr:@deno/dnt@^0.43.2",
     "rolldown": "npm:rolldown@^1",
     "react": "npm:react@^19.2.7",
     "react-dom": "npm:react-dom@^19.2.7",
     "react-hook-form": "npm:react-hook-form@^7",
     "formik": "npm:formik@^2",
     "@tanstack/react-form": "npm:@tanstack/react-form@^1",
-    "@kin-form/core": "../core/index.ts",
-    "@kin-form/react": "../react/index.ts",
-    "@kin-form/validators": "../validators/index.ts",
+    "@kintools/form-core": "../core/index.ts",
+    "@kintools/form-react": "../react/index.ts",
+    "@kintools/form-validators": "../validators/index.ts",
     "@happy-dom/global-registrator": "npm:@happy-dom/global-registrator@^15",
     "@testing-library/react": "npm:@testing-library/react@^16.3.2",
     "@types/react": "npm:@types/react@^19.2.17",

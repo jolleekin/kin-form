@@ -1,6 +1,6 @@
 /**
- * `@kin-form/react-devtools`: an inspector panel (`DevtoolsProvider`,
- * `useFormDevtools`) for visualizing a `@kin-form/react` form's live tree
+ * `@kintools/form-devtools-react`: an inspector panel (`DevtoolsProvider`,
+ * `useFormDevtools`) for visualizing a `@kintools/form-react` form's live tree
  * state during development.
  *
  * @module

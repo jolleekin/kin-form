@@ -11,7 +11,7 @@
     "examples/*",
     "lit",
     "react",
-    "react-devtools",
+    "devtools-react",
     "scripts",
     "validators"
   ]

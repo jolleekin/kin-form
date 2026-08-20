@@ -1,7 +1,7 @@
 import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { __decorate } from "tslib";
-import { type FormApi, WatchController } from "@kin-form/lit";
+import { type FormApi, WatchController } from "@kintools/form-lit";
 
 /**
  * A submit button bound to a form's submit state.

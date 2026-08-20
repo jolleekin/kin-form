@@ -1,36 +1,36 @@
-# @kin-form/react
+# @kintools/form-react
 
-[![JSR @kin-form/react](https://jsr.io/badges/@kin-form/react)](https://jsr.io/@kin-form/react)
+[![JSR @kintools/form-react](https://jsr.io/badges/@kintools/form-react)](https://jsr.io/@kintools/form-react)
 ![License: MIT](https://img.shields.io/badge/License-MIT-166534?style=flat)
 ![100% type-safe](https://img.shields.io/badge/100%25%20type--safe-166534?style=flat)
 
-React bindings for [`@kin-form/core`](../core/README.md): `useForm` to create a
-form, `Watch` (or the underlying `useWatch` hook) to subscribe a component to an
-already-resolved `FieldApi`/`FormApi`, resolved via
+React bindings for [`@kintools/form-core`](../core/README.md): `useForm` to
+create a form, `Watch` (or the underlying `useWatch` hook) to subscribe a
+component to an already-resolved `FieldApi`/`FormApi`, resolved via
 `parent.field(name,
 options)` directly, no separate hook for that.
-`@kin-form/react` depends on and re-exports everything from `@kin-form/core`, so
-no need to install it separately.
+`@kintools/form-react` depends on and re-exports everything from
+`@kintools/form-core`, so no need to install it separately.
 
 ## Install
 
 ```sh [npm]
-npx jsr add @kin-form/react
+npm add @kintools/form-react
 ```
 
 ```sh [pnpm]
-pnpm add jsr:@kin-form/react
+pnpm add @kintools/form-react
 ```
 
 ```sh [deno]
-deno add jsr:@kin-form/react
+deno add jsr:@kintools/form-react
 ```
 
 ## Quick start
 
 ```tsx
-import { useForm, Watch } from "@kin-form/react";
-import { required } from "@kin-form/validators";
+import { useForm, Watch } from "@kintools/form-react";
+import { required } from "@kintools/form-validators";
 
 function LoginForm() {
   const form = useForm({
@@ -75,10 +75,10 @@ subscribe the calling component; pass the returned instance to `Watch` for that.
 
 ## Resolving a field
 
-`parent.field(name, options)` (see [`@kin-form/core`](../core/README.md)) gets
-(creating on first call) the `FieldApi` registered under `name` on `parent`, for
-a leaf value, a nested object/array, or an array item alike, the same accessor
-either way. It's safe to call inline in JSX on every render: on an
+`parent.field(name, options)` (see [`@kintools/form-core`](../core/README.md))
+gets (creating on first call) the `FieldApi` registered under `name` on
+`parent`, for a leaf value, a nested object/array, or an array item alike, the
+same accessor either way. It's safe to call inline in JSX on every render: on an
 already-registered field, `options` is applied via `updateOptions` the same way
 every time, so re-calling it doesn't re-create anything. For an array, the
 field's own _value_ is the array, so array methods are called on it with `""`.
@@ -171,15 +171,15 @@ progress mid-wizard, and `onStepChanged`.
 
 - [Reactivity](../docs/guide/reactivity.md) — `useWatch`/`Watch` in depth,
   including `select` for controlling re-renders
-- [`useForm`](https://jsr.io/@kin-form/react/doc/index.ts/~/useForm),
-  [`useWatch`](https://jsr.io/@kin-form/react/doc/index.ts/~/useWatch), and
-  [`Watch`](https://jsr.io/@kin-form/react/doc/index.ts/~/Watch) — full
+- [`useForm`](https://jsr.io/@kintools/form-react/doc/index.ts/~/useForm),
+  [`useWatch`](https://jsr.io/@kintools/form-react/doc/index.ts/~/useWatch), and
+  [`Watch`](https://jsr.io/@kintools/form-react/doc/index.ts/~/Watch) — full
   reference on JSR
 - [Form Composition](../docs/guide/form-composition.md) — building reusable
   `TextField`/`AddressField`/`ItemsField`/`SubmitButton` components
 - [Multistep Forms](../docs/guide/multistep.md) — `useMultistep` for
   wizard-style forms
-- [`@kin-form/validators`](../validators/README.md) — `required`, `email`,
+- [`@kintools/form-validators`](../validators/README.md) — `required`, `email`,
   `minLength`, and a `toSchemaValidator()` adapter for zod/valibot
-- [`@kin-form/react-devtools`](../react-devtools/README.md) — an inspector panel
-  for a form's live tree state
+- [`@kintools/form-devtools-react`](../devtools-react/README.md) — an inspector
+  panel for a form's live tree state

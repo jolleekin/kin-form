@@ -1,7 +1,7 @@
 import "./_test-setup.ts";
 import { assertEquals } from "@std/assert";
 import { act, cleanup, renderHook } from "@testing-library/react";
-import { FormApi } from "@kin-form/core";
+import { FormApi } from "@kintools/form-core";
 import { useNodeVersion } from "./useNodeVersion.ts";
 import type { AnyNode } from "./types.ts";
 

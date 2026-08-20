@@ -62,5 +62,5 @@ starts clean whenever it does.
 
 ## What's next
 
-- [`FormApi`](https://jsr.io/@kin-form/core/doc/index.ts/~/FormApi) — full
+- [`FormApi`](https://jsr.io/@kintools/form-core/doc/index.ts/~/FormApi) — full
   reference on JSR

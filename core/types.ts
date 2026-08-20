@@ -39,7 +39,7 @@ export type ValidatorResult = ValidationError | false | undefined;
  * Consumers can add their own leaf types via declaration merging:
  * @example
  * ```ts
- * declare module "@kin-form/core" {
+ * declare module "@kintools/form-core" {
  *   interface LeafTypeMap {
  *     Money: Money;
  *     URL: URL;

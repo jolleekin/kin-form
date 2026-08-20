@@ -418,8 +418,8 @@
       "npm:zod@4"
     ],
     "links": {
-      "jsr:@kin-form/core@0.1.0": {},
-      "jsr:@kin-form/react-devtools@0.1.0": {
+      "jsr:@kintools/form-core@0.1.0": {},
+      "jsr:@kintools/form-devtools-react@0.1.0": {
         "dependencies": [
           "npm:@happy-dom/global-registrator@15",
           "npm:@testing-library/react@^16.3.2",
@@ -427,7 +427,7 @@
           "npm:react@^19.2.7"
         ]
       },
-      "jsr:@kin-form/react@0.1.0": {
+      "jsr:@kintools/form-react@0.1.0": {
         "dependencies": [
           "npm:@happy-dom/global-registrator@15",
           "npm:@testing-library/react@^16.3.2",
@@ -435,7 +435,7 @@
           "npm:react@^19.2.7"
         ]
       },
-      "jsr:@kin-form/validators@0.1.0": {
+      "jsr:@kintools/form-validators@0.1.0": {
         "dependencies": [
           "npm:@standard-schema/spec@^1.1.0"
         ]

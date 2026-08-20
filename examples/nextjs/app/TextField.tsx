@@ -1,7 +1,7 @@
 "use client";
 
 import { type InputHTMLAttributes, type ReactNode, useId } from "react";
-import { type FieldApi, useWatch } from "@kin-form/react";
+import { type FieldApi, useWatch } from "@kintools/form-react";
 
 const inputClasses = (invalid: boolean) =>
   `mt-1 block w-full rounded-md border px-3 py-2 text-sm text-gray-900 shadow-sm focus:outline-none focus:ring-2 ${

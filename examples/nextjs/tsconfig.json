@@ -24,13 +24,13 @@
       }
     ],
     "paths": {
-      "@kin-form/core": [
+      "@kintools/form-core": [
         "../../core/index.ts"
       ],
-      "@kin-form/react": [
+      "@kintools/form-react": [
         "../../react/index.ts"
       ],
-      "@kin-form/validators": [
+      "@kintools/form-validators": [
         "../../validators/index.ts"
       ]
     }

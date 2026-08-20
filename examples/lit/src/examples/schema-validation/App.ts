@@ -1,6 +1,6 @@
 import { html } from "lit";
-import { FormApi } from "@kin-form/lit";
-import { email, required, toSchemaValidator } from "@kin-form/validators";
+import { FormApi } from "@kintools/form-lit";
+import { email, required, toSchemaValidator } from "@kintools/form-validators";
 import { z } from "zod";
 import "./components/SubmitButton.ts";
 import "./components/TextField.ts";

@@ -2,7 +2,7 @@ import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
 import { __decorate } from "tslib";
-import { type FieldApi, WatchController } from "@kin-form/lit";
+import { type FieldApi, WatchController } from "@kintools/form-lit";
 
 // Generic array editor: works for any item type (primitive or object) at any
 // path, because `.api`'s own value already *is* the array - array methods

@@ -1,5 +1,5 @@
-import { useForm } from "@kin-form/react";
-import { useFormDevtools } from "@kin-form/react-devtools";
+import { useForm } from "@kintools/form-react";
+import { useFormDevtools } from "@kintools/form-devtools-react";
 import { type Address, AddressField } from "./components/AddressField.tsx";
 import { SubmitButton } from "./components/SubmitButton.tsx";
 

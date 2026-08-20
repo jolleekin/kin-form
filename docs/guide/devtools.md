@@ -6,24 +6,25 @@ React only for now: other framework bindings are planned.
 
 :::
 
-`@kin-form/react-devtools` is an inspector panel for visualizing a
-`@kin-form/react` form's live tree state during development: every registered
-field/group's `value`, `error`, `touched`, and `validating` as they change.
+`@kintools/form-devtools-react` is an inspector panel for visualizing a
+`@kintools/form-react` form's live tree state during development: every
+registered field/group's `value`, `error`, `touched`, and `validating` as they
+change.
 
 ## Install
 
 ::: code-group
 
 ```sh [npm]
-npx jsr add @kin-form/react-devtools
+npm add @kintools/form-devtools-react
 ```
 
 ```sh [pnpm]
-pnpm add jsr:@kin-form/react-devtools
+pnpm add @kintools/form-devtools-react
 ```
 
 ```sh [deno]
-deno add jsr:@kin-form/react-devtools
+deno add jsr:@kintools/form-devtools-react
 ```
 
 :::
@@ -34,7 +35,7 @@ Mount `DevtoolsProvider` once, near the root of your app, typically only in
 development:
 
 ```tsx
-import { DevtoolsProvider } from "@kin-form/react-devtools";
+import { DevtoolsProvider } from "@kintools/form-devtools-react";
 
 function App() {
   return import.meta.env.DEV
@@ -52,8 +53,8 @@ function App() {
 Then opt each form in with `useFormDevtools`, right next to `useForm`:
 
 ```tsx
-import { useForm } from "@kin-form/react";
-import { useFormDevtools } from "@kin-form/react-devtools";
+import { useForm } from "@kintools/form-react";
+import { useFormDevtools } from "@kintools/form-devtools-react";
 
 function CheckoutForm() {
   const form = useForm({ initialValue: { email: "", items: [] } });

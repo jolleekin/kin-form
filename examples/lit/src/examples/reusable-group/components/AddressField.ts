@@ -1,8 +1,8 @@
 import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { __decorate } from "tslib";
-import { type FieldApi, type Validator } from "@kin-form/lit";
-import { required } from "@kin-form/validators";
+import { type FieldApi, type Validator } from "@kintools/form-lit";
+import { required } from "@kintools/form-validators";
 import "./TextField.ts";
 
 export type Address = {

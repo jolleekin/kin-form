@@ -1,5 +1,5 @@
 /**
- * Measures render/update-speed and validation overhead for @kin-form/react
+ * Measures render/update-speed and validation overhead for @kintools/form-react
  * against React Hook Form, Formik, and TanStack Form, all mounted into a real
  * (Happy DOM) React tree via @testing-library/react, using one shared
  * ~84-field form shape and update plan (see `speed/scenario.ts`) so every

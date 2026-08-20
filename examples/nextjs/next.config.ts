@@ -9,7 +9,7 @@ const kinFormPackages = ["core", "react", "validators"] as const;
 const turbopackAliases = Object.fromEntries(
   kinFormPackages.map((
     name,
-  ) => [`@kin-form/${name}`, `../../${name}/index.ts`]),
+  ) => [`@kintools/form-${name}`, `../../${name}/index.ts`]),
 );
 
 const nextConfig: NextConfig = {

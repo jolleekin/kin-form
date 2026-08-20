@@ -1,5 +1,5 @@
 import { assertEquals, assertStrictEquals } from "@std/assert";
-import { FormApi } from "@kin-form/core";
+import { FormApi } from "@kintools/form-core";
 import { DevtoolsRegistry } from "./DevtoolsRegistry.ts";
 
 // `DevtoolsRegistry.register` takes `FormApi<unknown>`; a concretely-typed

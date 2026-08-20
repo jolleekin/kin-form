@@ -14,8 +14,8 @@ the same topics the [guide](/guide/) covers, one at a time, against
 ::: code-group
 
 ```tsx{15} [Kin Form]
-import { useForm, Watch } from "@kin-form/react";
-import { required } from "@kin-form/validators";
+import { useForm, Watch } from "@kintools/form-react";
+import { required } from "@kintools/form-validators";
 
 type LoginValues = { email: string };
 
@@ -101,8 +101,8 @@ else, both sides bind to a controlled `<TextInput>` component, so
 ::: code-group
 
 ```tsx{14} [Kin Form]
-import { useForm, Watch } from "@kin-form/react";
-import { required } from "@kin-form/validators";
+import { useForm, Watch } from "@kintools/form-react";
+import { required } from "@kintools/form-validators";
 
 type ProfileValues = { country: string };
 
@@ -182,7 +182,7 @@ reusable components rather than inlined in one form.
 ::: code-group
 
 ```tsx{13} [Kin Form]
-import { useForm, Watch } from "@kin-form/react";
+import { useForm, Watch } from "@kintools/form-react";
 
 function SignupForm() {
   const form = useForm<{ username: string }>({
@@ -253,7 +253,7 @@ function SignupForm() {
 
 Both need a thin adapter from a separate package to plug a schema in:
 
-- Kin Form: `toSchemaValidator()` from `@kin-form/validators`
+- Kin Form: `toSchemaValidator()` from `@kintools/form-validators`
 - React Hook Form: `standardSchemaResolver` from `@hookform/resolvers`
 
 Both adapters can be used with any Standard Schema library: zod, valibot, ...
@@ -263,8 +263,8 @@ Both adapters can be used with any Standard Schema library: zod, valibot, ...
 ::: code-group
 
 ```tsx{20-21} [Kin Form]
-import { useForm, Watch } from "@kin-form/react";
-import { required, toSchemaValidator } from "@kin-form/validators";
+import { useForm, Watch } from "@kintools/form-react";
+import { required, toSchemaValidator } from "@kintools/form-validators";
 import { z } from "zod";
 
 const signupSchema = z.object({
@@ -673,7 +673,7 @@ error or touched status means also subscribing to `useFormState`.
 ::: code-group
 
 ```tsx{5-8} [Kin Form]
-import { type FieldApi, useWatch } from "@kin-form/react";
+import { type FieldApi, useWatch } from "@kintools/form-react";
 
 function Field<TParentValue>({ api }: { api: FieldApi<string, TParentValue> }) {
   // One hook covers all field state (including value).
@@ -764,7 +764,7 @@ against core React Hook Form, without this addon.
 ::: code-group
 
 ```tsx{4} [Kin Form]
-import { type FieldApi, useWatch } from "@kin-form/react";
+import { type FieldApi, useWatch } from "@kintools/form-react";
 
 function TextField<TParent>(
   { api, label }: { api: FieldApi<string, TParent>; label: string },
@@ -853,7 +853,7 @@ and billing) instead of an array:
 ::: code-group
 
 ```tsx{6} [Kin Form]
-import { type FieldApi } from "@kin-form/react";
+import { type FieldApi } from "@kintools/form-react";
 
 type Address = { line1: string; city: string };
 
@@ -929,7 +929,7 @@ identity across a reorder, plus its own mutation helpers:
 ::: code-group
 
 ```tsx{4,15,33} [Kin Form]
-import { FieldApi, useForm, useWatch } from "@kin-form/react";
+import { FieldApi, useForm, useWatch } from "@kintools/form-react";
 
 function ItemsField<TParentValue>(
   { api }: { api: FieldApi<string[], TParentValue> },
@@ -944,7 +944,7 @@ function ItemsField<TParentValue>(
         return (
           <ItemField
             key={field.id}
-            field={field}
+            api={field}
             onMoveUp={i > 0 ? () => api.moveItem("", i, i - 1) : undefined}
             onMoveDown={i < value.length - 1
               ? () => api.moveItem("", i, i + 1)
@@ -960,21 +960,21 @@ function ItemsField<TParentValue>(
 }
 
 function ItemField(
-  { field, onMoveUp, onMoveDown, onRemove }: {
-    field: FieldApi<string, string[]>;
+  { api, onMoveUp, onMoveDown, onRemove }: {
+    api: FieldApi<string, string[]>;
     onMoveUp?: () => void;
     onMoveDown?: () => void;
     onRemove: () => void;
   },
 ) {
-  useWatch(field);
+  useWatch(api);
 
   return (
     <div>
       <TextInput
-         value={field.value}
-         onBlur={field.handleBlur}
-         onChange={field.handleChange}
+         value={api.value}
+         onBlur={api.handleBlur}
+         onChange={api.handleChange}
       />
       <button disabled={!onMoveUp} onClick={onMoveUp}>Move up</button>
       <button disabled={!onMoveDown} onClick={onMoveDown}>Move down</button>
@@ -1110,7 +1110,7 @@ docs demonstrate the hand-rolled version.
 ::: code-group
 
 ```tsx{16-20,28-29,35-37} [Kin Form]
-import { useForm, useMultistep } from "@kin-form/react";
+import { useForm, useMultistep } from "@kintools/form-react";
 
 type Signup = {
   credentials: { email: string; password: string };

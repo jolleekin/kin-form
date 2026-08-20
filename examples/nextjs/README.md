@@ -1,15 +1,15 @@
 # Kin Form + Next.js SSR example
 
 A minimal Next.js (App Router) app whose only page is a server component
-rendering `LoginForm`, a client component built with `@kin-form/react`
+rendering `LoginForm`, a client component built with `@kintools/form-react`
 (`useForm`/`Watch`) plus a reusable `TextField`. Exists to exercise Kin Form's
 React bindings under real SSR, not just Vite's client-only dev server the other
 `examples/*` apps use.
 
-Imports `@kin-form/core`/`@kin-form/react`/`@kin-form/validators` straight from
-this repo's workspace source (`tsconfig.json` `paths` + a `next.config.ts`
-Turbopack `resolveAlias`), not the published JSR/npm packages, so it always
-reflects the current state of `core/`/`react/`/`validators/`.
+Imports `@kintools/form-core`/`@kintools/form-react`/`@kintools/form-validators`
+straight from this repo's workspace source (`tsconfig.json` `paths` + a
+`next.config.ts` Turbopack `resolveAlias`), not the published JSR/npm packages,
+so it always reflects the current state of `core/`/`react/`/`validators/`.
 
 ## Running
 

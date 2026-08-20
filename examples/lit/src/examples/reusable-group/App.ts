@@ -1,5 +1,5 @@
 import { html } from "lit";
-import { FormApi } from "@kin-form/lit";
+import { FormApi } from "@kintools/form-lit";
 import { type Address } from "./components/AddressField.ts";
 import "./components/AddressField.ts";
 import "./components/SubmitButton.ts";

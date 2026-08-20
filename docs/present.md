@@ -17,7 +17,7 @@ head:
   <p class="lede">Build your field components once. Reuse them everywhere.</p>
   <div class="actions">
     <a class="btn-primary" href="/guide/getting-started">Get Started</a>
-    <a class="btn-secondary" href="https://github.com/jolleekin/kin-form">View on GitHub</a>
+    <a class="btn-secondary" href="https://github.com/kintools-dev/form">View on GitHub</a>
   </div>
   <p class="present-byline">Man Hoang (Kin)</p>
 </section>
@@ -178,8 +178,8 @@ head:
 ::: code-group
 
 ```tsx{12-13,28-29} [1. Form with Watch]
-import { useForm, Watch } from "@kin-form/react";
-import { required } from "@kin-form/validators";
+import { useForm, Watch } from "@kintools/form-react";
+import { required } from "@kintools/form-validators";
 
 function LoginForm() {
   const form = useForm({
@@ -217,7 +217,7 @@ function LoginForm() {
 
 ```tsx{13} [2. Reusable TextField]
 import type { ReactNode } from "react";
-import { type FieldApi, useWatch } from "@kin-form/react";
+import { type FieldApi, useWatch } from "@kintools/form-react";
 
 export type TextFieldProps<TParentValue> = {
   api: FieldApi<string, TParentValue>;
@@ -251,7 +251,7 @@ export function TextField<TParentValue>(
 
 ```tsx{12} [3. Reusable SubmitButton]
 import type { ReactNode } from "react";
-import { type FormApi, useWatch } from "@kin-form/react";
+import { type FormApi, useWatch } from "@kintools/form-react";
 
 export type SubmitButtonProps<TValue> = {
   api: FormApi<TValue>; // Subclass of FieldApi.
@@ -273,7 +273,7 @@ export function SubmitButton<TValue>(
 ```
 
 ```tsx{11-15} [4. Form with reusable components]
-import { required } from "@kin-form/validators";
+import { required } from "@kintools/form-validators";
 
 function LoginForm() {
   const form = useForm({

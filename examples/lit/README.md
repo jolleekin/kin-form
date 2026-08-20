@@ -6,8 +6,8 @@ code lives in its own file under `src/examples/<slug>/`, self-contained
 point on its own.
 
 This is the Lit port of `examples/react`: same patterns, same value shapes, same
-Tailwind styling, `@kin-form/lit`'s `watch`/`WatchController`/
-`MultistepController` in place of `@kin-form/react`'s
+Tailwind styling, `@kintools/form-lit`'s `watch`/`WatchController`/
+`MultistepController` in place of `@kintools/form-react`'s
 `Watch`/`useWatch`/`useMultistep`. `virtual-list` uses `@tanstack/lit-virtual`
 in place of `@tanstack/react-virtual`, and (unlike the React version) uses a
 fixed row height rather than per-row dynamic measurement — see

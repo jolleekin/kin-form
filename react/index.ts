@@ -1,11 +1,11 @@
 /**
- * `@kin-form/react`: React bindings (`useForm`, `useMultistep`, `Watch`) on
- * top of `@kin-form/core`, re-exporting everything from `@kin-form/core` too.
+ * `@kintools/form-react`: React bindings (`useForm`, `useMultistep`, `Watch`) on
+ * top of `@kintools/form-core`, re-exporting everything from `@kintools/form-core` too.
  *
  * @module
  */
 
-export * from "@kin-form/core";
+export * from "@kintools/form-core";
 export * from "./useForm.ts";
 export * from "./useMultistep.ts";
 export * from "./useWatch.ts";

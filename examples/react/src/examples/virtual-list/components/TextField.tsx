@@ -1,5 +1,5 @@
 import type { InputHTMLAttributes, ReactNode } from "react";
-import { type FieldApi, useWatch } from "@kin-form/react";
+import { type FieldApi, useWatch } from "@kintools/form-react";
 
 const inputClasses = (invalid: boolean) =>
   `block w-full rounded-md border px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:outline-none focus:ring-2 ${

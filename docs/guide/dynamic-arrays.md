@@ -47,7 +47,7 @@ function ArrayField<Item, TParentValue>(
 ```ts [Lit]
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { type FieldApi } from "@kin-form/lit";
+import { type FieldApi } from "@kintools/form-lit";
 
 @customElement("array-field")
 class ArrayField<Item> extends LitElement {
@@ -87,5 +87,5 @@ keyed on `field.id` in Lit) instead of the index.
 
 ## What's next
 
-- [`FieldApi`](https://jsr.io/@kin-form/core/doc/index.ts/~/FieldApi) — full
-  reference on JSR, including the field registry
+- [`FieldApi`](https://jsr.io/@kintools/form-core/doc/index.ts/~/FieldApi) —
+  full reference on JSR, including the field registry

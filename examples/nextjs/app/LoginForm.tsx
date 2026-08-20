@@ -1,7 +1,7 @@
 "use client";
 
-import { useForm, Watch } from "@kin-form/react";
-import { email, minLength, required } from "@kin-form/validators";
+import { useForm, Watch } from "@kintools/form-react";
+import { email, minLength, required } from "@kintools/form-validators";
 import { TextField } from "./TextField.tsx";
 
 type Login = {
