@@ -24,7 +24,7 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno test -A core react devtools-react lit validators
 
-  publish-core:
+  publish-core-jsr:
     needs: [lint, test]
     if: startsWith(github.ref, 'refs/tags/core@')
     runs-on: ubuntu-latest
@@ -36,6 +36,17 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: core
+
+  publish-core-npm:
+    needs: [lint, test, publish-core-jsr]
+    if: startsWith(github.ref, 'refs/tags/core@')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: denoland/setup-deno@v2
       - uses: actions/setup-node@v7
         with:
           node-version: "24"
@@ -45,7 +56,7 @@ jobs:
       - run: npm publish --provenance --access public
         working-directory: core/npm
 
-  publish-react:
+  publish-react-jsr:
     needs: [lint, test]
     if: startsWith(github.ref, 'refs/tags/react@')
     runs-on: ubuntu-latest
@@ -57,6 +68,17 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: react
+
+  publish-react-npm:
+    needs: [lint, test, publish-react-jsr]
+    if: startsWith(github.ref, 'refs/tags/react@')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: denoland/setup-deno@v2
       - uses: actions/setup-node@v7
         with:
           node-version: "24"
@@ -66,7 +88,7 @@ jobs:
       - run: npm publish --provenance --access public
         working-directory: react/npm
 
-  publish-devtools-react:
+  publish-devtools-react-jsr:
     needs: [lint, test]
     if: startsWith(github.ref, 'refs/tags/devtools-react@')
     runs-on: ubuntu-latest
@@ -78,6 +100,17 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: devtools-react
+
+  publish-devtools-react-npm:
+    needs: [lint, test, publish-devtools-react-jsr]
+    if: startsWith(github.ref, 'refs/tags/devtools-react@')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: denoland/setup-deno@v2
       - uses: actions/setup-node@v7
         with:
           node-version: "24"
@@ -87,7 +120,7 @@ jobs:
       - run: npm publish --provenance --access public
         working-directory: devtools-react/npm
 
-  publish-lit:
+  publish-lit-jsr:
     needs: [lint, test]
     if: startsWith(github.ref, 'refs/tags/lit@')
     runs-on: ubuntu-latest
@@ -99,6 +132,17 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: lit
+
+  publish-lit-npm:
+    needs: [lint, test, publish-lit-jsr]
+    if: startsWith(github.ref, 'refs/tags/lit@')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: denoland/setup-deno@v2
       - uses: actions/setup-node@v7
         with:
           node-version: "24"
@@ -108,7 +152,7 @@ jobs:
       - run: npm publish --provenance --access public
         working-directory: lit/npm
 
-  publish-validators:
+  publish-validators-jsr:
     needs: [lint, test]
     if: startsWith(github.ref, 'refs/tags/validators@')
     runs-on: ubuntu-latest
@@ -120,6 +164,17 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: validators
+
+  publish-validators-npm:
+    needs: [lint, test, publish-validators-jsr]
+    if: startsWith(github.ref, 'refs/tags/validators@')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: denoland/setup-deno@v2
       - uses: actions/setup-node@v7
         with:
           node-version: "24"
