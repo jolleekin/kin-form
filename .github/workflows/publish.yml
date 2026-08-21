@@ -36,7 +36,7 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: core
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
           registry-url: "https://registry.npmjs.org"
@@ -57,7 +57,7 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: react
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
           registry-url: "https://registry.npmjs.org"
@@ -78,7 +78,7 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: devtools-react
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
           registry-url: "https://registry.npmjs.org"
@@ -99,7 +99,7 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: lit
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
           registry-url: "https://registry.npmjs.org"
@@ -120,7 +120,7 @@ jobs:
       - uses: denoland/setup-deno@v2
       - run: deno publish
         working-directory: validators
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
           registry-url: "https://registry.npmjs.org"
