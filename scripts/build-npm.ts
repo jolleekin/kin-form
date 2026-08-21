@@ -44,6 +44,12 @@ const MAPPINGS: Record<string, Record<string, Mapping>> = {
 // other packages' shipped code is plain .ts, so they need no JSX transform.
 const JSX_PACKAGES = new Set(["devtools-react"]);
 
+// lit is ESM-only ("type": "module", no CommonJS entry point), so a CJS
+// build of a package that imports it would throw ERR_REQUIRE_ESM at runtime
+// the moment it required lit. Ship ESM only for lit; every other package's
+// peer/runtime deps (react, or nothing) are still CJS-requirable.
+const ESM_ONLY_PACKAGES = new Set(["lit"]);
+
 const pkg = Deno.args[0];
 if (!pkg) {
   console.error("Usage: deno task --cwd scripts build-npm <package>");
@@ -62,6 +68,7 @@ await build({
   shims: {},
   test: false,
   typeCheck: false,
+  scriptModule: ESM_ONLY_PACKAGES.has(pkg) ? false : "cjs",
   mappings: MAPPINGS[pkg],
   compilerOptions: JSX_PACKAGES.has(pkg)
     ? { jsx: "react-jsx", jsxImportSource: "react" }

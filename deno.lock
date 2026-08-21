@@ -1,14 +1,22 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@david/code-block-writer@^13.0.3": "13.0.3",
+    "jsr:@deno/dnt@~0.43.2": "0.43.2",
     "jsr:@std/assert@^1.0.19": "1.0.19",
     "jsr:@std/async@^1.4.0": "1.5.0",
     "jsr:@std/data-structures@^1.1.0": "1.1.1",
+    "jsr:@std/fmt@1": "1.0.10",
+    "jsr:@std/fs@1": "1.0.24",
     "jsr:@std/fs@^1.0.24": "1.0.24",
     "jsr:@std/internal@^1.0.12": "1.0.14",
     "jsr:@std/internal@^1.0.14": "1.0.14",
+    "jsr:@std/path@1": "1.1.5",
     "jsr:@std/path@^1.1.5": "1.1.5",
     "jsr:@std/testing@1": "1.0.19",
+    "jsr:@std/yaml@*": "1.1.2",
+    "jsr:@ts-morph/bootstrap@0.29": "0.29.0",
+    "jsr:@ts-morph/common@0.29": "0.29.0",
     "npm:@deno/vite-plugin@^2.0.2": "2.0.3_vite@8.2.1__@types+node@20.19.43_@types+node@20.19.43",
     "npm:@happy-dom/global-registrator@15": "15.11.7",
     "npm:@standard-schema/spec@^1.1.0": "1.1.0",
@@ -43,6 +51,19 @@
     "npm:zod@4": "4.4.3"
   },
   "jsr": {
+    "@david/code-block-writer@13.0.3": {
+      "integrity": "f98c77d320f5957899a61bfb7a9bead7c6d83ad1515daee92dbacc861e13bb7f"
+    },
+    "@deno/dnt@0.43.2": {
+      "integrity": "8068703a782f389d9fcb4ead32809ca666d3b088262a23f1d9016cbc9af5d37f",
+      "dependencies": [
+        "jsr:@david/code-block-writer",
+        "jsr:@std/fmt",
+        "jsr:@std/fs@1",
+        "jsr:@std/path@1",
+        "jsr:@ts-morph/bootstrap"
+      ]
+    },
     "@std/assert@1.0.19": {
       "integrity": "eaada96ee120cb980bc47e040f82814d786fe8162ecc53c91d8df60b8755991e",
       "dependencies": [
@@ -55,10 +76,14 @@
     "@std/data-structures@1.1.1": {
       "integrity": "7e1fcf19771fb9c6dbcd7f65039d6d42ef8dc023cfbc0c4cdc74b24e09229380"
     },
+    "@std/fmt@1.0.10": {
+      "integrity": "90dfba288802ac6de82fb31d0917eb9e4450b9925b954d5e51fc29ac07419db5"
+    },
     "@std/fs@1.0.24": {
       "integrity": "f3061b45b81673a2bece689da041df32d174be064c89eb6397fb5718d3fb7877",
       "dependencies": [
-        "jsr:@std/path"
+        "jsr:@std/internal@^1.0.14",
+        "jsr:@std/path@^1.1.5"
       ]
     },
     "@std/internal@1.0.14": {
@@ -76,9 +101,25 @@
         "jsr:@std/assert",
         "jsr:@std/async",
         "jsr:@std/data-structures",
-        "jsr:@std/fs",
+        "jsr:@std/fs@^1.0.24",
         "jsr:@std/internal@^1.0.14",
-        "jsr:@std/path"
+        "jsr:@std/path@^1.1.5"
+      ]
+    },
+    "@std/yaml@1.1.2": {
+      "integrity": "de612653c036749ba2044165e316f52412b0f0698afffb7ee80b5331d6d2abae"
+    },
+    "@ts-morph/bootstrap@0.29.0": {
+      "integrity": "69f9b1b42b03423308a9f623f924174181ef20f6f2a8771799f216f561b9b7a6",
+      "dependencies": [
+        "jsr:@ts-morph/common"
+      ]
+    },
+    "@ts-morph/common@0.29.0": {
+      "integrity": "14e8f44c5e4297628cf756aed071787dc026c493e36c1cc29ce49dc95e493f8f",
+      "dependencies": [
+        "jsr:@std/fs@1",
+        "jsr:@std/path@1"
       ]
     }
   },
@@ -2779,6 +2820,14 @@
       "jsr:@std/testing@1"
     ],
     "members": {
+      "devtools-react": {
+        "dependencies": [
+          "npm:@happy-dom/global-registrator@15",
+          "npm:@testing-library/react@^16.3.2",
+          "npm:@types/react@^19.2.17",
+          "npm:react@^19.2.7"
+        ]
+      },
       "docs": {
         "dependencies": [
           "npm:vitepress-plugin-llms@^1.13.4",
@@ -2833,14 +2882,6 @@
         ]
       },
       "react": {
-        "dependencies": [
-          "npm:@happy-dom/global-registrator@15",
-          "npm:@testing-library/react@^16.3.2",
-          "npm:@types/react@^19.2.17",
-          "npm:react@^19.2.7"
-        ]
-      },
-      "devtools-react": {
         "dependencies": [
           "npm:@happy-dom/global-registrator@15",
           "npm:@testing-library/react@^16.3.2",
